@@ -1,0 +1,395 @@
+/* main styles */
+
+@font-face {
+    font-family:'Lobster';
+    src: url('fonts/Lobster-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
+    font-family:'Roboto';
+    src: url('fonts/Roboto-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    background-color: #FEF9FF;
+    font-family: 'Roboto', sans-serif;
+}
+
+section {
+    padding: 20px; /* Espacio interno dentro de cada sección */
+    border: 1px solid #FEF9FF; /* Borde alrededor de cada sección */
+    margin-bottom: 20px;
+}
+
+#main-title {
+    font-family: 'Lobster', sans-serif;
+    font-size: 3em;
+    line-height: 0.50;
+    text-align: center;
+    justify-content: center;
+    height: auto;
+    margin: 0;
+}
+
+#main-title a {
+    text-decoration: none;
+    color: #736CED;
+}
+
+.menu-bar {
+    display: flex;
+    justify-content: space-around;
+    height: auto;
+    background-color: #9f9fed;
+}
+
+.menu-bar a {
+    text-decoration: none;
+    color: #FEF9FF;
+    transition: color 0.5s;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.menu-bar a:hover {
+    color: #736CED;
+}
+
+.image-container {
+    display: flex; 
+    justify-content: center;
+    max-height: 600px;
+    overflow: hidden;
+}
+
+.image-box {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+}
+
+.image-box img {
+    width: 100%;
+    height: auto;
+    max-height: 600px;
+}
+
+.opcion-inicio {
+    position: absolute; 
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #9f9fed;
+    color: #FEF9FF;
+    height: auto;
+    width: 200px;
+    text-align: center;
+    transition: background-color 0.5s ease;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.opcion-inicio:hover {
+    background-color: #d4c1ec;
+}
+
+button {
+    background-color: #9f9fed;
+    border: 0;
+    color: #FEF9FF; 
+    height: 50px;
+    width: 200px;
+    text-align: center;
+    transition: background-color 0.5s ease;
+    text-decoration: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+button:hover,
+button:active {
+    background-color: #d4c1ec;
+}
+
+.confirmar {
+    display: flex; /* Usar flexbox para centrar */
+    justify-content: center; /* Centrar horizontalmente */
+    margin-top: 20px; /* Margen superior para separar del último campo */
+}
+
+.text {
+    text-align: center;
+    font-size: 18px;
+    font-weight: normal;
+    justify-content: center;
+}
+
+.section-title {
+    font-family: 'Lobster', sans-serif;
+    font-size: 2em;
+    line-height: 0.50;
+    text-align: center;
+    justify-content: center;
+    height: auto;
+    margin: 0;
+    padding-bottom: 10px;
+    color: #9f9fed;
+}
+
+/* product styles */
+
+#opciones-producto {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+#tarjetas-catalogo {
+    display: flex; /* Usa flexbox para alinear las tarjetas */
+    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan en varias filas */
+    justify-content: space-around; /* Espacio entre las tarjetas */
+}
+
+.tarjeta-flor {
+    width: 200px; /* Ancho del rectángulo */
+    height: 300px; /* Alto del rectángulo */
+    margin: 10px; /* Margen alrededor de cada tarjeta */
+    display: flex; /* Usar flexbox para el contenido interno */
+    flex-direction: column; /* Colocar los elementos en columna */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center;
+    background-color: #FFFFFF;
+    padding: 10px; /* Espacio interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.imagen-flor {
+    width: 175px; /* Ancho del cuadro de imagen */
+    height: 175px; /* Alto del cuadro de imagen */
+    margin-bottom: 10px; /* Margen inferior para separar de los textos */
+    margin-top: 10px;
+}
+
+.imagen-flor img {
+    width: 100%; /* Hacer que la imagen ocupe todo el cuadro */
+    height: 100%; /* Mantener la imagen dentro del cuadro */
+    object-fit: cover; /* Cubrir el cuadro sin distorsionar la imagen */
+}
+
+.nombre-flor, .cantidad-flor, .precio-flor {
+    margin: 5px 0; /* Margen entre los textos */
+    text-align: center; /* Centrar el texto */
+}
+
+.formulario-producto {
+    width: 500px; /* Ancho del formulario */
+    padding: 20px; /* Espacio interno del formulario */
+    margin: 20px auto; /* Centra el formulario horizontalmente en la página */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.formulario-producto label {
+    margin-top: 10px; /* Margen superior para los labels */
+    display: block; /* Hacer que los labels ocupen todo el ancho */
+}
+
+.formulario-producto input[type="text"],
+.formulario-producto input[type="number"],
+.formulario-producto input[type="file"] {
+    width: calc(100% - 20px); /* Hacer que los campos ocupen el 100% del ancho menos el padding */
+    padding: 10px; /* Espacio interno para los campos */
+    margin-top: 5px; /* Margen superior para separar del label */
+    border: 1px solid #000000; /* Bordes de los campos */
+}
+
+/* designs styles */
+
+#opciones-design {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+#tarjetas-design {
+    display: flex; /* Usar flexbox para alinear las tarjetas */
+    flex-wrap: wrap; /* Permitir que las tarjetas se envuelvan en varias líneas */
+    justify-content: center; /* Centrar las tarjetas horizontalmente */
+    gap: 20px; /* Espacio entre las tarjetas */
+    padding: 20px; /* Espacio interno de la sección */
+}
+
+.tarjeta-design {
+    max-width: 500px; /* Ancho máximo de las tarjetas */
+    width: 100%; /* Hacer que las tarjetas ocupen todo el ancho posible hasta el máximo */
+    padding: 15px; /* Espacio interno de las tarjetas */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    background-color: #FFFFFF; /* Fondo blanco para las tarjetas */
+}
+
+#nombre-design-input {
+    max-width: 500px; /* Ancho máximo del formulario */
+    margin: 20px auto; /* Centrar el formulario */
+    padding: 20px; /* Padding interno */
+}
+
+#tarjetas-catalogo-design {
+    display: flex; /* Usa flexbox para alinear las tarjetas */
+    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan en varias filas */
+    justify-content: space-around; /* Espacio entre las tarjetas */
+    margin-top: 20px;
+}
+
+#nombre-design {
+    font-weight: bold; /* Hacer el nombre del diseño más destacado */
+    font-size: 1.2em; /* Tamaño de fuente más grande */
+    margin-bottom: 10px; /* Margen inferior para separar del resto del contenido */
+}
+
+#precio-design {
+    font-weight: bold; /* Hacer el precio más destacado */
+    margin-top: 10px; /* Margen superior para separar del contenido anterior */
+}
+
+.formulario-design label {
+    margin-top: 10px; /* Margen superior para los labels */
+    display: block; /* Hacer que los labels ocupen todo el ancho */
+}
+
+.formulario-design input[type="text"] {
+    width: calc(100% - 20px); /* Hacer que los campos ocupen el 100% del ancho menos el padding */
+    padding: 10px; /* Espacio interno para los campos */
+    margin-top: 5px; /* Margen superior para separar del label */
+}
+
+.contador {
+    display: flex; /* Usar flexbox para centrar el campo de entrada */
+    justify-content: center; /* Centrar horizontalmente */
+    margin-top: 10px; /* Margen superior para separar del contenido anterior */
+}
+
+.input-cantidad {
+    width: 50px; /* Ancho del campo de entrada */
+    text-align: center; /* Centrar el texto en el campo de entrada */
+    border: 1px solid #D4C1EC; /* Borde del campo de entrada */
+    padding: 5px; /* Espacio interno */
+    margin-bottom: 10px;
+}
+
+/* pedidos styles */
+
+#opciones-pedido {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+#tarjetas-pedidos {
+    display: flex; /* Usar flexbox para el contenedor */
+    flex-wrap: wrap; /* Permitir que las tarjetas se envuelvan en varias filas */
+    justify-content: space-around; /* Distribuir el espacio entre las tarjetas */
+}
+
+.tarjeta-pedido {
+    background-color: #FFFFFF; /* Color de fondo blanco */
+    padding: 20px; /* Espacio interno */
+    margin: 10px; /* Margen alrededor de cada tarjeta */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    width: calc(33% - 20px); /* Ancho de la tarjeta (3 tarjetas por fila) */
+    max-width: 400px; /* Ancho máximo de la tarjeta */
+    box-sizing: border-box; /* Incluir padding y borde en el ancho total */
+    display: flex; /* Usar flexbox para el contenido interno */
+    flex-direction: column; /* Colocar los elementos en columna */
+}
+
+.nombre-cliente,
+.telefono-cliente,
+.email-cliente,
+.fecha-pedido,
+.designs-incluidos {
+    margin: 10px 0; /* Margen entre los párrafos */
+}
+
+.lista-designs {
+    list-style-type: none; /* Sin viñetas */
+    padding: 0; /* Sin padding */
+}
+
+.lista-designs li {
+    margin: 5px 0; /* Margen entre los elementos de la lista */
+    padding: 5px; /* Padding interno */
+    background-color: #FEF9FF; /* Color de fondo suave para los elementos de la lista */
+}
+
+/* Estilo para el estado del pedido */
+.estado-pedido {
+    margin-top: auto; /* Empujar el estado del pedido hacia abajo */
+    padding: 10px; /* Espacio interno */
+    background-color: #FEF9FF; /* Color de fondo suave para el recuadro */
+    text-align: center; /* Centrar el texto */
+}
+
+.estado-abierto {
+    color: green; /* Color verde para estado abierto */
+    font-weight: bold; /* Negrita para destacar el estado */
+}
+
+.estado-cerrado {
+    color: red; /* Color rojo para estado cerrado */
+    font-weight: bold; /* Negrita para destacar el estado */
+}
+
+#tarjetas-design-pedido-nuevo, #tarjetas-design-pedido-editar {
+    display: flex; /* Usar flexbox para alinear las tarjetas */
+    flex-wrap: wrap; /* Permitir que las tarjetas se envuelvan en varias líneas */
+    justify-content: center; /* Centrar las tarjetas horizontalmente */
+    gap: 20px; /* Espacio entre las tarjetas */
+    padding: 20px; /* Espacio interno de la sección */
+}
+
+/* perfil styles */
+
+.formulario-perfil, #datos-perfil {
+    max-width: 500px; /* Ancho máximo del formulario */
+    margin: 20px auto; /* Centrar el formulario */
+    padding: 20px; /* Padding interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+label {
+    display: block; /* Hacer que las etiquetas ocupen todo el ancho */
+    margin-bottom: 5px; /* Margen inferior para separar de los inputs */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: calc(100% - 20px); /* Ancho completo menos el padding */
+    padding: 10px; /* Espacio interno */
+    margin-bottom: 15px; /* Margen inferior entre inputs */
+    border: 1px solid #000000;
+}
+
+#datos-perfil {
+    max-width: 500px; /* Ancho máximo del bloque */
+    margin: 20px auto; /* Centrar el bloque */
+    padding: 20px; /* Padding interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    background-color: #FFFFFF;
+}
+
+#datos-perfil p {
+    margin: 10px 0; /* Margen entre los párrafos */
+}
+
+#datos-perfil strong {
+    display: inline-block; /* Hacer que el texto en negrita se alinee a la izquierda */
+    width: 120px; /* Ancho fijo para los nombres de los campos */
+}
