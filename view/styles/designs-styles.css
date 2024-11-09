@@ -1,0 +1,70 @@
+#opciones-design {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+#tarjetas-design {
+    display: flex; /* Usar flexbox para alinear las tarjetas */
+    flex-wrap: wrap; /* Permitir que las tarjetas se envuelvan en varias líneas */
+    justify-content: center; /* Centrar las tarjetas horizontalmente */
+    gap: 20px; /* Espacio entre las tarjetas */
+    padding: 20px; /* Espacio interno de la sección */
+}
+
+.tarjeta-design {
+    max-width: 500px; /* Ancho máximo de las tarjetas */
+    width: 100%; /* Hacer que las tarjetas ocupen todo el ancho posible hasta el máximo */
+    padding: 15px; /* Espacio interno de las tarjetas */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    background-color: #FFFFFF; /* Fondo blanco para las tarjetas */
+}
+
+#nombre-design-input {
+    max-width: 500px; /* Ancho máximo del formulario */
+    margin: 20px auto; /* Centrar el formulario */
+    padding: 20px; /* Padding interno */
+}
+
+#tarjetas-catalogo-design {
+    display: flex; /* Usa flexbox para alinear las tarjetas */
+    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan en varias filas */
+    justify-content: space-around; /* Espacio entre las tarjetas */
+    margin-top: 20px;
+}
+
+#nombre-design {
+    font-weight: bold; /* Hacer el nombre del diseño más destacado */
+    font-size: 1.2em; /* Tamaño de fuente más grande */
+    margin-bottom: 10px; /* Margen inferior para separar del resto del contenido */
+}
+
+#precio-design {
+    font-weight: bold; /* Hacer el precio más destacado */
+    margin-top: 10px; /* Margen superior para separar del contenido anterior */
+}
+
+.formulario-design label {
+    margin-top: 10px; /* Margen superior para los labels */
+    display: block; /* Hacer que los labels ocupen todo el ancho */
+}
+
+.formulario-design input[type="text"] {
+    width: calc(100% - 20px); /* Hacer que los campos ocupen el 100% del ancho menos el padding */
+    padding: 10px; /* Espacio interno para los campos */
+    margin-top: 5px; /* Margen superior para separar del label */
+}
+
+.contador {
+    display: flex; /* Usar flexbox para centrar el campo de entrada */
+    justify-content: center; /* Centrar horizontalmente */
+    margin-top: 10px; /* Margen superior para separar del contenido anterior */
+}
+
+.input-cantidad {
+    width: 50px; /* Ancho del campo de entrada */
+    text-align: center; /* Centrar el texto en el campo de entrada */
+    border: 1px solid #D4C1EC; /* Borde del campo de entrada */
+    padding: 5px; /* Espacio interno */
+    margin-bottom: 10px;
+}

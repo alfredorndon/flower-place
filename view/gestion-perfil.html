@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es-VE">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta author="Alfredo Rondon, Oscar Manrique"/>
+        <meta name="Description" content="Flower Place" />
+        <title>Flower Place | Perfil</title>
+        <link
+            rel="icon"
+            href="https://img.freepik.com/vector-premium/flor-roja-simple-tamano-grande-emoji-flor-primavera_599062-6934.jpg?w=360"
+            type="image/jpg"
+            size="16x16 32x32 64x64"
+        />
+        <link 
+            rel="stylesheet" 
+            href="styles/main-styles.css"
+        />
+        <link 
+            rel="stylesheet" 
+            href="styles/perfil-styles.css"
+        />    
+    </head>
+    <body>
+        <header>
+            <div id="main-title">
+                <a href="main.html"><h1>Flower Place</h1></a>
+            </div>
+            <div class="menu-bar">
+                <h3><a href="gestion-productos.html">Productos</a></h3>
+                <h3><a href="gestion-designs.html">Diseños</a></h3>
+                <h3><a href="gestion-pedidos.html">Pedidos</a></h3>
+                <h3><a href="gestion-perfil.html">Perfil</a></h3>
+            </div>
+        </header>
+        <main> 
+            <section id="iniciar-sesion">
+                <div class="section-title">
+                    <h2>Iniciar Sesión</h2>
+                </div>
+                <form class="formulario-perfil" action="#" method="post" id="iniciar-sesion-form" enctype="multipart/form-data">
+                    <label for="email">Correo Electrónico:</label>
+                    <input type="email" id="email" name="email" required>
+                    <label for="contrasena">Contraseña:</label>
+                    <input type="password" id="contrasena" name="contrasena" required>
+                    <div class="confirmar">
+                        <button type="submit">Iniciar Sesión</button>
+                    </div>
+                    <div class="text">
+                        <p><a href="#crear-perfil">¿No tienes cuenta? Regístrate.</a></p>
+                    </div>
+                </form>
+            </section>
+            <section id="crear-perfil">
+                <div class="section-title">
+                    <h2>Registrarse</h2>
+                </div>
+                <form class="formulario-perfil" action="" method="POST" id="registro-form">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                
+                    <label for="telefono">Teléfono:</label>
+                    <input type="text" id="telefono" name="telefono" required>
+                
+                    <label for="email">Correo Electrónico:</label>
+                    <input type="email" id="email" name="email" required>
+                
+                    <label for="contrasena">Contraseña:</label>
+                    <input type="password" id="contrasena" name="contrasena" required>
+                
+                    <label for="confirmar_contrasena">Confirmar Contraseña:</label>
+                    <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" required>
+                
+                    <div class="confirmar">
+                        <button type="submit">Registrarse</button>
+                    </div>
+                    <div class="text">
+                        <p><a href="#iniciar-sesion">¿Ya tienes cuenta? Inicia sesión.</a></p>
+                    </div>
+                </form>
+            </section>
+            <section id="consultar-perfil">
+                <div class="section-title">
+                    <h2>Consultar Perfil</h2>
+                </div>
+                <div id="datos-perfil" class="formulario-perfil">
+                    <p><strong>Nombre:</strong> Juan Pérez</p>
+                    <p><strong>Teléfono:</strong> +123456789</p>
+                    <p><strong>E-mail:</strong> juan.perez@example.com</p>
+                    <p><strong>Contraseña:</strong> **********</p>
+                </div>
+            </section>
+        </main>
+        <script 
+            src="scripts/perfil-script.js" 
+            type="text/javascript"> 
+        </script>
+    </body>
+</html>

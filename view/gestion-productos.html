@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es-VE">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta author="Alfredo Rondon, Oscar Manrique"/>
+        <meta name="Description" content="Flower Place" />
+        <title>Flower Place | Productos</title>
+        <link
+            rel="icon"
+            href="https://img.freepik.com/vector-premium/flor-roja-simple-tamano-grande-emoji-flor-primavera_599062-6934.jpg?w=360"
+            type="image/jpg"
+            size="16x16 32x32 64x64"
+        />
+        <link 
+            rel="stylesheet" 
+            href="styles/main-styles.css" 
+        />
+        <link 
+            rel="stylesheet" 
+            href="styles/productos-styles.css"
+        />
+    </head>
+    <body>
+        <header>
+            <div id="main-title">
+                <a href="main.html"><h1>Flower Place</h1></a>
+            </div>
+            <div class="menu-bar">
+                <h3><a href="gestion-productos.html">Productos</a></h3>
+                <h3><a href="gestion-designs.html">Diseños</a></h3>
+                <h3><a href="gestion-pedidos.html">Pedidos</a></h3>
+                <h3><a href="gestion-perfil.html">Perfil</a></h3>
+            </div>
+        </header>
+        <main> 
+            <section id="catalogo-productos">
+                <div class="section-title">
+                    <h2>Catálogo de Productos</h2>
+                </div>
+                <div id="opciones-producto">
+                    <div id="boton-nuevo-producto"><button>Nuevo</button></div> <!-- Deberíamos quitar el div acá? lo digo pq el css solo modifica el botón tonces ajá no sé, tú dime. Le pondría su id a la etiqueta button y ya.-->
+                    <div id="boton-editar-producto"><button>Editar</button></div>
+                    <!-- Hace falta agregar un botón para regresarse que se oculte en un principio y que después aparezca cuando le de a editar o a nuevo producto-->
+                </div>
+                <section id="tarjetas-catalogo">
+                    <div class="tarjeta-flor" id="tarjeta-1">
+                        <div class="imagen-flor">
+                            <img class="foto-flor" src="/view/styles/images/gettyimages-1126841725-2048x2048.jpg" alt="Nombre del Producto" />
+                        </div>
+                        <p class="nombre-flor">Nombre del Producto</p>
+                        <p class="cantidad-flor">Cantidad: 10</p>
+                        <p class="precio-flor">Precio: $XX.XX</p>
+                    </div>
+                </section>
+            </section>
+            <section id="editar-producto">
+                <div class="section-title">
+                    <h2>Editar Producto</h2>
+                </div>
+                <form class="formulario-producto" action="#" method="post" id="agregar-producto-form" enctype="multipart/form-data">
+                    <label for="nombre-flor-form">Nombre de la Flor</label>
+                    <input type="text" id="nombre-flor-form" name="nombre-flor-form" placeholder="Nombre" required />
+                    
+                    <label for="cantidad-flor-form">Cantidad</label>
+                    <input type="number" id="cantidad-flor-form" name="cantidad-flor-form" placeholder="Cantidad" min="1" required />
+                    
+                    <label for="precio-flor-form">Precio</label>
+                    <input type="number" id="precio-flor-form" name="precio-flor-form" placeholder="Precio" step="0.01" required />
+                    
+                    <label for="foto-flor-form">Subir Foto</label>
+                    <input type="file" id="foto-flor-form" name="foto-flor-form" accept="image/*" required />
+                    
+                    <div class="confirmar">
+                        <button type="submit">Confirmar</button>
+                    </div>
+                </form>
+            </section>
+            <section id="agregar-producto">
+                <div class="section-title">
+                    <h2>Agregar Producto</h2>
+                </div>
+                <form class="formulario-producto" action="#" method="post" id="agregar-producto-form" enctype="multipart/form-data">
+                    <label for="nombre-flor-form">Nombre de la Flor</label>
+                    <input type="text" id="nombre-flor-form" name="nombre-flor-form" placeholder="Nombre" required />
+                    
+                    <label for="cantidad-flor-form">Cantidad</label>
+                    <input type="number" id="cantidad-flor-form" name="cantidad-flor-form" placeholder="Cantidad" min="1" required />
+                    
+                    <label for="precio-flor-form">Precio</label>
+                    <input type="number" id="precio-flor-form" name="precio-flor-form" placeholder="Precio" step="0.01" required />
+                    
+                    <label for="foto-flor-form">Subir Foto</label>
+                    <input type="file" id="foto-flor-form" name="foto-flor-form" accept="image/*" required />
+                    
+                    <div class="confirmar">
+                        <button type="submit">Confirmar</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+        <script 
+            src="scripts/productos-script.js" 
+            type="text/javascript"> 
+        </script>
+    </body>
+</html>

@@ -1,0 +1,63 @@
+#opciones-producto {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+#tarjetas-catalogo {
+    display: flex; /* Usa flexbox para alinear las tarjetas */
+    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan en varias filas */
+    justify-content: space-around; /* Espacio entre las tarjetas */
+}
+
+.tarjeta-flor {
+    width: 200px; /* Ancho del rectángulo */
+    height: 300px; /* Alto del rectángulo */
+    margin: 10px; /* Margen alrededor de cada tarjeta */
+    display: flex; /* Usar flexbox para el contenido interno */
+    flex-direction: column; /* Colocar los elementos en columna */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center;
+    background-color: #FFFFFF;
+    padding: 10px; /* Espacio interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.imagen-flor {
+    width: 175px; /* Ancho del cuadro de imagen */
+    height: 175px; /* Alto del cuadro de imagen */
+    margin-bottom: 10px; /* Margen inferior para separar de los textos */
+    margin-top: 10px;
+}
+
+.imagen-flor img {
+    width: 100%; /* Hacer que la imagen ocupe todo el cuadro */
+    height: 100%; /* Mantener la imagen dentro del cuadro */
+    object-fit: cover; /* Cubrir el cuadro sin distorsionar la imagen */
+}
+
+.nombre-flor, .cantidad-flor, .precio-flor {
+    margin: 5px 0; /* Margen entre los textos */
+    text-align: center; /* Centrar el texto */
+}
+
+.formulario-producto {
+    width: 500px; /* Ancho del formulario */
+    padding: 20px; /* Espacio interno del formulario */
+    margin: 20px auto; /* Centra el formulario horizontalmente en la página */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+.formulario-producto label {
+    margin-top: 10px; /* Margen superior para los labels */
+    display: block; /* Hacer que los labels ocupen todo el ancho */
+}
+
+.formulario-producto input[type="text"],
+.formulario-producto input[type="number"],
+.formulario-producto input[type="file"] {
+    width: calc(100% - 20px); /* Hacer que los campos ocupen el 100% del ancho menos el padding */
+    padding: 10px; /* Espacio interno para los campos */
+    margin-top: 5px; /* Margen superior para separar del label */
+    border: 1px solid #000000; /* Bordes de los campos */
+}

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es-VE">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta author="Alfredo Rondon, Oscar Manrique"/>
+        <meta name="Description" content="Flower Place" />
+        <title>Flower Place | Pedidos</title>
+        <link
+            rel="icon"
+            href="https://img.freepik.com/vector-premium/flor-roja-simple-tamano-grande-emoji-flor-primavera_599062-6934.jpg?w=360"
+            type="image/jpg"
+            size="16x16 32x32 64x64"
+        />
+        <link 
+            rel="stylesheet" 
+            href="styles/main-styles.css"
+        />
+        <link 
+            rel="stylesheet" 
+            href="styles/pedidos-styles.css"
+        />
+        <link 
+            rel="stylesheet" 
+            href="styles/designs-styles.css"
+        />
+        <link 
+            rel="stylesheet" 
+            href="styles/productos-styles.css"
+        />      
+    </head>
+    <body>
+        <header>
+            <div id="main-title">
+                <a href="main.html"><h1>Flower Place</h1></a>
+            </div>
+            <div class="menu-bar">
+                <h3><a href="gestion-productos.html">Productos</a></h3>
+                <h3><a href="gestion-designs.html">Diseños</a></h3>
+                <h3><a href="gestion-pedidos.html">Pedidos</a></h3>
+                <h3><a href="gestion-perfil.html">Perfil</a></h3>
+            </div>
+        </header>
+        <main>
+            <section id="pedidos-creados">
+                <div class="section-title">
+                    <h2>Pedidos Creados</h2>
+                </div>
+                <div id="opciones-pedido">
+                    <div id="boton-nuevo-pedido"><button>Nuevo</button></div> <!-- Deberíamos quitar el div acá? lo digo pq el css solo modifica el botón tonces ajá no sé, tú dime. Le pondría su id a la etiqueta button y ya.-->
+                    <div id="boton-editar-pedido"><button>Editar</button></div>
+                    <!-- Hace falta agregar un botón para regresarse que se oculte en un principio y que después aparezca cuando le de a editar o a nuevo pedido-->
+                </div>
+                <section id="tarjetas-pedidos">
+                    <div class="tarjeta-pedido" id="tarjeta-pedido-1">
+                        <p class="nombre-cliente"><strong>Nombre del Cliente:</strong> Juan Pérez</p>
+                        <p class="telefono-cliente"><strong>Teléfono:</strong> +123456789</p>
+                        <p class="email-cliente"><strong>Correo:</strong> juan.perez@example.com</p>
+                        <p class="fecha-pedido"><strong>Fecha de Creación del Pedido:</strong> 2023-10-01</p>
+                        <p class="designs-incluidos"><strong>Diseños Incluidos:</strong></p>
+                        <ul class="lista-designs">
+                            <li>Diseño 1</li>
+                            <li>Diseño 2</li>
+                            <li>Diseño 3</li>
+                        </ul>
+                        <div class="estado-pedido">
+                            <strong>Estado del Pedido:</strong> <span class="estado-abierto">Abierto</span>
+                        </div>
+                    </div>
+                    <div class="tarjeta-pedido" id="tarjeta-pedido-2">
+                        <p class="nombre-cliente"><strong>Nombre del Cliente:</strong> María Gómez</p>
+                        <p class="telefono-cliente"><strong>Teléfono:</strong> +987654321</p>
+                        <p class="email-cliente"><strong>Correo:</strong> maria.gomez@example.com</p>
+                        <p class="fecha-pedido"><strong>Fecha de Creación del Pedido:</strong> 2023-10-02</p>
+                        <p class="designs-incluidos"><strong>Diseños Incluidos:</strong></p>
+                        <ul class="lista-designs">
+                            <li>Diseño A</li>
+                            <li>Diseño B</li>
+                            <li>Diseño C</li>
+                        </ul>
+                        <div class="estado-pedido">
+                            <strong>Estado del Pedido:</strong> <span class="estado-cerrado">Cerrado</span>
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <section id="crear-pedido">
+                <div class="section-title">
+                    <h2>Crear Pedido</h2>
+                </div>
+                <form class="formulario-pedido" action="#" method="post" id="nuevo-pedido-form" enctype="multipart/form-data">
+                    <section id="tarjetas-design-pedido-nuevo">
+                        <div class="tarjeta-design" id="tarjeta-1">
+                            <p id="nombre-design">Nombre del Diseño 1</p>
+                            <p id="flor-1">Flor: Rosa</p>
+                            <p id="cantidad-flor-1">Cantidad: 10</p>
+                            <p id="flor-2">Flor: Lirio</p>
+                            <p id="cantidad-flor-2">Cantidad: 5</p>
+                            <p id="precio-design">Precio Total: $150.00</p>
+                        </div>
+                        
+                        <div class="tarjeta-design" id="tarjeta-2">
+                            <p id="nombre-design">Nombre del Diseño 2</p>
+                            <p id="flor-1">Flor: Tulipán</p>
+                            <p id="cantidad-flor-1">Cantidad: 8</p>
+                            <p id="flor-2">Flor: Margarita</p>
+                            <p id="cantidad-flor-2">Cantidad: 12</p>
+                            <p id="precio-design">Precio Total: $120.00</p>
+                        </div>
+                        
+                        <div class="tarjeta-design" id="tarjeta-3">
+                            <p id="nombre-design">Nombre del Diseño 3</p>
+                            <p id="flor-1">Flor: Girasol</p>
+                            <p id="cantidad-flor-1">Cantidad: 15</p>
+                            <p id="flor-2">Flor: Orquídea</p>
+                            <p id="cantidad-flor-2">Cantidad: 7</p>
+                            <p id="precio-design">Precio Total: $200.00</p>
+                        </div>
+                        
+                        <div class="tarjeta-design" id="tarjeta-4">
+                            <p id="nombre-design">Nombre del Diseño 4</p>
+                            <p id="flor-1">Flor: Clavel</p>
+                            <p id="cantidad-flor-1">Cantidad: 20</p>
+                            <p id="flor-2">Flor: Jazmín</p>
+                            <p id="cantidad-flor-2">Cantidad: 10</p>
+                            <p id="precio-design">Precio Total: $180.00</p>
+                        </div>
+                        
+                        <div class="tarjeta-design" id="tarjeta-5">
+                            <p id="nombre-design">Nombre del Diseño 5</p>
+                            <p id="flor-1">Flor: Peonía</p>
+                            <p id="cantidad-flor-1">Cantidad: 6</p>
+                            <p id="flor-2">Flor: Gardenia</p>
+                            <p id="cantidad-flor-2">Cantidad: 4</p>
+                            <p id="precio-design">Precio Total: $140.00</p>
+                        </div>
+                    </section>
+                    <div class="confirmar">
+                        <button type="submit">Confirmar</button>
+                    </div>
+                </form>
+                </section>
+            </section>
+
+            <section id="editar-pedido">
+                <div class="section-title">
+                    <h2>Editar Pedido</h2>
+                </div>
+                <form class="formulario-pedido" action="#" method="post" id="editar-pedido-form" enctype="multipart/form-data">
+                    <section id="tarjetas-design-pedido-editar">
+                        <div class="tarjeta-design" id="tarjeta-1">
+                            <p id="nombre-design">Nombre del Diseño 1</p>
+                            <p id="flor-1">Flor: Rosa</p>
+                            <p id="cantidad-flor-1">Cantidad: 10</p>
+                            <p id="flor-2">Flor: Lirio</p>
+                            <p id="cantidad-flor-2">Cantidad: 5</p>
+                            <p id="precio-design">Precio Total: $150.00</p>
+                        </div>
+                        
+                        <div class="tarjeta-design" id="tarjeta-2">
+                            <p id="nombre-design">Nombre del Diseño 2</p>
+                            <p id="flor-1">Flor: Tulipán</p>
+                            <p id="cantidad-flor-1">Cantidad: 8</p>
+                            <p id="flor-2">Flor: Margarita</p>
+                            <p id="cantidad-flor-2">Cantidad: 12</p>
+                            <p id="precio-design">Precio Total: $120.00</p>
+                        </div>
+                        
+                        <div class="tarjeta-design" id="tarjeta-3">
+                            <p id="nombre-design">Nombre del Diseño 3</p>
+                            <p id="flor-1">Flor: Girasol</p>
+                            <p id="cantidad-flor-1">Cantidad: 15</p>
+                            <p id="flor-2">Flor: Orquídea</p>
+                            <p id="cantidad-flor-2">Cantidad: 7</p>
+                            <p id="precio-design">Precio Total: $200.00</p>
+                        </div>
+                        
+                        <div class="tarjeta-design" id="tarjeta-4">
+                            <p id="nombre-design">Nombre del Diseño 4</p>
+                            <p id="flor-1">Flor: Clavel</p>
+                            <p id="cantidad-flor-1">Cantidad: 20</p>
+                            <p id="flor-2">Flor: Jazmín</p>
+                            <p id="cantidad-flor-2">Cantidad: 10</p>
+                            <p id="precio-design">Precio Total: $180.00</p>
+                        </div>
+                        
+                        <div class="tarjeta-design" id="tarjeta-5">
+                            <p id="nombre-design">Nombre del Diseño 5</p>
+                            <p id="flor-1">Flor: Peonía</p>
+                            <p id="cantidad-flor-1">Cantidad: 6</p>
+                            <p id="flor-2">Flor: Gardenia</p>
+                            <p id="cantidad-flor-2">Cantidad: 4</p>
+                            <p id="precio-design">Precio Total: $140.00</p>
+                        </div>
+                    </section>
+                    <div class="confirmar">
+                        <button type="submit">Confirmar</button>
+                    </div>
+                </form>
+                </section>
+            </section>
+        </main>
+        <script 
+            src="scripts/pedidos-script.js" 
+            type="text/javascript"> 
+        </script>
+    </body>
+</html>

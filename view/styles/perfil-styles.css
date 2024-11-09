@@ -1,0 +1,37 @@
+.formulario-perfil, #datos-perfil {
+    max-width: 500px; /* Ancho máximo del formulario */
+    margin: 20px auto; /* Centrar el formulario */
+    padding: 20px; /* Padding interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+}
+
+label {
+    display: block; /* Hacer que las etiquetas ocupen todo el ancho */
+    margin-bottom: 5px; /* Margen inferior para separar de los inputs */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: calc(100% - 20px); /* Ancho completo menos el padding */
+    padding: 10px; /* Espacio interno */
+    margin-bottom: 15px; /* Margen inferior entre inputs */
+    border: 1px solid #000000;
+}
+
+#datos-perfil {
+    max-width: 500px; /* Ancho máximo del bloque */
+    margin: 20px auto; /* Centrar el bloque */
+    padding: 20px; /* Padding interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    background-color: #FFFFFF;
+}
+
+#datos-perfil p {
+    margin: 10px 0; /* Margen entre los párrafos */
+}
+
+#datos-perfil strong {
+    display: inline-block; /* Hacer que el texto en negrita se alinee a la izquierda */
+    width: 120px; /* Ancho fijo para los nombres de los campos */
+}

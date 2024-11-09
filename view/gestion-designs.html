@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es-VE">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta author="Alfredo Rondon, Oscar Manrique"/>
+        <meta name="Description" content="Flower Place" />
+        <title>Flower Place | Diseños</title>
+        <link
+            rel="icon"
+            href="https://img.freepik.com/vector-premium/flor-roja-simple-tamano-grande-emoji-flor-primavera_599062-6934.jpg?w=360"
+            type="image/jpg"
+            size="16x16 32x32 64x64"
+        />
+        <link 
+            rel="stylesheet" 
+            href="styles/main-styles.css" 
+        />
+        <link 
+            rel="stylesheet" 
+            href="styles/designs-styles.css"
+        />
+        <link 
+            rel="stylesheet" 
+            href="styles/productos-styles.css"
+        />        
+    </head>
+    <body>
+        <header>
+            <div id="main-title">
+                <a href="main.html"><h1>Flower Place</h1></a>
+            </div>
+            <div class="menu-bar">
+                <h3><a href="gestion-productos.html">Productos</a></h3>
+                <h3><a href="gestion-designs.html">Diseños</a></h3>
+                <h3><a href="gestion-pedidos.html">Pedidos</a></h3>
+                <h3><a href="gestion-perfil.html">Perfil</a></h3>
+            </div>
+        </header>
+        <main>
+            <section id="designs-guardados">
+                <div class="section-title">
+                    <h2>Diseños Guardados</h2>
+                </div>
+                <div id="opciones-design">
+                    <div id="boton-nuevo-design"><button>Nuevo</button></div> <!-- Deberíamos quitar el div acá? lo digo pq el css solo modifica el botón tonces ajá no sé, tú dime. Le pondría su id a la etiqueta button y ya.-->
+                    <!-- Hace falta agregar un botón para regresarse que se oculte en un principio y que después aparezca cuando le de a nuevo design-->
+                </div>
+                <section id="tarjetas-design">
+                    <div class="tarjeta-design" id="tarjeta-1">
+                        <p id="nombre-design">Nombre del Diseño</p>
+                        <p id="flor-1">Flor: Rosa</p>
+                        <p id="cantidad-flor-1">Cantidad: 10</p>
+                        <p id="flor-2">Flor: Lirio</p>
+                        <p id="cantidad-flor-2">Cantidad: 5</p>
+                        <p id="precio-design">Precio Total: $150.00</p>
+                    </div>
+                </section>
+            </section>
+            <section id="nuevo-design">
+                <div class="section-title">
+                    <h2>Crear Diseño</h2>
+                </div>
+                <form class="formulario-design" action="#" method="post" id="nuevo-design-form" enctype="multipart/form-data">
+                    <div id="nombre-design-input">
+                        <label for="nombre-design-form">Nombre del Diseño:</label>
+                        <input type="text" id="nombre-design-form" name="nombre-design-form" placeholder="Ingresa el nombre de tu diseño." required />
+                    </div>
+                    <section id="tarjetas-catalogo-design">
+                        <div class="tarjeta-flor" id="tarjeta-1">
+                            <div class="imagen-flor">
+                                <img class="foto-flor" src="/view/styles/images/gettyimages-1126841725-2048x2048.jpg" alt="Nombre del Producto" />
+                            </div>
+                            <p class="nombre-flor">Nombre del Producto</p>
+                            <p class="cantidad-flor">Cantidad: <span class="cantidad-actual">10</span></p>
+                            <p class="precio-flor">Precio: $XX.XX</p>
+                            <div class="contador">
+                                <input type="number" class="input-cantidad" value="0" min="0" />
+                            </div>
+                        </div>
+                    </section>
+                    <div class="confirmar">
+                        <button type="submit">Confirmar</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+        <script 
+            src="scripts/designs-script.js" 
+            type="text/javascript"> 
+        </script>
+    </body>
+</html>
