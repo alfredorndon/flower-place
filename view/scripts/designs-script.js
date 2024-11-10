@@ -8,11 +8,52 @@ function mostrarPorID (ID)
     document.getElementById(ID).style.setProperty('display','block','important');
 }
 
-document.addEventListener('DOMContentLoaded', ocultarPorID("nuevo-design"));
+function ocultarPorClase (clase)
+{
+    var elementos = document.getElementsByClassName(clase);
+    for (var i = 0; i < elementos.length; i++)
+    {
+        elementos[i].style.setProperty('display','none','important');
+    }
+}
 
-//Sección de Nuevo Diseño
-document.getElementById("boton-nuevo-design").addEventListener('click', function()
+function mostrarPorClase (clase)
+{
+    var elementos = document.getElementsByClassName(clase);
+    for (var i = 0; i < elementos.length; i++)
+    {
+        elementos[i].style.setProperty('display', 'block', 'important');
+    }
+}
+
+function comprobarLogIn()
+{
+    if (localStorage.getItem('login') !== null)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+var login = comprobarLogIn();
+
+if (login)
+{
+    document.addEventListener('DOMContentLoaded', ocultarPorID("nuevo-design"));
+
+    //Sección de Nuevo Diseño
+    document.getElementById("boton-nuevo-design").addEventListener('click', function()
+    {
+        document.addEventListener('DOMContentLoaded', ocultarPorID("designs-guardados"));
+        document.addEventListener('DOMContentLoaded', mostrarPorID("nuevo-design"));
+    })
+}
+else
 {
     document.addEventListener('DOMContentLoaded', ocultarPorID("designs-guardados"));
-    document.addEventListener('DOMContentLoaded', mostrarPorID("nuevo-design"));
-})
+    document.addEventListener('DOMContentLoaded', ocultarPorID("nuevo-design"));
+    document.addEventListener('DOMContentLoaded', ocultarPorID("volver-designs"));
+}

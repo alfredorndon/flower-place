@@ -47,4 +47,6 @@ if (login)
 else
 {
     document.addEventListener('DOMContentLoaded', ocultarPorClase ('menu-bar'));
+    document.addEventListener('DOMContentLoaded', ocultarPorID ('texto-login'));
+    
 }

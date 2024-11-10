@@ -8,19 +8,61 @@ function mostrarPorID (ID)
     document.getElementById(ID).style.setProperty('display','block','important');
 }
 
-document.addEventListener('DOMContentLoaded', ocultarPorID("crear-pedido"));
-document.addEventListener('DOMContentLoaded', ocultarPorID("editar-pedido"));
+function ocultarPorClase (clase)
+{
+    var elementos = document.getElementsByClassName(clase);
+    for (var i = 0; i < elementos.length; i++)
+    {
+        elementos[i].style.setProperty('display','none','important');
+    }
+}
 
-//Sección de Editar Pedido
-document.getElementById("boton-editar-pedido").addEventListener('click', function()
+function mostrarPorClase (clase)
+{
+    var elementos = document.getElementsByClassName(clase);
+    for (var i = 0; i < elementos.length; i++)
+    {
+        elementos[i].style.setProperty('display', 'block', 'important');
+    }
+}
+
+function comprobarLogIn()
+{
+    if (localStorage.getItem('login') !== null)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+var login = comprobarLogIn();
+
+if (login)
+{
+    document.addEventListener('DOMContentLoaded', ocultarPorID("crear-pedido"));
+    document.addEventListener('DOMContentLoaded', ocultarPorID("editar-pedido"));
+
+    //Sección de Editar Pedido
+    document.getElementById("boton-editar-pedido").addEventListener('click', function()
+    {
+        document.addEventListener('DOMContentLoaded', ocultarPorID("pedidos-creados"));
+        document.addEventListener('DOMContentLoaded', mostrarPorID("editar-pedido"));
+    })
+
+    //Sección de Nuevo Pedido
+    document.getElementById("boton-nuevo-pedido").addEventListener('click', function()
+    {
+        document.addEventListener('DOMContentLoaded', ocultarPorID("pedidos-creados"));
+        document.addEventListener('DOMContentLoaded', mostrarPorID("crear-pedido"));
+    })
+}
+else
 {
     document.addEventListener('DOMContentLoaded', ocultarPorID("pedidos-creados"));
-    document.addEventListener('DOMContentLoaded', mostrarPorID("editar-pedido"));
-})
-
-//Sección de Nuevo Pedido
-document.getElementById("boton-nuevo-pedido").addEventListener('click', function()
-{
-    document.addEventListener('DOMContentLoaded', ocultarPorID("pedidos-creados"));
-    document.addEventListener('DOMContentLoaded', mostrarPorID("crear-pedido"));
-})
+    document.addEventListener('DOMContentLoaded', ocultarPorID("crear-pedido"));
+    document.addEventListener('DOMContentLoaded', ocultarPorID("editar-pedido"));
+    document.addEventListener('DOMContentLoaded', ocultarPorID("volver-pedidos"));
+}
