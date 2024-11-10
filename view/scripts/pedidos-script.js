@@ -38,6 +38,8 @@ function comprobarLogIn()
     }
 }
 
+//Main del programa
+
 var login = comprobarLogIn();
 
 document.addEventListener('DOMContentLoaded', function ()

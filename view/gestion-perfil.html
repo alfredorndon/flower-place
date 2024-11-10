@@ -31,11 +31,11 @@
                 </div>
                 <form class="formulario-perfil" action="#" method="post" id="iniciar-sesion-form" enctype="multipart/form-data">
                     <label for="email">Correo Electrónico:</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email-inicio" name="email" placeholder="example@domain" required>
                     <label for="contrasena">Contraseña:</label>
-                    <input type="password" id="contrasena" name="contrasena" required>
+                    <input type="password" id="contrasena-inicio" name="contrasena" required>
                     <div class="confirmar">
-                        <button type="submit">Iniciar Sesión</button>
+                        <button type="submit" id="boton-iniciar-sesion">Iniciar Sesión</button>
                     </div>
                     <div class="text">
                         <p><a href="#crear-perfil" id="ir-a-registrarse">¿No tienes cuenta? Regístrate.</a></p>
@@ -46,7 +46,7 @@
                 <div class="section-title">
                     <h2>Registrarse</h2>
                 </div>
-                <form class="formulario-perfil" action="" method="POST" id="registro-form">
+                <form class="formulario-perfil" action="#" method="POST" id="registro-form">
                     <label for="nombre">Nombre:</label>
                     <input type="text" id="nombre" name="nombre" required>
                 
@@ -60,10 +60,10 @@
                     <input type="password" id="contrasena" name="contrasena" required>
                 
                     <label for="confirmar_contrasena">Confirmar Contraseña:</label>
-                    <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" required>
+                    <input type="password" id="confirmar-contrasena" name="confirmar_contrasena" required>
                 
                     <div class="confirmar">
-                        <button type="submit">Registrarse</button>
+                        <button type="submit" id="boton-registrarse">Registrarse</button>
                     </div>
                     <div class="text">
                         <p><a href="#iniciar-sesion" id="ir-a-iniciar-sesion">¿Ya tienes cuenta? Inicia sesión.</a></p>
