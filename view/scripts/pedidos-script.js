@@ -40,29 +40,32 @@ function comprobarLogIn()
 
 var login = comprobarLogIn();
 
-if (login)
+document.addEventListener('DOMContentLoaded', function ()
 {
-    document.addEventListener('DOMContentLoaded', ocultarPorID("crear-pedido"));
-    document.addEventListener('DOMContentLoaded', ocultarPorID("editar-pedido"));
-
-    //Sección de Editar Pedido
-    document.getElementById("boton-editar-pedido").addEventListener('click', function()
+    if (login)
     {
-        document.addEventListener('DOMContentLoaded', ocultarPorID("pedidos-creados"));
-        document.addEventListener('DOMContentLoaded', mostrarPorID("editar-pedido"));
-    })
+        ocultarPorID("crear-pedido");
+        ocultarPorID("editar-pedido");
 
-    //Sección de Nuevo Pedido
-    document.getElementById("boton-nuevo-pedido").addEventListener('click', function()
+        //Sección de Editar Pedido
+        document.getElementById("boton-editar-pedido").addEventListener('click', function()
+        {
+            ocultarPorID("pedidos-creados");
+            mostrarPorID("editar-pedido");
+        })
+
+        //Sección de Nuevo Pedido
+        document.getElementById("boton-nuevo-pedido").addEventListener('click', function()
+        {
+            ocultarPorID("pedidos-creados");
+            mostrarPorID("crear-pedido");
+        })
+    }
+    else
     {
-        document.addEventListener('DOMContentLoaded', ocultarPorID("pedidos-creados"));
-        document.addEventListener('DOMContentLoaded', mostrarPorID("crear-pedido"));
-    })
-}
-else
-{
-    document.addEventListener('DOMContentLoaded', ocultarPorID("pedidos-creados"));
-    document.addEventListener('DOMContentLoaded', ocultarPorID("crear-pedido"));
-    document.addEventListener('DOMContentLoaded', ocultarPorID("editar-pedido"));
-    document.addEventListener('DOMContentLoaded', ocultarPorID("volver-pedidos"));
-}
+        ocultarPorID("pedidos-creados");
+        ocultarPorID("crear-pedido");
+        ocultarPorID("editar-pedido");
+        ocultarPorID("volver-pedidos");
+    }
+});

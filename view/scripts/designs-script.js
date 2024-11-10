@@ -40,20 +40,23 @@ function comprobarLogIn()
 
 var login = comprobarLogIn();
 
-if (login)
+document.addEventListener('DOMContentLoaded', function ()
 {
-    document.addEventListener('DOMContentLoaded', ocultarPorID("nuevo-design"));
-
-    //Sección de Nuevo Diseño
-    document.getElementById("boton-nuevo-design").addEventListener('click', function()
+    if (login)
     {
-        document.addEventListener('DOMContentLoaded', ocultarPorID("designs-guardados"));
-        document.addEventListener('DOMContentLoaded', mostrarPorID("nuevo-design"));
-    })
-}
-else
-{
-    document.addEventListener('DOMContentLoaded', ocultarPorID("designs-guardados"));
-    document.addEventListener('DOMContentLoaded', ocultarPorID("nuevo-design"));
-    document.addEventListener('DOMContentLoaded', ocultarPorID("volver-designs"));
-}
+        ocultarPorID("nuevo-design");
+
+        //Sección de Nuevo Diseño
+        document.getElementById("boton-nuevo-design").addEventListener('click', function()
+        {
+            ocultarPorID("designs-guardados");
+            mostrarPorID("nuevo-design");
+        })
+    }
+    else
+    {
+        ocultarPorID("designs-guardados");
+        ocultarPorID("nuevo-design");
+        ocultarPorID("volver-designs");
+    }
+});

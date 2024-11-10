@@ -53,22 +53,28 @@ function comprobarToken(token, value)
 var login = comprobarLogIn();
 var inicioSesion = comprobarToken('inicioSesion','true');
 
-if (login)
+document.addEventListener('DOMContentLoaded', function ()
 {
-    document.addEventListener('DOMContentLoaded', ocultarPorID("iniciar-sesion"));
-    document.addEventListener('DOMContentLoaded', ocultarPorID("crear-perfil"));
-}
-else
-{
-    document.addEventListener('DOMContentLoaded', ocultarPorID("consultar-perfil"));
-    document.addEventListener('DOMContentLoaded', ocultarPorID("iniciar-sesion"));
-    document.addEventListener('DOMContentLoaded', ocultarPorID("crear-perfil"));
-    document.addEventListener('DOMContentLoaded', ocultarPorID("volver-perfil"));
-    if (inicioSesion)
-        document.addEventListener('DOMContentLoaded', mostrarPorID("iniciar-sesion"));
+    if (login)
+    {
+        ocultarPorID("iniciar-sesion");
+        ocultarPorID("crear-perfil");
+    }
     else
-        document.addEventListener('DOMContentLoaded', mostrarPorID("crear-perfil"));
-}
+    {
+        ocultarPorClase ('menu-bar');
+        ocultarPorID("consultar-perfil");
+        ocultarPorID("iniciar-sesion");
+        ocultarPorID("crear-perfil");
+        ocultarPorID("volver-perfil");
+        if (inicioSesion)
+            mostrarPorID("iniciar-sesion");
+        else
+            mostrarPorID("crear-perfil");
+        document.getElementById('ir-a-iniciar-sesion').addEventListener('click', function () {mostrarPorID("iniciar-sesion"); ocultarPorID("crear-perfil");});
+        document.getElementById('ir-a-registrarse').addEventListener('click', function() {mostrarPorID("crear-perfil"); ocultarPorID("iniciar-sesion")});
+    }
+});
 
 // function calcularTamanoLocalStorage() {
 //     let total = 0;

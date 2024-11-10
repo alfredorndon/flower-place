@@ -40,29 +40,32 @@ function comprobarLogIn()
 
 var login = comprobarLogIn();
 
-if (login)
+document.addEventListener('DOMContentLoaded', function() 
 {
-    document.addEventListener('DOMContentLoaded', ocultarPorID("editar-producto"));
-    document.addEventListener('DOMContentLoaded', ocultarPorID("agregar-producto"));
-
-    //Sección de Editar Producto
-    document.getElementById("boton-editar-producto").addEventListener('click', function()
+    if (login)
     {
-        document.addEventListener('DOMContentLoaded', ocultarPorID("catalogo-productos"));
-        document.addEventListener('DOMContentLoaded', mostrarPorID("editar-producto"));
-    })
+        ocultarPorID("editar-producto");
+        ocultarPorID("agregar-producto");
 
-    //Sección de Nuevo Producto
-    document.getElementById("boton-nuevo-producto").addEventListener('click', function()
+        //Sección de Editar Producto
+        document.getElementById("boton-editar-producto").addEventListener('click', function()
+        {
+            ocultarPorID("catalogo-productos");
+            mostrarPorID("editar-producto");
+        })
+
+        //Sección de Nuevo Producto
+        document.getElementById("boton-nuevo-producto").addEventListener('click', function()
+        {
+            ocultarPorID("catalogo-productos");
+            mostrarPorID("agregar-producto");
+        })
+    }
+    else
     {
-        document.addEventListener('DOMContentLoaded', ocultarPorID("catalogo-productos"));
-        document.addEventListener('DOMContentLoaded', mostrarPorID("agregar-producto"));
-    })
-}
-else
-{
-    document.addEventListener('DOMContentLoaded', ocultarPorID("editar-producto"));
-    document.addEventListener('DOMContentLoaded', ocultarPorID("agregar-producto"));
-    document.addEventListener('DOMContentLoaded', ocultarPorID("catalogo-productos"));
-    document.addEventListener('DOMContentLoaded', ocultarPorID("volver-productos"));
-}
+        ocultarPorID("editar-producto");
+        ocultarPorID("agregar-producto");
+        ocultarPorID("catalogo-productos");
+        ocultarPorID("volver-productos");
+    }
+});
