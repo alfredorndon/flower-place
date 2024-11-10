@@ -38,7 +38,20 @@ function comprobarLogIn()
     }
 }
 
+function comprobarToken(token, value)
+{
+    if (localStorage.getItem(token) == value)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
 var login = comprobarLogIn();
+var inicioSesion = comprobarToken('inicioSesion','true');
 
 if (login)
 {
@@ -51,4 +64,22 @@ else
     document.addEventListener('DOMContentLoaded', ocultarPorID("iniciar-sesion"));
     document.addEventListener('DOMContentLoaded', ocultarPorID("crear-perfil"));
     document.addEventListener('DOMContentLoaded', ocultarPorID("volver-perfil"));
+    if (inicioSesion)
+        document.addEventListener('DOMContentLoaded', mostrarPorID("iniciar-sesion"));
+    else
+        document.addEventListener('DOMContentLoaded', mostrarPorID("crear-perfil"));
 }
+
+// function calcularTamanoLocalStorage() {
+//     let total = 0;
+//     for (let key in localStorage) {
+//         if (localStorage.hasOwnProperty(key)) {
+//             total += key.length + localStorage.getItem(key).length;
+//         }
+//     }
+//     // Convertir a bytes
+//     const totalBytes = new Blob([total]).size;
+//     console.log(`Has utilizado aproximadamente ${totalBytes} bytes en localStorage.`);
+// }
+
+// calcularTamanoLocalStorage();

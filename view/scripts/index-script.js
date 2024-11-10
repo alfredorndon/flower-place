@@ -38,9 +38,8 @@ function comprobarLogIn()
     }
 }
 
-var login = comprobarLogIn(); 
-export var registrarse = false;
-export var inicioSesion = false;
+var login = comprobarLogIn();
+
 if (login)
 {
     document.addEventListener('DOMContentLoaded', ocultarPorID ('texto-no-login'));
@@ -49,5 +48,6 @@ else
 {
     document.addEventListener('DOMContentLoaded', ocultarPorClase ('menu-bar'));
     document.addEventListener('DOMContentLoaded', ocultarPorID ('texto-login'));
-    document.getElementById('boton-iniciar-sesion').addEventListener('click', function() {})
+    document.getElementById('boton-iniciar-sesion').addEventListener('click', function() { localStorage.setItem('inicioSesion','true') });
+    document.getElementById('boton-registrarse').addEventListener('click', function() { localStorage.setItem('inicioSesion','false') })
 }
