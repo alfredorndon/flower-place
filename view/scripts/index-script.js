@@ -38,15 +38,16 @@ function comprobarLogIn()
     }
 }
 
-var login = comprobarLogIn();
-
+var login = comprobarLogIn(); 
+export var registrarse = false;
+export var inicioSesion = false;
 if (login)
 {
-
+    document.addEventListener('DOMContentLoaded', ocultarPorID ('texto-no-login'));
 }
 else
 {
     document.addEventListener('DOMContentLoaded', ocultarPorClase ('menu-bar'));
     document.addEventListener('DOMContentLoaded', ocultarPorID ('texto-login'));
-    
+    document.getElementById('boton-iniciar-sesion').addEventListener('click', function() {})
 }
