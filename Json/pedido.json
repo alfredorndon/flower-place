@@ -1,0 +1,36 @@
+[
+  {
+    "design":[
+        {
+          "productos": [
+            {
+              "nombre": "Rosa",
+              "precio": "5",
+              "cantidad": "3"
+            }
+          ],
+          "nombre":"Diseño 1",
+          "precio": "15"
+        },
+        {
+          "productos": [
+            {
+              "nombre": "Girasol",
+              "precio": "4",
+              "cantidad": "2"
+            },
+            {
+              "nombre": "Margarita",
+              "precio": "2",
+              "cantidad": "3"
+            }
+          ],
+          "nombre":"Diseño 2",
+          "precio": "14"
+        }
+      ],
+    "estado": "pagado",
+    "id":"01",
+    "correo": "Claulopez@gmail.com"
+  }
+]

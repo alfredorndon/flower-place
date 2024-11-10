@@ -1,0 +1,66 @@
+package com.proyecto.ingenieriasoftware.ucab.manejador.JSON;
+
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
+import com.proyecto.ingenieriasoftware.ucab.Model.Cliente;
+import com.proyecto.ingenieriasoftware.ucab.Model.Design;
+import com.proyecto.ingenieriasoftware.ucab.Model.Producto;
+
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class DesignJson extends Design {
+    public DesignJson(ArrayList<Producto> productos, String nombre, float precio) {
+        super(productos, nombre, precio);
+    }
+
+    //PARA MANEJO DE ARCHIVOS
+    //Para extraer informacion del Json
+    static public List<Design> obtenerDesigns(String nombreDesign) { //Recibe el atributo identificador de la clase
+        try {
+            Gson gson = new Gson();
+            Object FilePath;
+            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\design.json"));
+            Design[] designs = gson.fromJson(reader, Design[].class);
+            List<Design> designLista = new ArrayList<>(Arrays.asList(designs));
+            List<Design> nuevaLista = new ArrayList<>();
+
+            for (Design design : designLista) {
+                if (design.getNombre().equals(nombreDesign)) {
+                    nuevaLista.add(design);
+                }
+            }
+            return nuevaLista;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //Para guardar un objeto en la lista del objeto en json
+    static public void guardarDesign (Design design) { //Le paso el objeto que quiero guardar en la lista del json
+        try {
+            Gson gson = new Gson();
+            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\design.json"));
+            Design[] designs = gson.fromJson(reader, Design[].class);
+            List<Design> designLista= new ArrayList<>(Arrays.asList(designs));
+
+            designLista.add(design);
+
+            FileWriter fw = new FileWriter("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\design.json");
+            StringWriter sw = new StringWriter();
+            sw.write(gson.toJson(designLista));
+            fw.write(sw.toString());
+            fw.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
