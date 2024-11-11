@@ -52,8 +52,10 @@ public class PedidoJson extends Pedido {
             Gson gson = new Gson();
             JsonReader reader = new JsonReader(new FileReader("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\pedido.json"));
             Pedido[] pedidos = gson.fromJson(reader, Pedido[].class);
+            if (pedidos == null || pedidos.length == 0) {
+                return new ArrayList<>(); // Retorna un ArrayList vacío
+            }
             ArrayList<Pedido> pedidosLista = new ArrayList<>(Arrays.asList(pedidos));
-
             return pedidosLista;
 
         } catch (IOException e) {

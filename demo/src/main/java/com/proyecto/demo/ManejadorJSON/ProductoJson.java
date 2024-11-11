@@ -56,6 +56,9 @@ public class ProductoJson extends Producto {
             Gson gson = new Gson();
             JsonReader reader = new JsonReader(new FileReader("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\producto.json"));
             Producto[] productos = gson.fromJson(reader, Producto[].class);
+            if (productos == null || productos.length == 0) {
+                return new ArrayList<>(); // Retorna un ArrayList vacío
+            }
             ArrayList   <Producto> productosLista = new ArrayList<>(Arrays.asList(productos));
             /* for (Producto producto : productosLista) {
                 System.out.println("    Nombre del producto: " + producto.getNombre());
