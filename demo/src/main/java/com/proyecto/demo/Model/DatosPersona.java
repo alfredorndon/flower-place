@@ -32,16 +32,13 @@ public class DatosPersona {
         this.contra = contra;
     }
 
-    public DatosPersona ObtenerDatos(String correo, String contrasena)
+    public boolean validarDatosLogIn (String correo, String contrasena)
     {
-        Administrador administrador= new Administrador(1);
         Cliente cliente= new Cliente(correo,contrasena,"","");
-        if (administrador.verificarDatos(correo, contrasena))
-            return this;
-        else if (cliente.verificarDatos(correo, contrasena))
-            return this;
+        if (cliente.verificarDatos(correo, contrasena))
+            return true;
         else
-            return null;
+            return false;
     }
 }
 

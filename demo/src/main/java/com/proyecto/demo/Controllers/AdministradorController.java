@@ -23,9 +23,11 @@ public class AdministradorController {
     public AdministradorController() {}
 
     @PostMapping("/login")
-    public ResponseEntity<DatosPersona> login(@RequestBody DatosPersona datosPersona) {
-        datosPersona= datosPersona.ObtenerDatos(datosPersona.getCorreo(), datosPersona.getContra());
-        return new ResponseEntity<DatosPersona>(datosPersona, HttpStatus.OK);
+    public ResponseEntity<String> login(@RequestBody DatosPersona datosPersona) {
+        if (datosPersona.validarDatosLogIn(datosPersona.getCorreo(), datosPersona.getContra()))
+        return new ResponseEntity<String>("Inicio de sesion valido", HttpStatus.OK);
+        else
+        return new ResponseEntity<String>("Datos invalidos", HttpStatus.BAD_REQUEST);
     }
     @PostMapping("/registro")
     public ResponseEntity<String> registro (@RequestBody Cliente cliente) {
