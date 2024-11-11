@@ -30,13 +30,13 @@
                     <h2>Catálogo de Productos</h2>
                 </div>
                 <div id="opciones-producto">
-                    <div id="boton-nuevo-producto"><button>Nuevo</button></div>
-                    <div id="boton-editar-producto"><button>Editar</button></div>
+                    <button id="boton-nuevo-producto">Nuevo</button>
+                    <button id="boton-editar-producto">Editar</button>
                 </div>
                 <section id="tarjetas-catalogo">
-                    <div class="tarjeta-flor" id="tarjeta-1">
+                    <div class="tarjeta-flor" id="tarjeta-individual-flor">
                         <div class="imagen-flor">
-                            <img class="foto-flor" src="styles/images/imagen-login-1.jpg" alt="Nombre del Producto" />
+                            <img class="foto-flor" src="styles/images/imagen-login-1.jpg" alt="Imagen de la Flor" />
                         </div>
                         <p class="nombre-flor">Nombre del Producto</p>
                         <p class="cantidad-flor">Cantidad: 10</p>
@@ -44,7 +44,7 @@
                     </div>
                 </section>
             </section>
-            <section id="editar-producto">
+            <section id="editar-producto-section">
                 <div class="section-title">
                     <h2>Editar Producto</h2>
                 </div>
@@ -62,11 +62,11 @@
                     <input type="file" id="foto-flor-form" name="foto-flor-form" accept="image/*" required />
                     
                     <div class="confirmar">
-                        <button type="submit">Confirmar</button>
+                        <button type="submit" id="editar-producto-button">Confirmar</button>
                     </div>
                 </form>
             </section>
-            <section id="agregar-producto">
+            <section id="agregar-producto-section">
                 <div class="section-title">
                     <h2>Agregar Producto</h2>
                 </div>
@@ -78,13 +78,13 @@
                     <input type="number" id="cantidad-flor-form" name="cantidad-flor-form" placeholder="Cantidad" min="1" required />
                     
                     <label for="precio-flor-form">Precio</label>
-                    <input type="number" id="precio-flor-form" name="precio-flor-form" placeholder="Precio" step="0.01" required />
+                    <input type="number" id="precio-flor-form" name="precio-flor-form" placeholder="Precio" step="0.10" min="1.00" required />
                     
                     <label for="foto-flor-form">Subir Foto</label>
                     <input type="file" id="foto-flor-form" name="foto-flor-form" accept="image/*" required />
                     
                     <div class="confirmar">
-                        <button type="submit">Confirmar</button>
+                        <button type="submit" id="agregar-producto-button">Confirmar</button>
                     </div>
                 </form>
             </section>
