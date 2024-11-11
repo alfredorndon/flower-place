@@ -52,7 +52,7 @@ public class AdministradorController {
     public ResponseEntity<String> agregarProducto (@RequestBody Producto productoAgregado)
     {
         Administrador administrador= new Administrador();
-        if (!administrador.verificarProducto(productoAgregado.getNombre()))
+        if (!administrador.verificarProducto(productoAgregado))
         {
             ProductoJson.guardarProducto(productoAgregado);
             return new ResponseEntity<String>("Producto Agregado",HttpStatus.OK);

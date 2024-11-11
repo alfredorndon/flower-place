@@ -3,6 +3,8 @@ package com.proyecto.demo.Controllers;
 
 import com.proyecto.demo.ManejadorJSON.ProductoJson;
 import com.proyecto.demo.Model.Administrador;
+import com.proyecto.demo.Model.Cliente;
+import com.proyecto.demo.Model.Design;
 import com.proyecto.demo.Model.Producto;
 
 import java.util.ArrayList;
@@ -17,9 +19,15 @@ public class ClienteController {
 
     public ClienteController() {}
 
-    @GetMapping("/Productos")
-    public ArrayList<Producto> obtenerProductos(){
-        return ProductoJson.obtenerProductosTotales();
+    @PostMapping("/crearDesign")
+    public ResponseEntity<String> crearDesign(@RequestBody Cliente cliente){
+        if (!cliente.validarDesign(cliente))
+        {
+            return new ResponseEntity<String>("Diseño agregado", HttpStatus.OK);
+        }
+        else
+        return new ResponseEntity<String>("Diseño existente", HttpStatus.BAD_REQUEST);
     }
+
 
 }
