@@ -61,6 +61,10 @@ document.addEventListener('DOMContentLoaded', function ()
     {
         ocultarPorID("iniciar-sesion");
         ocultarPorID("crear-perfil");
+        let divDatos = document.getElementById("datos-perfil");
+        let parrafos = divDatos.querySelectorAll("p");
+        parrafos[0].textContent = "Nombre: "+localStorage.getItem();
+
     }
     else    //Si no está logueado
     {
@@ -86,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function ()
             if (document.getElementById('contrasena').value == document.getElementById('confirmar-contrasena').value)
             {
                 cliente.contrasena = document.getElementById('contrasena').value;
-                const peticion = await fetch ("http://localhost:8080/registrarse",
+                const peticion = await fetch ("/registrarse",
                     {
                         method:'POST',
                         headers:
@@ -98,7 +102,10 @@ document.addEventListener('DOMContentLoaded', function ()
                     });
                 if (peticion.ok)
                 {
+                    localStorage.setItem('nombre', document.getElementById('nombre').value);
+                    localStorage.setItem('telefono', document.getElementById('telefono').value);
                     localStorage.setItem('email', document.getElementById('email').value);
+                    localStorage.setItem('contrasena', document.getElementById('contrasena').value);
                     document.getElementById('nombre').value = '';
                     document.getElementById('telefono').value = '';
                     document.getElementById('email').value = '';
@@ -109,7 +116,8 @@ document.addEventListener('DOMContentLoaded', function ()
                 }
                 else
                 {
-                    alert("Ha ocurrido un problema");
+                    const errorRespuesta = await peticion.text();
+                alert(errorRespuesta);
                 }
             }
             else
@@ -125,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function ()
             let datosUsuario = {}
             datosUsuario.correo = document.getElementById('email-inicio');
             datosUsuario.contra = document.getElementById('contrasena-inicio');
-            const peticion = await fetch ("http://localhost:8080/login",
+            const peticion = await fetch ("/login",
             {
                 method:'POST',
                 headers:
@@ -133,18 +141,22 @@ document.addEventListener('DOMContentLoaded', function ()
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(cliente)
+                body: JSON.stringify(datosUsuario)
             });
-            if (peticion.ok)
+            if (peticion.json)
             {
-                document.getElementById('email-inicio').value = '';
+                const respuesta = await peticion.text();
+                console.log(respuesta);
+                localStorage.setItem('email', document.getElementById('email-inicio').value);
+                document.getElementById('email-inicio',).value = '';
                 document.getElementById('contrasena-inicio').value = '';
                 localStorage.setItem('inicioSesion','true');
                 window.location.href = "index.html";
             }
             else
             {
-                alert("Ha ocurrido un problema");
+                const errorRespuesta = await peticion.text();
+                alert(errorRespuesta);
             }
         });
     }
