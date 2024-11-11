@@ -27,7 +27,7 @@ public class ClienteJson extends Cliente {
         try {
             Gson gson = new Gson();
             Object FilePath;
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\cliente.json"));
+            JsonReader reader = new JsonReader(new FileReader("demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json"));
             Cliente[] clientes = gson.fromJson(reader, Cliente[].class);
             List<Cliente> clienteLista = new ArrayList<>(Arrays.asList(clientes));
             List<Cliente> nuevaLista = new ArrayList<>();
@@ -49,7 +49,7 @@ public class ClienteJson extends Cliente {
     static public ArrayList<Cliente> obtenerClientesTotales() {
         try {
             Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\cliente.json"));
+            JsonReader reader = new JsonReader(new FileReader("demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json"));
             Cliente[] clientes = gson.fromJson(reader, Cliente[].class);
             ArrayList<Cliente> clientesLista = new ArrayList<>(Arrays.asList(clientes));
 
@@ -65,13 +65,13 @@ public class ClienteJson extends Cliente {
     static public void guardarCliente(Cliente cliente) { //Le paso el objeto que quiero guardar en la lista del json
         try {
             Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\cliente.json"));
+            JsonReader reader = new JsonReader(new FileReader("demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json"));
             Cliente[] clientes = gson.fromJson(reader, Cliente[].class);
             List<Cliente> clienteLista= new ArrayList<>(Arrays.asList(clientes));
 
             clienteLista.add(cliente);
 
-            FileWriter fw = new FileWriter("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\cliente.json");
+            FileWriter fw = new FileWriter("demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json");
             StringWriter sw = new StringWriter();
             sw.write(gson.toJson(clienteLista));
             fw.write(sw.toString());
@@ -86,7 +86,7 @@ public class ClienteJson extends Cliente {
     public static void eliminarCliente(String correoCliente) throws IOException {
         // Leer el JSON existente
         Gson gson = new Gson();
-        List<Cliente> clientes = gson.fromJson(new FileReader("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\cliente.json"), new TypeToken<List<Producto>>() {}.getType());
+        List<Cliente> clientes = gson.fromJson(new FileReader("demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json"), new TypeToken<List<Producto>>() {}.getType());
 
         // Eliminar el producto
         List<Cliente> clientesActualizados = new ArrayList<>();
@@ -97,7 +97,7 @@ public class ClienteJson extends Cliente {
         }
 
         // Escribir el JSON actualizado
-        try (FileWriter writer = new FileWriter("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\cliente.json")) {
+        try (FileWriter writer = new FileWriter("demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json")) {
             gson.toJson(clientesActualizados, writer);
         }
     }

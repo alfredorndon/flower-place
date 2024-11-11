@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function ()
             if (document.getElementById('contrasena').value == document.getElementById('confirmar-contrasena').value)
             {
                 cliente.contrasena = document.getElementById('contrasena').value;
-                const peticion = await fetch ("/registrarse",
+                const peticion = await fetch ("/admin/registro",
                     {
                         method:'POST',
                         headers:
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function ()
             let datosPersona = {}
             datosPersona.correo = document.getElementById('email-inicio');
             datosPersona.contra = document.getElementById('contrasena-inicio');
-            const peticion = await fetch ("/login",
+            const peticion = await fetch ("/admin/login",
             {
                 method:'POST',
                 headers:
