@@ -51,10 +51,14 @@ function comprobarToken(token, value)
 }
 
 function cerrarSesion() {
-    localStorage.removeItem('login'); // Elimina el estado de login
-    localStorage.removeItem('email'); // Opcional: elimina el email
-    localStorage.removeItem('contrasena'); // Opcional: elimina la contraseña
-    // Puedes eliminar otras claves que consideres necesarias
+    // Cambiar el estado de la variable login a FALSA
+    login = false; // Asegúrate de que 'login' esté definida en el ámbito adecuado
+    // Llamar al método comprobarLogIn para verificar el estado de inicio de sesión
+    comprobarLogIn();
+    // Ocultar el menú-bar por clase
+    ocultarPorClase('menu-bar');
+    // Mostrar los elementos de iniciar sesión y crear perfil por ID
+    mostrarPorClase('opcion-inicio');
     window.location.href = "index.html"; // Redirige a la página de inicio
 }
 
@@ -80,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function ()
         parrafos[3].textContent = "Contraseña: "+localStorage.getItem('contrasena');
 
         // Cerrar Sesion
-        document.querySelector('.icono-logout').addEventListener('click', cerrarSesion);
+        document.querySelector('icono-logout').addEventListener('click', cerrarSesion);
     }
     else    //Si no está logueado
     {
