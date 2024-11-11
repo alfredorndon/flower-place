@@ -8,6 +8,7 @@ import com.proyecto.demo.ManejadorJSON.PedidoJson;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.proyecto.demo.Model.Cliente;
 
 import java.util.ArrayList;
 @RestController
@@ -18,7 +19,6 @@ public class AdministradorController {
     PedidoJson pedidos = new PedidoJson(new ArrayList<Design>(), "", 0, "");
     public AdministradorController() {}
 
-    @CrossOrigin("http://127.0.0.1:5500/view/index.html")
     @PostMapping("/login")
     public ResponseEntity<DatosPersona> login(@RequestBody DatosPersona datosPersona) {
         datosPersona= datosPersona.ObtenerDatos(datosPersona.getCorreo(), datosPersona.getContra());

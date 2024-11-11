@@ -1,9 +1,11 @@
 package com.proyecto.demo.Model;
 
 import com.proyecto.demo.ManejadorJSON.ProductoJson;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.proyecto.demo.ManejadorJSON.ClienteJson;
 import com.proyecto.demo.ManejadorJSON.PedidoJson;
 import java.util.ArrayList;
+
 
 public class Cliente extends Persona {
     private ArrayList<Design> designs;
