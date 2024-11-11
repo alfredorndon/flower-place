@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', function()
             producto.precio = document.getElementById("precio-flor-form").value;
             producto.cantidad = document.getElementById("cantidad-flor-form").value;
 
-            const peticion = await fetch("/admin/productos", {
+            const peticion = await fetch("/admin/AgregarProducto", {
                 method:'POST',
                 headers:
                 {
@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function()
             });
             if (peticion.ok)
             {
-                crearTarjeta(campos.nombre, campos.cantidad, campos.precio);
+                crearTarjeta(producto.nombre, producto.cantidad, producto.precio);
             } 
             else
             {

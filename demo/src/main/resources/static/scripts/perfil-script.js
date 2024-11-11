@@ -181,9 +181,8 @@ document.addEventListener('DOMContentLoaded', function ()
                 });
                 if (peticion.ok)
                 {
-                    const respuesta = await peticion.json();
-                    console.log(respuesta);
                     localStorage.setItem('email', document.getElementById('email-inicio').value);
+                    localStorage.setItem('contrasena', document.getElementById('contrasena-inicio').value);
                     document.getElementById('email-inicio',).value = '';
                     document.getElementById('contrasena-inicio').value = '';
                     localStorage.setItem('login','true');

@@ -27,7 +27,7 @@ public class ClienteJson extends Cliente {
         try {
             Gson gson = new Gson();
             Object FilePath;
-            JsonReader reader = new JsonReader(new FileReader("demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json"));
+            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json"));
             Cliente[] clientes = gson.fromJson(reader, Cliente[].class);
             List<Cliente> clienteLista = new ArrayList<>(Arrays.asList(clientes));
             List<Cliente> nuevaLista = new ArrayList<>();
@@ -49,7 +49,7 @@ public class ClienteJson extends Cliente {
     static public ArrayList<Cliente> obtenerClientesTotales() {
         try {
             Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\Windows10\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json"));
+            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json"));
             Cliente[] clientes = gson.fromJson(reader, Cliente[].class);
             ArrayList<Cliente> clientesLista = new ArrayList<>(Arrays.asList(clientes));
 
@@ -65,13 +65,13 @@ public class ClienteJson extends Cliente {
     static public void guardarCliente(Cliente cliente) { //Le paso el objeto que quiero guardar en la lista del json
         try {
             Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\Windows10\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json"));
+            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json"));
             Cliente[] clientes = gson.fromJson(reader, Cliente[].class);
             List<Cliente> clienteLista= new ArrayList<>(Arrays.asList(clientes));
 
             clienteLista.add(cliente);
 
-            FileWriter fw = new FileWriter("C:\\Users\\Windows10\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json");
+            FileWriter fw = new FileWriter("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json");
             StringWriter sw = new StringWriter();
             sw.write(gson.toJson(clienteLista));
             fw.write(sw.toString());
