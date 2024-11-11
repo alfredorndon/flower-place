@@ -25,8 +25,13 @@ public class AdministradorController {
         return new ResponseEntity<>(datosPersona, HttpStatus.OK);
     }
     @PostMapping("/registro")
-    public void registro(@RequestBody Cliente cliente) {
-
-        ClienteJson.guardarCliente(cliente);
+    public ResponseEntity<?> registro (@RequestBody Cliente cliente) {
+        if(cliente.verificarCorreo(cliente.getCorreo()))
+        {
+            ClienteJson.guardarCliente(cliente);
+            return ResponseEntity.ok("Datos Ingresados");
+        }
+        else
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Correo ya registrado");
     }
 }
