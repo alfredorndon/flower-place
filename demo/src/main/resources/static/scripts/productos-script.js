@@ -70,63 +70,86 @@ document.addEventListener('DOMContentLoaded', function()
 {
     if (login)
     {
-        ocultarPorID("editar-producto");
-        ocultarPorID("agregar-producto");
-        document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
-        if (localStorage.getItem('email') == correoAdmin)
+        let pedirProductos = async () => 
         {
-            elementos[1].style.setProperty('display', 'none', 'important');
-
-            //Sección de Editar Producto
-            document.getElementById("boton-editar-producto").addEventListener('click', function()
+            const respuesta = await fetch("/admin/Productos",
             {
-                ocultarPorID("catalogo-productos");
-                mostrarPorID("editar-producto");
-            });
-
-            //Sección de Nuevo Producto
-            document.getElementById("boton-nuevo-producto").addEventListener('click', function()
-            {
-                ocultarPorID("catalogo-productos");
-                mostrarPorID("agregar-producto");
-            });
-
-        }
-        else
-        {
-            
-        }
-
-        let botonAgregarProducto = document.getElementById("agregar-producto-boton");
-        botonAgregarProducto.addEventListener("click", async () =>
-        {
-            event.preventDefault();
-            
-            let producto = {};
-            producto.nombre = document.getElementById("nombre-flor-form").value;
-            producto.precio = document.getElementById("precio-flor-form").value;
-            producto.cantidad = document.getElementById("cantidad-flor-form").value;
-
-            const peticion = await fetch("/admin/AgregarProducto", {
-                method:'POST',
+                method:'GET',
                 headers:
                 {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(producto)
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
             });
-            if (peticion.ok)
+
+            if(respuesta.ok)
             {
-                crearTarjeta(producto.nombre, producto.cantidad, producto.precio);
-            } 
+                const datos = await respuesta.json();
+                datos.forEach(producto =>
+                {
+                    crearTarjeta(producto.nombre, producto.cantidad, producto.precio, producto.foto);
+                });
+                ocultarPorID("editar-producto");
+                ocultarPorID("agregar-producto");
+                document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
+                if (localStorage.getItem('email') == correoAdmin)
+                {
+                    elementos[1].style.setProperty('display', 'none', 'important');
+
+                    //Sección de Editar Producto
+                    document.getElementById("boton-editar-producto").addEventListener('click', function()
+                    {
+                        ocultarPorID("catalogo-productos");
+                        mostrarPorID("editar-producto");
+                    });
+
+                    //Sección de Nuevo Producto
+                    document.getElementById("boton-nuevo-producto").addEventListener('click', function()
+                    {
+                        ocultarPorID("catalogo-productos");
+                        mostrarPorID("agregar-producto");
+                    });
+                    let botonAgregarProducto = document.getElementById("agregar-producto-boton");
+                    botonAgregarProducto.addEventListener("click", async () =>
+                    {
+                        event.preventDefault();
+                        
+                        let productoAgregado = {};
+                        productoAgregado.nombre = document.getElementById("nombre-flor-form").value;
+                        productoAgregado.precio = document.getElementById("precio-flor-form").value;
+                        productoAgregado.cantidad = document.getElementById("cantidad-flor-form").value;
+
+                        const peticion = await fetch("/admin/AgregarProducto", 
+                        {
+                            method:'POST',
+                            headers:
+                            {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(productoAgregado)
+                        });
+                        if (peticion.ok)
+                        {
+                            crearTarjeta(productoAgregado.nombre, productoAgregado.cantidad, productoAgregado.precio);
+                        } 
+                        else
+                        {
+                            const errorRespuesta = await peticion.text();
+                            console.log(errorRespuesta);
+                            alert(errorRespuesta);
+                        }
+                    });
+                }
+            }
             else
             {
-                const errorRespuesta = await peticion.text();
+                const errorRespuesta = await respuesta.text();
                 console.log(errorRespuesta);
                 alert(errorRespuesta);
             }
-        });
+        }
+        pedirProductos();
     }
     else
     {
