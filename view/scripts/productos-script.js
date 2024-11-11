@@ -71,3 +71,29 @@ document.addEventListener('DOMContentLoaded', function()
         ocultarPorID("volver-productos");
     }
 });
+
+
+let boton = document.getElementById("agregar-producto-boton");
+
+boton.addEventListener("click", evento => {
+    agregarProducto();
+});
+
+let agregarProducto = async () => {
+
+    let campos = {};
+
+    campos.nombre = document.getElementById("nombre-flor-form").value;
+    campos.cantidad = document.getElementById("cantidad-flor-form").value;
+    campos.precio = document.getElementById("precio-flor-form").value;
+
+    const peticion = await fetch("http://localhost:8080/api/peliculas", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(campos)
+    });
+}
+//faltaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
