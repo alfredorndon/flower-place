@@ -104,17 +104,16 @@ document.addEventListener('DOMContentLoaded', function()
                         ocultarPorID("catalogo-productos");
                         mostrarPorID("editar-producto");
                     });
-                    const tarjetas = document.querySelectorAll('tarjeta-flor');
+                    const tarjetas = document.querySelectorAll('.tarjeta-flor');
                     const botonEditar = document.getElementById('boton-editar-producto');
                     let tarjetaSeleccionada = null;
 
-                    tarjetas.forEach(tarjeta => 
-                    {
-                        tarjeta.addEventListener('click', function () 
-                        {
+                    tarjetas.forEach(tarjeta => {
+                        tarjeta.addEventListener('click', function () {
                             // Quitar la selección de la tarjeta anterior
-                            if (tarjetaSeleccionada) 
+                            if (tarjetaSeleccionada) {
                                 tarjetaSeleccionada.classList.remove('seleccionada');
+                            }
 
                             // Seleccionar la nueva tarjeta
                             tarjetaSeleccionada = tarjeta;
@@ -122,20 +121,25 @@ document.addEventListener('DOMContentLoaded', function()
                             botonEditar.disabled = false; // Habilitar el botón de editar
                         });
                     });
-
+                    
                     botonEditar.addEventListener('click', function () 
                     {
                         if (tarjetaSeleccionada)
                         {
+                            let texto = tarjetaSeleccionada.querySelectorAll("p");
+
                             // Cargar la información en el formulario
-                            document.getElementById('nombre').value = tarjetaSeleccionada.getAttribute('data-nombre');
-                            document.getElementById('cantidad').value = tarjetaSeleccionada.getAttribute('data-cantidad');
-                            document.getElementById('precio').value = tarjetaSeleccionada.getAttribute('data-precio');
+                            document.getElementById('nombre-flor-editar').value = texto[0].textContent;
+                            document.getElementById('cantidad-flor-editar').value = texto[1].textContent.split(" ")[1];
+                            document.getElementById('precio-flor-editar').value = texto[2].textContent.split("$")[1];
+                            document.getElementById('cantidad-flor-editar').placeholder= texto[1].textContent.split(" ")[1];
+                            document.getElementById('precio-flor-editar').placeholder = texto[2].textContent.split("$")[1];
                             ocultarPorID("catalogo-productos");
                             mostrarPorID("editar-producto");
                         }
                         document.getElementById('editar-confirmar').addEventListener('click', async () =>
                         {
+                            event.preventDefault();
                             let productoEditado = {};
                             productoEditado.nombre = document.getElementById("nombre-flor-editar").value;
                             productoEditado.precio = document.getElementById("precio-flor-editar").value;
@@ -148,25 +152,12 @@ document.addEventListener('DOMContentLoaded', function()
                                     'Accept': 'application/json',
                                     'Content-Type': 'application/json',
                                 },
-                                body: JSON.stringify(productoAgregado)
+                                body: JSON.stringify(productoEditado)
                             });
                             if (guardar.ok)
                             {
-                                // Opcional: Actualizar la tarjeta seleccionada con los nuevos valores
-                                // if (tarjetaSeleccionada) {
-                                //     tarjetaSeleccionada.setAttribute('data-nombre', document.getElementById('nombre-flor-editar').value);
-                                //     tarjetaSeleccionada.setAttribute('data-cantidad', document.getElementById('cantidad-flor-editar').value);
-                                //     tarjetaSeleccionada.setAttribute('data-precio', document.getElementById('precio-flor-editar').value);
-                    
-                                //     tarjetaSeleccionada.querySelector('.nombre-flor').innerText = document.getElementById('nombre-flor-editar').value;
-                                //     tarjetaSeleccionada.querySelector('.cantidad-flor').innerText = 'Cantidad: ' + document.getElementById('cantidad-flor-editar').value;
-                                //     tarjetaSeleccionada.querySelector('.precio-flor').innerText = 'Precio: $' + document.getElementById('precio-flor-editar').value;
-                                // }
-                    
-                                // Opcional: Limpiar el formulario después de guardar
+                                alert ('Producto editado con éxito');
                                 window.location.href = "gestion-productos.html";
-                                // tarjetaSeleccionada.classList.remove('seleccionada'); // Quitar la selección de la tarjeta
-                                // tarjetaSeleccionada = null; // Resetear la tarjeta seleccionada
                             }
                             else
                             {
