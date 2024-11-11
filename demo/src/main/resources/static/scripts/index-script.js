@@ -40,12 +40,21 @@ function comprobarLogIn()
 
 //Main del programa
 
+const correoAdmin = "admin@gmail.com";
+const contraAdmin = "admin1234";
+
 var login = comprobarLogIn();
+let menuBar = document.getElementsByClassName("menu-bar");
+let elementos = menuBar[0].querySelectorAll("h3");
 
 document.addEventListener('DOMContentLoaded', function ()
 {
     if (login)
     {
+        if (localStorage.getItem('email') == correoAdmin)
+        {
+            elementos[1].style.setProperty('display', 'none', 'important');
+        }
         ocultarPorID ('texto-no-login');
         ocultarPorClase ('opcion-inicio');
     }
@@ -54,6 +63,6 @@ document.addEventListener('DOMContentLoaded', function ()
         ocultarPorClase ('menu-bar');
         ocultarPorID ('texto-login');
         document.getElementById('boton-iniciar-sesion').addEventListener('click', function() { localStorage.setItem('inicioSesion','true') });
-        document.getElementById('boton-registrarse').addEventListener('click', function() { localStorage.setItem('inicioSesion','false') })
+        document.getElementById('boton-registrarse').addEventListener('click', function() { localStorage.setItem('inicioSesion','false') });
     }
 });

@@ -52,6 +52,9 @@ function comprobarToken(token, value)
 
 //Main del programa
 
+const correoAdmin = "admin@gmail.com";
+const contraAdmin = "admin1234";
+
 var login = comprobarLogIn();
 var inicioSesion = comprobarToken('inicioSesion','true');
 
@@ -81,6 +84,9 @@ document.addEventListener('DOMContentLoaded', function ()
             mostrarPorID("iniciar-sesion");
         else
             mostrarPorID("crear-perfil");
+
+        //Apartado Registrarse
+        
         let botonRegistrarse = document.getElementById('boton-registrarse');
         botonRegistrarse.addEventListener('click',async()=>
         {
@@ -132,38 +138,51 @@ document.addEventListener('DOMContentLoaded', function ()
             }
         });
 
+        //Apartado Iniciar Sesión
+
         let botonIniciarSesion = document.getElementById('boton-iniciar-sesion');
         botonIniciarSesion.addEventListener('click', async()=>
         {
-            event.preventDefault();
-            let datosPersona = {}
-            datosPersona.correo = document.getElementById('email-inicio').value;
-            datosPersona.contra = document.getElementById('contrasena-inicio').value;
-            const peticion = await fetch ("/admin/login",
+            if (document.getElementById('email-inicio').value == correoAdmin && document.getElementById('contrasena-inicio').value == contraAdmin)
             {
-                method:'POST',
-                headers:
-                {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(datosPersona)
-            });
-            if (peticion.ok)
-            {
-                const respuesta = await peticion.json();
-                console.log(respuesta);
-                localStorage.setItem('email', document.getElementById('email-inicio').value);
-                document.getElementById('email-inicio',).value = '';
-                document.getElementById('contrasena-inicio').value = '';
+                event.preventDefault();
+                localStorage.setItem('email', correoAdmin);
+                localStorage.setItem('contrasena', contraAdmin);
                 localStorage.setItem('login','true');
                 window.location.href = "index.html";
             }
             else
             {
-                const errorRespuesta = await peticion.text();
-                console.log(errorRespuesta);
-                alert(errorRespuesta);
+                event.preventDefault();
+                let datosPersona = {}
+                datosPersona.correo = document.getElementById('email-inicio').value;
+                datosPersona.contra = document.getElementById('contrasena-inicio').value;
+                const peticion = await fetch ("/admin/login",
+                {
+                    method:'POST',
+                    headers:
+                    {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(datosPersona)
+                });
+                if (peticion.ok)
+                {
+                    const respuesta = await peticion.json();
+                    console.log(respuesta);
+                    localStorage.setItem('email', document.getElementById('email-inicio').value);
+                    document.getElementById('email-inicio',).value = '';
+                    document.getElementById('contrasena-inicio').value = '';
+                    localStorage.setItem('login','true');
+                    window.location.href = "index.html";
+                }
+                else
+                {
+                    const errorRespuesta = await peticion.text();
+                    console.log(errorRespuesta);
+                    alert(errorRespuesta);
+                }
             }
         });
     }
