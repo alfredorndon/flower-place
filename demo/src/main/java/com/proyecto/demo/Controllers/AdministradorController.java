@@ -26,7 +26,7 @@ public class AdministradorController {
     }
     @PostMapping("/registro")
     public ResponseEntity<String> registro (@RequestBody Cliente cliente) {
-        if(cliente.verificarCorreo(cliente.getCorreo()))
+        if(!cliente.verificarCorreo(cliente.getCorreo()))
         {
             ClienteJson.guardarCliente(cliente);
             return new ResponseEntity<String>("Datos Ingresados",HttpStatus.OK);
