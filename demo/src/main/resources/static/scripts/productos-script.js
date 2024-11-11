@@ -161,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function()
                             }
                             else
                             {
-                                const errorRespuesta = await respuesta.text();
+                                const errorRespuesta = await guardar.text();
                                 console.log(errorRespuesta);
                                 alert(errorRespuesta);
                             }
