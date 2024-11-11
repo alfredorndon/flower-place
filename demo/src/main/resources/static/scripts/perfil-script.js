@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function ()
                 else
                 {
                     const errorRespuesta = await peticion.text();
-                alert(errorRespuesta);
+                    alert(errorRespuesta);
                 }
             }
             else
@@ -132,9 +132,9 @@ document.addEventListener('DOMContentLoaded', function ()
         botonIniciarSesion.addEventListener('click', async()=>
         {
             event.preventDefault();
-            let datosUsuario = {}
-            datosUsuario.correo = document.getElementById('email-inicio');
-            datosUsuario.contra = document.getElementById('contrasena-inicio');
+            let datosPersona = {}
+            datosPersona.correo = document.getElementById('email-inicio');
+            datosPersona.contra = document.getElementById('contrasena-inicio');
             const peticion = await fetch ("/login",
             {
                 method:'POST',
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', function ()
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(datosUsuario)
+                body: JSON.stringify(datosPersona)
             });
             if (peticion.json)
             {
