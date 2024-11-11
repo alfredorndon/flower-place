@@ -38,14 +38,25 @@ function comprobarLogIn()
     }
 }
 
+function cerrarSesion()
+{
+    localStorage.removeItem('login');
+    window.location.href = "index.html";
+}
+
 //Main del programa
+const correoAdmin = "admin@gmail.com";
+const contraAdmin = "admin1234";
 
 var login = comprobarLogIn();
+let menuBar = document.getElementsByClassName("menu-bar");
+let elementos = menuBar[0].querySelectorAll("h3");
 
 document.addEventListener('DOMContentLoaded', function ()
 {
     if (login)
     {
+        document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
         ocultarPorID("crear-pedido");
         ocultarPorID("editar-pedido");
 
@@ -54,14 +65,23 @@ document.addEventListener('DOMContentLoaded', function ()
         {
             ocultarPorID("pedidos-creados");
             mostrarPorID("editar-pedido");
-        })
+        });
 
         //Sección de Nuevo Pedido
         document.getElementById("boton-nuevo-pedido").addEventListener('click', function()
         {
             ocultarPorID("pedidos-creados");
             mostrarPorID("crear-pedido");
-        })
+        });
+        if (localStorage.getItem('email') == correoAdmin)
+        {
+            elementos[1].style.setProperty('display', 'none', 'important');
+            ocultarPorID('boton-nuevo-pedido');
+        }
+        else
+        {
+
+        }
     }
     else
     {

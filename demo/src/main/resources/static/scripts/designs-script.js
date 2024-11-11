@@ -38,14 +38,25 @@ function comprobarLogIn()
     }
 }
 
+function cerrarSesion()
+{
+    localStorage.removeItem('login');
+    window.location.href = "index.html";
+}
+
 //Main del programa
+const correoAdmin = "admin@gmail.com";
+const contraAdmin = "admin1234";
 
 var login = comprobarLogIn();
+let menuBar = document.getElementsByClassName("menu-bar");
+let elementos = menuBar[0].querySelectorAll("h3");
 
 document.addEventListener('DOMContentLoaded', function ()
 {
     if (login)
     {
+        document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
         ocultarPorID("nuevo-design");
 
         //Sección de Nuevo Diseño
@@ -53,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function ()
         {
             ocultarPorID("designs-guardados");
             mostrarPorID("nuevo-design");
-        })
+        });
     }
     else
     {

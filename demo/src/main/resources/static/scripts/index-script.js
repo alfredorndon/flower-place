@@ -38,6 +38,12 @@ function comprobarLogIn()
     }
 }
 
+function cerrarSesion()
+{
+    localStorage.removeItem('login');
+    window.location.href = "index.html";
+}
+
 //Main del programa
 
 const correoAdmin = "admin@gmail.com";
@@ -51,10 +57,9 @@ document.addEventListener('DOMContentLoaded', function ()
 {
     if (login)
     {
-        // if (localStorage.getItem('email') == correoAdmin)
-        // {
-        //     elementos[1].style.setProperty('display', 'none', 'important');
-        // }
+        document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
+        if (localStorage.getItem('email') == correoAdmin)
+            elementos[1].style.setProperty('display', 'none', 'important');
         ocultarPorID ('texto-no-login');
         ocultarPorClase ('opcion-inicio');
     }
