@@ -43,9 +43,9 @@ public class AdministradorController {
     @GetMapping("/Productos")
     public ResponseEntity<ArrayList<Producto>> obtenerProductos(){
         if (ProductoJson.obtenerProductosTotales().isEmpty())
-            return new ResponseEntity<ArrayList<Producto>>(ProductoJson.obtenerProductosTotales(),HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<ArrayList<Producto>>(ProductoJson.obtenerProductosTotales(),HttpStatus.BAD_REQUEST);
         else
-            return new ResponseEntity<ArrayList<Producto>>(ProductoJson.obtenerProductosTotales(),HttpStatus.OK);
+        return new ResponseEntity<ArrayList<Producto>>(ProductoJson.obtenerProductosTotales(),HttpStatus.OK);
     }
 
     @PostMapping("/AgregarProducto")
@@ -58,7 +58,7 @@ public class AdministradorController {
             return new ResponseEntity<String>("Producto Agregado",HttpStatus.OK);
         }
         else
-        return new ResponseEntity<String>("El Producto ya existe",HttpStatus.CONFLICT);
+        return new ResponseEntity<String>("Datos Invalidos",HttpStatus.CONFLICT);
     }
 
     @PostMapping("/EditarProducto")
