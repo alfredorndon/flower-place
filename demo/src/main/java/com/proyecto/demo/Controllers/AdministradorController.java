@@ -25,13 +25,13 @@ public class AdministradorController {
         return new ResponseEntity<>(datosPersona, HttpStatus.OK);
     }
     @PostMapping("/registro")
-    public ResponseEntity<?> registro (@RequestBody Cliente cliente) {
+    public ResponseEntity<String> registro (@RequestBody Cliente cliente) {
         if(cliente.verificarCorreo(cliente.getCorreo()))
         {
             ClienteJson.guardarCliente(cliente);
-            return ResponseEntity.ok("Datos Ingresados");
+            return new ResponseEntity("Datos Ingresados",HttpStatus.OK);
         }
         else
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Correo ya registrado");
+        return new ResponseEntity("Correo Repetido",HttpStatus.CONFLICT);
     }
 }

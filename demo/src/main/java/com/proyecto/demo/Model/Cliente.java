@@ -32,16 +32,27 @@ public class Cliente extends Persona {
         this.pedidos=new ArrayList<Pedido>();
         this.productos=new ArrayList<Producto>();
     }
+    public Cliente()
+    {
+        super("","","","");
+        this.designs =new ArrayList<Design>();
+        this.pedidos=new ArrayList<Pedido>();
+        this.productos=new ArrayList<Producto>();
+    }
 
     //Getters and setters
     public ArrayList<Design> getDiseños(String correo) {
         this.designs =obtenerCliente(correo).designs;
+        if (designs==null)
+            designs=new ArrayList<Design>();
         return designs;
     }
 
     public ArrayList<Producto> getProductos()
     {
         this.productos= ProductoJson.obtenerProductosTotales();
+        if (productos==null)
+            productos=new ArrayList<Producto>();
         return productos;
     }
 
@@ -53,6 +64,8 @@ public class Cliente extends Persona {
     public ArrayList<Pedido> getPedidos(String correo)
     {
         this.pedidos=obtenerCliente(correo).pedidos;
+        if (pedidos==null)
+        pedidos=new ArrayList<Pedido>();
         return pedidos;
     }
 
