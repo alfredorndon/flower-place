@@ -53,7 +53,12 @@ function crearTarjeta(nombre, cantidad, precio, f) {
 
 //Main del programa
 
+const correoAdmin = "admin@gmail.com";
+const contraAdmin = "admin1234";
+
 var login = comprobarLogIn();
+let menuBar = document.getElementsByClassName("menu-bar");
+let elementos = menuBar[0].querySelectorAll("h3");
 
 document.addEventListener('DOMContentLoaded', function() 
 {
@@ -61,20 +66,30 @@ document.addEventListener('DOMContentLoaded', function()
     {
         ocultarPorID("editar-producto");
         ocultarPorID("agregar-producto");
-
-        //Sección de Editar Producto
-        document.getElementById("boton-editar-producto").addEventListener('click', function()
+        document.querySelector('icono-logout').addEventListener('click', cerrarSesion);
+        if (localStorage.getItem('email') == correoAdmin)
         {
-            ocultarPorID("catalogo-productos");
-            mostrarPorID("editar-producto");
-        })
+            elementos[1].style.setProperty('display', 'none', 'important');
 
-        //Sección de Nuevo Producto
-        document.getElementById("boton-nuevo-producto").addEventListener('click', function()
+            //Sección de Editar Producto
+            document.getElementById("boton-editar-producto").addEventListener('click', function()
+            {
+                ocultarPorID("catalogo-productos");
+                mostrarPorID("editar-producto");
+            });
+
+            //Sección de Nuevo Producto
+            document.getElementById("boton-nuevo-producto").addEventListener('click', function()
+            {
+                ocultarPorID("catalogo-productos");
+                mostrarPorID("agregar-producto");
+            });
+
+        }
+        else
         {
-            ocultarPorID("catalogo-productos");
-            mostrarPorID("agregar-producto");
-        });
+            
+        }
 
         let botonAgregarProducto = document.getElementById("agregar-producto-boton");
         botonAgregarProducto.addEventListener("click", async () =>

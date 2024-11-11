@@ -39,13 +39,18 @@ function comprobarLogIn()
 }
 
 //Main del programa
+const correoAdmin = "admin@gmail.com";
+const contraAdmin = "admin1234";
 
 var login = comprobarLogIn();
+let menuBar = document.getElementsByClassName("menu-bar");
+let elementos = menuBar[0].querySelectorAll("h3");
 
 document.addEventListener('DOMContentLoaded', function ()
 {
     if (login)
     {
+        document.querySelector('icono-logout').addEventListener('click', cerrarSesion);
         ocultarPorID("nuevo-design");
 
         //Sección de Nuevo Diseño
@@ -53,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function ()
         {
             ocultarPorID("designs-guardados");
             mostrarPorID("nuevo-design");
-        })
+        });
     }
     else
     {

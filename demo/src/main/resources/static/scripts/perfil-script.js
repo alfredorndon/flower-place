@@ -50,16 +50,10 @@ function comprobarToken(token, value)
     }
 }
 
-function cerrarSesion() {
-    // Cambiar el estado de la variable login a FALSA
-    login = false; // Asegúrate de que 'login' esté definida en el ámbito adecuado
-    // Llamar al método comprobarLogIn para verificar el estado de inicio de sesión
-    comprobarLogIn();
-    // Ocultar el menú-bar por clase
-    ocultarPorClase('menu-bar');
-    // Mostrar los elementos de iniciar sesión y crear perfil por ID
-    mostrarPorClase('opcion-inicio');
-    window.location.href = "index.html"; // Redirige a la página de inicio
+function cerrarSesion()
+{
+    localStorage.setItem('login','false')
+    window.location.href = "index.html";
 }
 
 //Main del programa
@@ -69,11 +63,17 @@ const contraAdmin = "admin1234";
 
 var login = comprobarLogIn();
 var inicioSesion = comprobarToken('inicioSesion','true');
+let menuBar = document.getElementsByClassName("menu-bar");
+let elementos = menuBar[0].querySelectorAll("h3");
 
 document.addEventListener('DOMContentLoaded', function ()
 {
     if (login) //Si está logueado
     {
+        document.querySelector('icono-logout').addEventListener('click', cerrarSesion);
+        if (localStorage.getItem('email') == correoAdmin)
+            elementos[1].style.setProperty('display', 'none', 'important');
+        
         ocultarPorID("iniciar-sesion");
         ocultarPorID("crear-perfil");
         let divDatos = document.getElementById("datos-perfil");
@@ -82,9 +82,6 @@ document.addEventListener('DOMContentLoaded', function ()
         parrafos[1].textContent = "Teléfono: "+localStorage.getItem('telefono');
         parrafos[2].textContent = "E-mail: "+localStorage.getItem('email');
         parrafos[3].textContent = "Contraseña: "+localStorage.getItem('contrasena');
-
-        // Cerrar Sesion
-        document.querySelector('icono-logout').addEventListener('click', cerrarSesion);
     }
     else    //Si no está logueado
     {
