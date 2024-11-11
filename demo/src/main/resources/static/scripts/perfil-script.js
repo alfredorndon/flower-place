@@ -92,7 +92,10 @@ document.addEventListener('DOMContentLoaded', function ()
             if (document.getElementById('contrasena').value == document.getElementById('confirmar-contrasena').value)
             {
                 cliente.contrasena = document.getElementById('contrasena').value;
-                const peticion = await fetch ("/registrarse",
+                cliente.designs = {};
+                cliente.pedidos = {};
+                cliente.productos = {};
+                const peticion = await fetch ("/admin/registro",
                     {
                         method:'POST',
                         headers:
@@ -113,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function ()
                     document.getElementById('email').value = '';
                     document.getElementById('contrasena').value = '';
                     document.getElementById('confirmar-contrasena').value = '';
-                    localStorage.setItem('inicioSesion','true');
+                    localStorage.setItem('login','true');
                     window.location.href = "index.html";
                 }
                 else
@@ -135,7 +138,7 @@ document.addEventListener('DOMContentLoaded', function ()
             let datosPersona = {}
             datosPersona.correo = document.getElementById('email-inicio');
             datosPersona.contra = document.getElementById('contrasena-inicio');
-            const peticion = await fetch ("/login",
+            const peticion = await fetch ("/admin/login",
             {
                 method:'POST',
                 headers:
