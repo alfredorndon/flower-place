@@ -51,10 +51,10 @@ document.addEventListener('DOMContentLoaded', function ()
 {
     if (login)
     {
-        if (localStorage.getItem('email') == correoAdmin)
-        {
-            elementos[1].style.setProperty('display', 'none', 'important');
-        }
+        // if (localStorage.getItem('email') == correoAdmin)
+        // {
+        //     elementos[1].style.setProperty('display', 'none', 'important');
+        // }
         ocultarPorID ('texto-no-login');
         ocultarPorClase ('opcion-inicio');
     }

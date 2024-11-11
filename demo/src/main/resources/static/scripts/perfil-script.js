@@ -50,6 +50,14 @@ function comprobarToken(token, value)
     }
 }
 
+function cerrarSesion() {
+    localStorage.removeItem('login'); // Elimina el estado de login
+    localStorage.removeItem('email'); // Opcional: elimina el email
+    localStorage.removeItem('contrasena'); // Opcional: elimina la contraseña
+    // Puedes eliminar otras claves que consideres necesarias
+    window.location.href = "index.html"; // Redirige a la página de inicio
+}
+
 //Main del programa
 
 const correoAdmin = "admin@gmail.com";
@@ -70,10 +78,13 @@ document.addEventListener('DOMContentLoaded', function ()
         parrafos[1].textContent = "Teléfono: "+localStorage.getItem('telefono');
         parrafos[2].textContent = "E-mail: "+localStorage.getItem('email');
         parrafos[3].textContent = "Contraseña: "+localStorage.getItem('contrasena');
+
+        // Cerrar Sesion
+        document.querySelector('.icono-logout').addEventListener('click', cerrarSesion);
     }
     else    //Si no está logueado
     {
-        ocultarPorClase ('menu-bar');
+        ocultarPorClase('menu-bar');
         ocultarPorID("consultar-perfil");
         ocultarPorID("iniciar-sesion");
         ocultarPorID("crear-perfil");

@@ -1,13 +1,5 @@
 package com.proyecto.demo.ManejadorJSON;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-import com.proyecto.demo.Model.Cliente;
-import com.proyecto.demo.Model.Design;
-import com.proyecto.demo.Model.Pedido;
-import com.proyecto.demo.Model.Producto;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -15,6 +7,14 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.proyecto.demo.Model.Cliente;
+import com.proyecto.demo.Model.Design;
+import com.proyecto.demo.Model.Pedido;
+import com.proyecto.demo.Model.Producto;
 
 public class ClienteJson extends Cliente {
     public ClienteJson(String correo, String contrasena, String nombre, String numeroTelefonico, ArrayList<Design> designs, ArrayList<Pedido> pedidos) {
@@ -27,7 +27,7 @@ public class ClienteJson extends Cliente {
         try {
             Gson gson = new Gson();
             Object FilePath;
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json"));
+            JsonReader reader = new JsonReader(new FileReader("demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json"));
             Cliente[] clientes = gson.fromJson(reader, Cliente[].class);
             List<Cliente> clienteLista = new ArrayList<>(Arrays.asList(clientes));
             List<Cliente> nuevaLista = new ArrayList<>();
@@ -49,7 +49,7 @@ public class ClienteJson extends Cliente {
     static public ArrayList<Cliente> obtenerClientesTotales() {
         try {
             Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json"));
+            JsonReader reader = new JsonReader(new FileReader("demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json"));
             Cliente[] clientes = gson.fromJson(reader, Cliente[].class);
             ArrayList<Cliente> clientesLista = new ArrayList<>(Arrays.asList(clientes));
 

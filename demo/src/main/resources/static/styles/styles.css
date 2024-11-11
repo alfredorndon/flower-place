@@ -45,7 +45,8 @@ section {
 .menu-bar {
     display: flex;
     justify-content: space-around;
-    height: auto;
+    align-items: center; /* Centrar verticalmente los elementos */
+    height: 55px; /* Establecer la altura de la barra de menú */
     background-color: #9f9fed;
 }
 
@@ -59,6 +60,11 @@ section {
 
 .menu-bar a:hover {
     color: #736CED;
+}
+
+#icono-logout {
+    width: 24px; /* Ajusta el tamaño del ícono según lo que necesites */
+    height: 24px; /* Ajusta el tamaño del ícono según lo que necesites */
 }
 
 .image-container {
@@ -160,7 +166,7 @@ button:active {
 
 .tarjeta-flor {
     width: 200px; /* Ancho del rectángulo */
-    height: 300px; /* Alto del rectángulo */
+    height: 150px; /* Alto del rectángulo */
     margin: 10px; /* Margen alrededor de cada tarjeta */
     display: flex; /* Usar flexbox para el contenido interno */
     flex-direction: column; /* Colocar los elementos en columna */
@@ -307,6 +313,13 @@ button:active {
     box-sizing: border-box; /* Incluir padding y borde en el ancho total */
     display: flex; /* Usar flexbox para el contenido interno */
     flex-direction: column; /* Colocar los elementos en columna */
+    overflow: hidden; /* Ocultar el desbordamiento */
+}
+
+.email-cliente {
+    overflow: hidden; /* Ocultar el desbordamiento */
+    text-overflow: ellipsis; /* Mostrar puntos suspensivos si el texto es muy largo */
+    white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
 }
 
 .nombre-cliente,
