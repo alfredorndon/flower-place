@@ -175,6 +175,11 @@ button:active {
     background-color: #FFFFFF;
     padding: 10px; /* Espacio interno */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    cursor: pointer; /* Cambiar cursor al pasar sobre la tarjeta */
+}
+
+.tarjeta-flor.seleccionada {
+    background-color: #d4c1ec; /* Cambiar el fondo cuando está seleccionada */
 }
 
 .imagen-flor {

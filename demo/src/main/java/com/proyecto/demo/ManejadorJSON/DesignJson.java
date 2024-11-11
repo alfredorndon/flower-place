@@ -26,7 +26,7 @@ public class DesignJson extends Design {
         try {
             Gson gson = new Gson();
             Object FilePath;
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\design.json"));
+            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\design.json"));
             Design[] designs = gson.fromJson(reader, Design[].class);
             List<Design> designLista = new ArrayList<>(Arrays.asList(designs));
             List<Design> nuevaLista = new ArrayList<>();
@@ -48,13 +48,13 @@ public class DesignJson extends Design {
     static public void guardarDesign (Design design) { //Le paso el objeto que quiero guardar en la lista del json
         try {
             Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\design.json"));
+            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\design.json"));
             Design[] designs = gson.fromJson(reader, Design[].class);
             List<Design> designLista= new ArrayList<>(Arrays.asList(designs));
 
             designLista.add(design);
 
-            FileWriter fw = new FileWriter("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\design.json");
+            FileWriter fw = new FileWriter("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\design.json");
             StringWriter sw = new StringWriter();
             sw.write(gson.toJson(designLista));
             fw.write(sw.toString());
@@ -69,7 +69,7 @@ public class DesignJson extends Design {
     public static void eliminarDesign(String nombreDesign) throws IOException {
         // Leer el JSON existente
         Gson gson = new Gson();
-        List<Design> designs = gson.fromJson(new FileReader("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\design.json"), new TypeToken<List<Producto>>() {}.getType());
+        List<Design> designs = gson.fromJson(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\design.json"), new TypeToken<List<Producto>>() {}.getType());
 
         // Eliminar el producto
         List<Design> designsActualizados = new ArrayList<>();
@@ -80,7 +80,7 @@ public class DesignJson extends Design {
         }
 
         // Escribir el JSON actualizado
-        try (FileWriter writer = new FileWriter("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\design.json")) {
+        try (FileWriter writer = new FileWriter("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\design.json")) {
             gson.toJson(designsActualizados, writer);
         }
     }

@@ -59,12 +59,7 @@ public class ProductoJson extends Producto {
             if (productos == null || productos.length == 0) {
                 return new ArrayList<>(); // Retorna un ArrayList vacío
             }
-            ArrayList   <Producto> productosLista = new ArrayList<>(Arrays.asList(productos));
-            /* for (Producto producto : productosLista) {
-                System.out.println("    Nombre del producto: " + producto.getNombre());
-                System.out.println("    Precio del producto: " + producto.getPrecio());
-                System.out.println("Cantidad: " + producto.getCantidad());
-            }*/
+            ArrayList<Producto> productosLista = new ArrayList<>(Arrays.asList(productos));
 
             return productosLista;
 
