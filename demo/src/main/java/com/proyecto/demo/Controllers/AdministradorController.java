@@ -28,6 +28,7 @@ public class AdministradorController {
     public ResponseEntity<String> registro (@RequestBody Cliente cliente) {
         if(!cliente.verificarCorreo(cliente.getCorreo()))
         {
+            cliente= new Cliente(cliente.getCorreo(),cliente.getContrasena(),cliente.getNombre(),cliente.getNumeroTelefonico());
             ClienteJson.guardarCliente(cliente);
             return new ResponseEntity<String>("Datos Ingresados",HttpStatus.OK);
         }
