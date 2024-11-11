@@ -63,8 +63,10 @@ document.addEventListener('DOMContentLoaded', function ()
         ocultarPorID("crear-perfil");
         let divDatos = document.getElementById("datos-perfil");
         let parrafos = divDatos.querySelectorAll("p");
-        parrafos[0].textContent = "Nombre: "+localStorage.getItem();
-
+        parrafos[0].textContent = "Nombre: "+localStorage.getItem('nombre');
+        parrafos[1].textContent = "Teléfono: "+localStorage.getItem('telefono');
+        parrafos[2].textContent = "E-mail: "+localStorage.getItem('email');
+        parrafos[3].textContent = "Contraseña: "+localStorage.getItem('contrasena');
     }
     else    //Si no está logueado
     {
