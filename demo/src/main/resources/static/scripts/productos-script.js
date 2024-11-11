@@ -73,27 +73,32 @@ document.addEventListener('DOMContentLoaded', function()
 });
 
 
-let boton = document.getElementById("agregar-producto-boton");
+let botonAgregarProducto = document.getElementById("agregar-producto-boton");
 
-boton.addEventListener("click", evento => {
+botonAgregarProducto.addEventListener("click", evento => {
     agregarProducto();
 });
 
 let agregarProducto = async () => {
-
     let campos = {};
 
     campos.nombre = document.getElementById("nombre-flor-form").value;
     campos.cantidad = document.getElementById("cantidad-flor-form").value;
     campos.precio = document.getElementById("precio-flor-form").value;
 
+    // Obtener el archivo de la foto
+    const fotoInput = document.getElementById("foto-flor-form");
+    const foto = fotoInput.files[0]; // Obtener el primer archivo
+
+    // Si necesitas enviar la foto al servidor, puedes usar FormData
+    const formData = new FormData();
+    formData.append('nombre', campos.nombre);
+    formData.append('cantidad', campos.cantidad);
+    formData.append('precio', campos.precio);
+    formData.append('foto', foto); // Agregar la foto al FormData
+
     const peticion = await fetch("http://localhost:8080/api/peliculas", {
         method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(campos)
+        body: formData // Enviar el FormData en lugar de JSON
     });
 }
-//faltaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
