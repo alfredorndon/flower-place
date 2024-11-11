@@ -51,6 +51,10 @@ public class ClienteJson extends Cliente {
             Gson gson = new Gson();
             JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json"));
             Cliente[] clientes = gson.fromJson(reader, Cliente[].class);
+            
+            if (clientes == null || clientes.length == 0) {
+                return new ArrayList<>(); // Retorna un ArrayList vacío
+            }
             ArrayList<Cliente> clientesLista = new ArrayList<>(Arrays.asList(clientes));
 
             return clientesLista;

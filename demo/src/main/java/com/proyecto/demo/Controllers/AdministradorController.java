@@ -41,8 +41,11 @@ public class AdministradorController {
     }
 
     @GetMapping("/Productos")
-    public ArrayList<Producto> obtenerProductos(){
-        return ProductoJson.obtenerProductosTotales();
+    public ResponseEntity<ArrayList<Producto>> obtenerProductos(){
+        if (ProductoJson.obtenerProductosTotales().isEmpty())
+        return new ResponseEntity<ArrayList<Producto>>(ProductoJson.obtenerProductosTotales(),HttpStatus.BAD_REQUEST);
+        else
+        return new ResponseEntity<ArrayList<Producto>>(ProductoJson.obtenerProductosTotales(),HttpStatus.OK);
     }
 
     @PostMapping("/AgregarProducto")
