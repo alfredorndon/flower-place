@@ -92,6 +92,9 @@ document.addEventListener('DOMContentLoaded', function ()
             if (document.getElementById('contrasena').value == document.getElementById('confirmar-contrasena').value)
             {
                 cliente.contrasena = document.getElementById('contrasena').value;
+                cliente.designs = {};
+                cliente.pedidos = {};
+                cliente.productos = {};
                 const peticion = await fetch ("/admin/registro",
                     {
                         method:'POST',
@@ -113,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function ()
                     document.getElementById('email').value = '';
                     document.getElementById('contrasena').value = '';
                     document.getElementById('confirmar-contrasena').value = '';
-                    localStorage.setItem('inicioSesion','true');
+                    localStorage.setItem('login','true');
                     window.location.href = "index.html";
                 }
                 else
