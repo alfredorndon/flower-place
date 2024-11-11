@@ -22,16 +22,16 @@ public class AdministradorController {
     @PostMapping("/login")
     public ResponseEntity<DatosPersona> login(@RequestBody DatosPersona datosPersona) {
         datosPersona= datosPersona.ObtenerDatos(datosPersona.getCorreo(), datosPersona.getContra());
-        return new ResponseEntity<>(datosPersona, HttpStatus.OK);
+        return new ResponseEntity<DatosPersona>(datosPersona, HttpStatus.OK);
     }
     @PostMapping("/registro")
     public ResponseEntity<String> registro (@RequestBody Cliente cliente) {
         if(cliente.verificarCorreo(cliente.getCorreo()))
         {
             ClienteJson.guardarCliente(cliente);
-            return new ResponseEntity("Datos Ingresados",HttpStatus.OK);
+            return new ResponseEntity<String>("Datos Ingresados",HttpStatus.OK);
         }
         else
-        return new ResponseEntity("Correo Repetido",HttpStatus.CONFLICT);
+        return new ResponseEntity<String>("Correo Repetido",HttpStatus.CONFLICT);
     }
 }

@@ -10,6 +10,11 @@ public class DatosPersona {
         this.contra = contra;
     }
 
+    public DatosPersona()
+    {
+        this.correo = "";
+        this.contra = "";
+    }
 
     public String getCorreo() {
         return correo;
