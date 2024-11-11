@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', function ()
             });
             if (peticion.ok)
             {
-                document.getElementById('email-incio').value = '';
+                document.getElementById('email-inicio').value = '';
                 document.getElementById('contrasena-inicio').value = '';
                 localStorage.setItem('inicioSesion','true');
                 window.location.href = "index.html";
