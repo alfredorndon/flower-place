@@ -53,7 +53,7 @@ function crearTarjeta(nombre, cantidad, precio, f) {
 
 function cerrarSesion()
 {
-    localStorage.setItem('login','false')
+    localStorage.removeItem('login');
     window.location.href = "index.html";
 }
 

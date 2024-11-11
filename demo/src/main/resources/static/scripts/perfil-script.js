@@ -52,7 +52,7 @@ function comprobarToken(token, value)
 
 function cerrarSesion()
 {
-    localStorage.setItem('login','false')
+    localStorage.removeItem('login');
     window.location.href = "index.html";
 }
 
