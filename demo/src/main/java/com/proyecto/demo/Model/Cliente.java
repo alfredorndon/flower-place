@@ -92,9 +92,10 @@ public class Cliente extends Persona {
     @Override
     public boolean verificarCorreo(String correo)
     {
-        ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
+        ArrayList<Cliente> listaClientes=ClienteJson.obtenerClientesTotales();
         boolean clienteObtenido= false;
-        listaClientes=ClienteJson.obtenerClientesTotales();
+        if (listaClientes==null)
+        listaClientes=new ArrayList<Cliente>();
         for (int i=0;i<listaClientes.size();i++)
         {
             if (listaClientes.get(i).getCorreo().equals(correo))
@@ -102,6 +103,7 @@ public class Cliente extends Persona {
         }
         return clienteObtenido;
     }
+    
     @Override
     public boolean verificarContra(String contrasena)
     {

@@ -3,6 +3,8 @@ package com.proyecto.demo.Model;
 import com.proyecto.demo.ManejadorJSON.AdministradorJson;
 import com.proyecto.demo.ManejadorJSON.ProductoJson;
 import com.proyecto.demo.ManejadorJSON.PedidoJson;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Administrador extends Persona {
@@ -60,30 +62,33 @@ public class Administrador extends Persona {
         }
         return productoElegido;
     }
-    public void editarProducto(String nombreProducto, float precio, int cantidad)
+
+    public void editarProducto(String nombreProducto, float precio, int cantidad) throws IOException
     {
+        try{
         for (int i = 0; i < productos.size(); i++)
         {
             if (productos.get(i).getNombre().equalsIgnoreCase(nombreProducto))
             {
                 productos.get(i).setPrecio(precio);
                 productos.get(i).setCantidad(cantidad);
+                ProductoJson.eliminarProducto(productos.get(i).getNombre());
+                ProductoJson.guardarProducto(productos.get(i));
             }
         }
-        for (int i=0;i<productos.size();i++)
-        {
-            //ProductoJson.editarProducto(productos.get(i));
+    } catch (IOException e) {
+        e.printStackTrace();
         }
     }
 
     public boolean verificarProducto(String nombreProducto)
     {
-        boolean verificacionProducto=true;
+        boolean verificacionProducto=false;
         for (int i = 0; i < productos.size(); i++)
         {
             if (productos.get(i).getNombre().equalsIgnoreCase(nombreProducto))
             {
-                verificacionProducto=false;
+                verificacionProducto=true;
             }
         }
         return verificacionProducto;
@@ -146,5 +151,12 @@ public class Administrador extends Persona {
         {
             throw new RuntimeException("Datos de administrador erroneos");
         }
+    }
+    public boolean validarDatosProducto(int cantidad, float precio)
+    {
+        if (cantidad<0 || precio<=0)
+        return false;
+        else
+        return true;
     }
 }

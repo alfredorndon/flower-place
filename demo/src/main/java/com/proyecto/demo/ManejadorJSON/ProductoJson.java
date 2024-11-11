@@ -110,6 +110,9 @@ public class ProductoJson extends Producto {
         try (FileWriter writer = new FileWriter("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\producto.json")) {
             gson.toJson(productosActualizados, writer);
         }
+        catch (IOException e) {
+        e.printStackTrace();
+        }
     }
 
 }
