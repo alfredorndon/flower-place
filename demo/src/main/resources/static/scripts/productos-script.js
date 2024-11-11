@@ -72,10 +72,10 @@ document.addEventListener('DOMContentLoaded', function()
     }
 });
 
-
 let botonAgregarProducto = document.getElementById("agregar-producto-boton");
 
 botonAgregarProducto.addEventListener("click", evento => {
+    evento.preventDefault(); 
     agregarProducto();
 });
 
@@ -86,19 +86,42 @@ let agregarProducto = async () => {
     campos.cantidad = document.getElementById("cantidad-flor-form").value;
     campos.precio = document.getElementById("precio-flor-form").value;
 
-    // Obtener el archivo de la foto
     const fotoInput = document.getElementById("foto-flor-form");
-    const foto = fotoInput.files[0]; // Obtener el primer archivo
+    const foto = fotoInput.files[0];
 
-    // Si necesitas enviar la foto al servidor, puedes usar FormData
     const formData = new FormData();
     formData.append('nombre', campos.nombre);
     formData.append('cantidad', campos.cantidad);
     formData.append('precio', campos.precio);
-    formData.append('foto', foto); // Agregar la foto al FormData
+    formData.append('foto', foto);
 
-    const peticion = await fetch("http://localhost:8080/api/peliculas", {
+    const peticion = await fetch("http://localhost:8080/admin/productos", {
         method: 'POST',
-        body: formData // Enviar el FormData en lugar de JSON
+        body: formData 
     });
+
+    if (peticion.ok) {
+        // Crear la tarjeta
+        crearTarjeta(campos.nombre, campos.cantidad, campos.precio, foto);
+    } else {
+        console.error("Error al agregar el producto");
+    }
+}
+
+function crearTarjeta(nombre, cantidad, precio, foto) {
+    const contenedor = document.getElementById("tarjetas-catalogo");
+
+    const tarjeta = document.createElement("div");
+    tarjeta.classList.add("tarjeta-flor");
+
+    tarjeta.innerHTML = `
+        <div class="imagen-flor">
+            <img class="foto-flor" src="${URL.createObjectURL(foto)}" alt="Imagen de la Flor" />
+        </div>
+        <p class="nombre-flor">${nombre}</p>
+        <p class="cantidad-flor">Cantidad: ${cantidad}</p>
+        <p class="precio-flor">Precio: $${precio}</p>
+    `;
+
+    contenedor.appendChild(tarjeta);
 }
