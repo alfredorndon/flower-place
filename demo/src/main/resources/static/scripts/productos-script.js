@@ -51,6 +51,12 @@ function crearTarjeta(nombre, cantidad, precio, f) {
     contenedor.appendChild(tarjeta);
 }
 
+function cerrarSesion()
+{
+    localStorage.setItem('login','false')
+    window.location.href = "index.html";
+}
+
 //Main del programa
 
 const correoAdmin = "admin@gmail.com";
@@ -66,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function()
     {
         ocultarPorID("editar-producto");
         ocultarPorID("agregar-producto");
-        document.querySelector('icono-logout').addEventListener('click', cerrarSesion);
+        document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
         if (localStorage.getItem('email') == correoAdmin)
         {
             elementos[1].style.setProperty('display', 'none', 'important');

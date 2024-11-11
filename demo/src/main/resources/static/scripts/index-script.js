@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function ()
 {
     if (login)
     {
-        document.querySelector('icono-logout').addEventListener('click', cerrarSesion);
+        document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
         if (localStorage.getItem('email') == correoAdmin)
             elementos[1].style.setProperty('display', 'none', 'important');
         ocultarPorID ('texto-no-login');

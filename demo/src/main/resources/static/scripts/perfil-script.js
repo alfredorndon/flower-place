@@ -70,10 +70,10 @@ document.addEventListener('DOMContentLoaded', function ()
 {
     if (login) //Si está logueado
     {
-        document.querySelector('icono-logout').addEventListener('click', cerrarSesion);
+        document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
         if (localStorage.getItem('email') == correoAdmin)
             elementos[1].style.setProperty('display', 'none', 'important');
-        
+
         ocultarPorID("iniciar-sesion");
         ocultarPorID("crear-perfil");
         let divDatos = document.getElementById("datos-perfil");

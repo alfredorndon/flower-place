@@ -38,6 +38,12 @@ function comprobarLogIn()
     }
 }
 
+function cerrarSesion()
+{
+    localStorage.setItem('login','false')
+    window.location.href = "index.html";
+}
+
 //Main del programa
 const correoAdmin = "admin@gmail.com";
 const contraAdmin = "admin1234";
@@ -50,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function ()
 {
     if (login)
     {
-        document.querySelector('icono-logout').addEventListener('click', cerrarSesion);
+        document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
         ocultarPorID("nuevo-design");
 
         //Sección de Nuevo Diseño
