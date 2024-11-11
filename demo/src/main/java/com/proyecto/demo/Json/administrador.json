@@ -1,0 +1,73 @@
+{
+  "correo": "Juanp@gmail.com",
+  "contraseña": "2024",
+  "nombre": "Juan Perez",
+  "numeroTelefonico": "04141313131",
+  "productos": [
+    {
+      "nombre": "Girasol",
+      "precio": "2",
+      "cantidad": "30"
+    },
+    {
+      "nombre": "Margarita",
+      "precio": "4",
+      "cantidad": "2"
+    },
+    {
+      "nombre": "Rosa",
+      "precio": "5",
+      "cantidad": "44"
+    },
+    {
+      "nombre": "Tulipan",
+      "precio": "3",
+      "cantidad": "18"
+    },
+    {
+      "nombre": "Lirio",
+      "precio": "2",
+      "cantidad": "37"
+    },
+    {
+      "nombre": "Clavel",
+      "precio": "5",
+      "cantidad": "30"
+    }
+  ],
+      "pedidos":[
+        {
+          "diseños": [
+            {
+              "productos": [
+                {
+                  "nombre": "Rosa",
+                  "precio": "5",
+                  "cantidad": "3"
+                }
+              ],
+              "nombre":"Diseño 1",
+              "precio": "15"
+            },
+            {
+              "productos": [
+                {
+                  "nombre": "Girasol",
+                  "precio": "4",
+                  "cantidad": "2"
+                },
+                {
+                  "nombre": "Margarita",
+                  "precio": "2",
+                  "cantidad": "3"
+                }
+              ],
+              "nombre":"Diseño 2",
+              "precio": "14"
+            }
+          ],
+          "estado": "pagado",
+          "id": "1"
+        }
+      ]
+}
