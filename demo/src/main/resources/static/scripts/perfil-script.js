@@ -92,9 +92,9 @@ document.addEventListener('DOMContentLoaded', function ()
             if (document.getElementById('contrasena').value == document.getElementById('confirmar-contrasena').value)
             {
                 cliente.contrasena = document.getElementById('contrasena').value;
-                cliente.designs = {};
-                cliente.pedidos = {};
-                cliente.productos = {};
+                cliente.designs = [];
+                cliente.pedidos = [];
+                cliente.productos = [];
                 const peticion = await fetch ("/admin/registro",
                     {
                         method:'POST',
@@ -122,6 +122,7 @@ document.addEventListener('DOMContentLoaded', function ()
                 else
                 {
                     const errorRespuesta = await peticion.text();
+                    console.log(errorRespuesta);
                     alert(errorRespuesta);
                 }
             }
@@ -136,8 +137,8 @@ document.addEventListener('DOMContentLoaded', function ()
         {
             event.preventDefault();
             let datosPersona = {}
-            datosPersona.correo = document.getElementById('email-inicio');
-            datosPersona.contra = document.getElementById('contrasena-inicio');
+            datosPersona.correo = document.getElementById('email-inicio').value;
+            datosPersona.contra = document.getElementById('contrasena-inicio').value;
             const peticion = await fetch ("/admin/login",
             {
                 method:'POST',
@@ -148,19 +149,20 @@ document.addEventListener('DOMContentLoaded', function ()
                 },
                 body: JSON.stringify(datosPersona)
             });
-            if (peticion.json)
+            if (peticion.ok)
             {
-                const respuesta = await peticion.text();
+                const respuesta = await peticion.json();
                 console.log(respuesta);
                 localStorage.setItem('email', document.getElementById('email-inicio').value);
                 document.getElementById('email-inicio',).value = '';
                 document.getElementById('contrasena-inicio').value = '';
-                localStorage.setItem('inicioSesion','true');
+                localStorage.setItem('login','true');
                 window.location.href = "index.html";
             }
             else
             {
                 const errorRespuesta = await peticion.text();
+                console.log(errorRespuesta);
                 alert(errorRespuesta);
             }
         });
