@@ -38,6 +38,19 @@ function comprobarLogIn()
     }
 }
 
+function crearTarjeta(nombre, cantidad, precio, f) {
+    const contenedor = document.getElementById("tarjetas-catalogo");
+    const tarjeta = document.createElement("div");
+    tarjeta.classList.add("tarjeta-flor");
+    tarjeta.innerHTML = `
+        <p class="nombre-flor">${nombre}</p>
+        <p class="cantidad-flor">Cantidad: ${cantidad}</p>
+        <p class="precio-flor">Precio: $${precio}</p>
+    `;
+
+    contenedor.appendChild(tarjeta);
+}
+
 //Main del programa
 
 var login = comprobarLogIn();
@@ -61,7 +74,38 @@ document.addEventListener('DOMContentLoaded', function()
         {
             ocultarPorID("catalogo-productos");
             mostrarPorID("agregar-producto");
-        })
+        });
+
+        let botonAgregarProducto = document.getElementById("agregar-producto-boton");
+        botonAgregarProducto.addEventListener("click", async () =>
+        {
+            event.preventDefault();
+            
+            let producto = {};
+            producto.nombre = document.getElementById("nombre-flor-form").value;
+            producto.precio = document.getElementById("precio-flor-form").value;
+            producto.cantidad = document.getElementById("cantidad-flor-form").value;
+
+            const peticion = await fetch("/admin/productos", {
+                method:'POST',
+                headers:
+                {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(producto)
+            });
+            if (peticion.ok)
+            {
+                crearTarjeta(campos.nombre, campos.cantidad, campos.precio);
+            } 
+            else
+            {
+                const errorRespuesta = await peticion.text();
+                console.log(errorRespuesta);
+                alert(errorRespuesta);
+            }
+        });
     }
     else
     {
@@ -71,57 +115,3 @@ document.addEventListener('DOMContentLoaded', function()
         ocultarPorID("volver-productos");
     }
 });
-
-let botonAgregarProducto = document.getElementById("agregar-producto-boton");
-
-botonAgregarProducto.addEventListener("click", evento => {
-    evento.preventDefault(); 
-    agregarProducto();
-});
-
-let agregarProducto = async () => {
-    let campos = {};
-
-    campos.nombre = document.getElementById("nombre-flor-form").value;
-    campos.cantidad = document.getElementById("cantidad-flor-form").value;
-    campos.precio = document.getElementById("precio-flor-form").value;
-
-    const fotoInput = document.getElementById("foto-flor-form");
-    const foto = fotoInput.files[0];
-
-    const formData = new FormData();
-    formData.append('nombre', campos.nombre);
-    formData.append('cantidad', campos.cantidad);
-    formData.append('precio', campos.precio);
-    formData.append('foto', foto);
-
-    const peticion = await fetch("http://localhost:8080/admin/productos", {
-        method: 'POST',
-        body: formData 
-    });
-
-    if (peticion.ok) {
-        // Crear la tarjeta
-        crearTarjeta(campos.nombre, campos.cantidad, campos.precio, foto);
-    } else {
-        console.error("Error al agregar el producto");
-    }
-}
-
-function crearTarjeta(nombre, cantidad, precio, foto) {
-    const contenedor = document.getElementById("tarjetas-catalogo");
-
-    const tarjeta = document.createElement("div");
-    tarjeta.classList.add("tarjeta-flor");
-
-    tarjeta.innerHTML = `
-        <div class="imagen-flor">
-            <img class="foto-flor" src="${URL.createObjectURL(foto)}" alt="Imagen de la Flor" />
-        </div>
-        <p class="nombre-flor">${nombre}</p>
-        <p class="cantidad-flor">Cantidad: ${cantidad}</p>
-        <p class="precio-flor">Precio: $${precio}</p>
-    `;
-
-    contenedor.appendChild(tarjeta);
-}
