@@ -95,8 +95,6 @@ public class Cliente extends Persona {
         ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
         boolean clienteObtenido= false;
         listaClientes=ClienteJson.obtenerClientesTotales();
-        if (listaClientes==null)
-            listaClientes=new ArrayList<Cliente>();
         for (int i=0;i<listaClientes.size();i++)
         {
             if (listaClientes.get(i).getCorreo().equals(correo))
