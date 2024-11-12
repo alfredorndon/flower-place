@@ -245,6 +245,10 @@ button:active {
     background-color: #FFFFFF; /* Fondo blanco para las tarjetas */
 }
 
+.tarjeta-design.seleccionada {
+    background-color: #d4c1ec;
+}
+
 #nombre-design-input {
     max-width: 500px; /* Ancho máximo del formulario */
     margin: 20px auto; /* Centrar el formulario */
