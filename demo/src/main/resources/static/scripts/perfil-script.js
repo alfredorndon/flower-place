@@ -96,10 +96,6 @@ document.addEventListener('DOMContentLoaded', function ()
                 parrafos[2].textContent = "E-mail: "+localStorage.getItem('email');
                 parrafos[3].textContent = "Contraseña: "+localStorage.getItem('contrasena');
             }
-            else
-            {
-
-            }
         }
         pedirDatos();
     }
