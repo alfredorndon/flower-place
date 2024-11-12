@@ -89,7 +89,7 @@ public class PedidoJson extends Pedido {
     public static void eliminarPedido(int idPedido) throws IOException {
         // Leer el JSON existente
         Gson gson = new Gson();
-        List<Pedido> pedidos = gson.fromJson(new FileReader("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\producto.json"), new TypeToken<List<Producto>>() {}.getType());
+        List<Pedido> pedidos = gson.fromJson(new FileReader("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\producto.json"), new TypeToken<List<Pedido>>() {}.getType());
 
         // Eliminar el producto
         List<Pedido> pedidosActualizados = new ArrayList<>();

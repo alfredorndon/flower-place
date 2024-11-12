@@ -90,7 +90,7 @@ public class ClienteJson extends Cliente {
     public static void eliminarCliente(String correoCliente) throws IOException {
         // Leer el JSON existente
         Gson gson = new Gson();
-        List<Cliente> clientes = gson.fromJson(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json"), new TypeToken<List<Producto>>() {}.getType());
+        List<Cliente> clientes = gson.fromJson(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\cliente.json"), new TypeToken<List<Cliente>>() {}.getType());
 
         // Eliminar el producto
         List<Cliente> clientesActualizados = new ArrayList<>();

@@ -151,16 +151,6 @@ public class Cliente extends Persona {
         ClienteJson.guardarCliente(clienteNuevo);
     }
 
-    public boolean validarDiseno(String nombre)
-    {
-        boolean disenoValidado=true;
-        for (int i = 0; i< designs.size(); i++)
-        {
-            if(designs.get(i).getNombre().equalsIgnoreCase(nombre))
-                disenoValidado=false;
-        }
-        return disenoValidado;
-    }
 
     public void actualizarProductosTotales()
     {

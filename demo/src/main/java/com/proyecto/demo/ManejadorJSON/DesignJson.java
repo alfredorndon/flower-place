@@ -69,7 +69,7 @@ public class DesignJson extends Design {
     public static void eliminarDesign(String nombreDesign) throws IOException {
         // Leer el JSON existente
         Gson gson = new Gson();
-        List<Design> designs = gson.fromJson(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\design.json"), new TypeToken<List<Producto>>() {}.getType());
+        List<Design> designs = gson.fromJson(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\design.json"), new TypeToken<List<Design>>() {}.getType());
 
         // Eliminar el producto
         List<Design> designsActualizados = new ArrayList<>();
