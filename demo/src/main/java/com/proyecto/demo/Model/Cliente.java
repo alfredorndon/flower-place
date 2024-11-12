@@ -1,6 +1,6 @@
 package com.proyecto.demo.Model;
 
-import com.proyecto.demo.ManejadorJSON.ProductoJson;
+import com.proyecto.demo.ManejadorJSON.ProductoJson;  
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.proyecto.demo.ManejadorJSON.ClienteJson;
 import com.proyecto.demo.ManejadorJSON.PedidoJson;
@@ -218,11 +218,9 @@ public class Cliente extends Persona {
         return clienteObtenido;
     }
 
-    public boolean validarDesign(Cliente cliente)
+    public boolean validarDesign(Design design , String correo)
     {
         ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
-        Design disenoPorValidar=cliente.designs.get(0);
-        String correo= cliente.getCorreo();
         Cliente clienteActual= new Cliente();
         boolean designValidado=false;
         for (int i=0;i<listaClientes.size();i++)
@@ -234,28 +232,26 @@ public class Cliente extends Persona {
         }
         for (int j=0;j<clienteActual.designs.size();j++)
         {
-            if (disenoPorValidar.getNombre().equals(clienteActual.designs.get(j).getNombre()))
+            if (design.getNombre().equals(clienteActual.designs.get(j).getNombre()))
             {
                 designValidado=true;
             }
         }
         return designValidado;
     }
-    public void agregarDiseno(Cliente cliente) throws IOException
+    public void agregarDiseno(Design design , String correo) throws IOException
     {
         ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
-        Design disenoPorAgregar=cliente.designs.get(0);
-        String correo= cliente.getCorreo();
         Cliente clienteActual= new Cliente();
         for (int i=0;i<listaClientes.size();i++)
         {
             if (listaClientes.get(i).getCorreo().equals(correo))
             {
                 clienteActual=listaClientes.get(i);
-                ClienteJson.eliminarCliente(listaClientes.get(i).getCorreo());
+                ClienteJson.eliminarCliente(correo);
             }
         }
-                clienteActual.designs.add(disenoPorAgregar);
+                clienteActual.designs.add(design);
                 ClienteJson.guardarCliente(clienteActual);
     }
 }
