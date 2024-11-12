@@ -2,10 +2,12 @@ package com.proyecto.demo.Controllers;
 
 
 import com.proyecto.demo.ManejadorJSON.ClienteJson;
+import com.proyecto.demo.ManejadorJSON.PedidoJson;
 import com.proyecto.demo.ManejadorJSON.ProductoJson;
 import com.proyecto.demo.Model.Administrador;
 import com.proyecto.demo.Model.Cliente;
 import com.proyecto.demo.Model.Design;
+import com.proyecto.demo.Model.Pedido;
 import com.proyecto.demo.Model.Producto;
 
 import java.io.IOException;
@@ -45,4 +47,23 @@ public class ClienteController {
         else
         return new ResponseEntity<ArrayList<Design>>(cliente.getDesigns(),HttpStatus.OK);
     }
+
+    @PostMapping("/crearPedido")
+    public ResponseEntity<String> crearPedido(@RequestBody Pedido pedido, @RequestParam("correo") String correo) throws IOException
+    {
+        Cliente cliente= new Cliente(correo,"","","");
+        cliente.actualizarProductosTotales();
+        cliente.agregarPedido(pedido, correo);
+        return new ResponseEntity<String>("Pedido creado", HttpStatus.OK);
+    }
+    @GetMapping("/cargarPedidos")
+    public ResponseEntity<ArrayList<Pedido>> obtenerPedidos(@RequestParam("correo") String correo) throws IOException
+    {
+        Cliente cliente= ClienteJson.obtenerClientes(correo).get(0);
+        if (cliente.getPedidos().isEmpty())
+            return new ResponseEntity<ArrayList<Pedido>>(cliente.getPedidos(),HttpStatus.BAD_REQUEST);
+        else
+        return new ResponseEntity<ArrayList<Pedido>>(cliente.getPedidos(),HttpStatus.OK);
+    }
 }
+
