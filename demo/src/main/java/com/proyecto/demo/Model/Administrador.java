@@ -65,7 +65,6 @@ public class Administrador extends Persona {
 
     public void editarProducto(String nombreProducto, float precio, int cantidad) throws IOException
     {
-        try{
         for (int i = 0; i < productos.size(); i++)
         {
             if (productos.get(i).getNombre().equalsIgnoreCase(nombreProducto))
@@ -76,23 +75,21 @@ public class Administrador extends Persona {
                 ProductoJson.guardarProducto(productos.get(i));
             }
         }
-    } catch (IOException e) {
-        e.printStackTrace();
-        }
     }
 
-    public boolean verificarProducto(String nombreProducto)
+    public boolean verificarProducto(Producto productoAgregado)
     {
         boolean verificacionProducto=false;
-        for (int i = 0; i < productos.size(); i++)
-        {
-            if (productos.get(i).getNombre().equalsIgnoreCase(nombreProducto))
+        if (validarDatosProducto(productoAgregado.getCantidad(), productoAgregado.getPrecio()))
+        verificacionProducto=true;
+            for (int i = 0; i < productos.size(); i++)
             {
-                verificacionProducto=true;
+                if (productos.get(i).getNombre().equalsIgnoreCase(productoAgregado.getNombre()))
+                    verificacionProducto=true;
             }
-        }
         return verificacionProducto;
     }
+
 
     @Override
     public boolean verificarCorreo(String correo)

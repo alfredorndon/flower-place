@@ -4,6 +4,8 @@ import com.proyecto.demo.ManejadorJSON.ProductoJson;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.proyecto.demo.ManejadorJSON.ClienteJson;
 import com.proyecto.demo.ManejadorJSON.PedidoJson;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -41,11 +43,15 @@ public class Cliente extends Persona {
     }
 
     //Getters and setters
-    public ArrayList<Design> getDiseños(String correo) {
+    public ArrayList<Design> getDesigns(String correo) {
         this.designs =obtenerCliente(correo).designs;
         if (designs==null)
             designs=new ArrayList<Design>();
         return designs;
+    }
+    public ArrayList<Design> getDesigns()
+    {
+        return this.designs;
     }
 
     public ArrayList<Producto> getProductos()
@@ -144,17 +150,6 @@ public class Cliente extends Persona {
         listaClientes.add(clienteNuevo);
         ClienteJson.guardarCliente(clienteNuevo);
     }
-    public void agregarDiseno(String nombre, float precio, ArrayList<Producto> productos)
-    {
-        this.designs.add(new Design(productos,nombre,precio));
-        ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
-        if (listaClientes==null)
-            listaClientes = new ArrayList<Cliente>();
-        for (int i=0;i<listaClientes.size();i++)
-        {
-
-        }
-    }
 
     public boolean validarDiseno(String nombre)
     {
@@ -221,6 +216,47 @@ public class Cliente extends Persona {
             }
         }
         return clienteObtenido;
+    }
+
+    public boolean validarDesign(Cliente cliente)
+    {
+        ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
+        Design disenoPorValidar=cliente.designs.get(0);
+        String correo= cliente.getCorreo();
+        Cliente clienteActual= new Cliente();
+        boolean designValidado=false;
+        for (int i=0;i<listaClientes.size();i++)
+        {
+            if (listaClientes.get(i).getCorreo().equals(correo))
+            {
+                clienteActual=listaClientes.get(i);
+            }
+        }
+        for (int j=0;j<clienteActual.designs.size();j++)
+        {
+            if (disenoPorValidar.getNombre().equals(clienteActual.designs.get(j).getNombre()))
+            {
+                designValidado=true;
+            }
+        }
+        return designValidado;
+    }
+    public void agregarDiseno(Cliente cliente) throws IOException
+    {
+        ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
+        Design disenoPorAgregar=cliente.designs.get(0);
+        String correo= cliente.getCorreo();
+        Cliente clienteActual= new Cliente();
+        for (int i=0;i<listaClientes.size();i++)
+        {
+            if (listaClientes.get(i).getCorreo().equals(correo))
+            {
+                clienteActual=listaClientes.get(i);
+                ClienteJson.eliminarCliente(listaClientes.get(i).getCorreo());
+            }
+        }
+                clienteActual.designs.add(disenoPorAgregar);
+                ClienteJson.guardarCliente(clienteActual);
     }
 }
 

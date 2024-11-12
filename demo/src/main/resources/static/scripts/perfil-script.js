@@ -89,7 +89,6 @@ document.addEventListener('DOMContentLoaded', function ()
         ocultarPorID("consultar-perfil");
         ocultarPorID("iniciar-sesion");
         ocultarPorID("crear-perfil");
-        ocultarPorID("volver-perfil");
         document.getElementById('ir-a-iniciar-sesion').addEventListener('click', function () {mostrarPorID("iniciar-sesion"); ocultarPorID("crear-perfil");});
         document.getElementById('ir-a-registrarse').addEventListener('click', function() {mostrarPorID("crear-perfil"); ocultarPorID("iniciar-sesion")});
         if (inicioSesion)
@@ -183,8 +182,6 @@ document.addEventListener('DOMContentLoaded', function ()
                 {
                     localStorage.setItem('email', document.getElementById('email-inicio').value);
                     localStorage.setItem('contrasena', document.getElementById('contrasena-inicio').value);
-                    document.getElementById('email-inicio',).value = '';
-                    document.getElementById('contrasena-inicio').value = '';
                     localStorage.setItem('login','true');
                     window.location.href = "index.html";
                 }
