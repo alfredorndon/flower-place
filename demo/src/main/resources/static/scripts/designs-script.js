@@ -100,12 +100,13 @@ function actualizarTotal() {
     tarjetas.forEach(tarjeta => {
         const precioTexto = tarjeta.querySelector('.precio-flor').textContent;
         const precio = parseFloat(precioTexto.replace('$', ''));
-        const cantidadInput = tarjeta.querySelector('.input-cantidad').value;
-
+        const cantidadInput = parseFloat(tarjeta.querySelector('.input-cantidad').value);
+        console.log(cantidadInput);
         total += precio * cantidadInput;
     });
 
-    document.querySelector('#total-design p').innerHTML = `<strong>Precio total del diseño:</strong> $${total.toFixed(2)}`;
+    document.querySelector('#total-design p').innerHTML = `<strong>Precio total del diseño:</strong> $${total}`;
+    console.log(total);
 }
 
 //Main del programa
@@ -138,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function ()
                 const datos = await respuesta.json();
                 datos.forEach(producto =>
                 {
-                    crearTarjetaFlor(producto.nombre, producto.cantidad, producto.precio, producto.foto);
+                    crearTarjetaFlor(producto.nombre, producto.cantidad, producto.precio);
                 });
                 document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
                 ocultarPorID("nuevo-design");
@@ -158,25 +159,25 @@ document.addEventListener('DOMContentLoaded', function ()
                     
                     const productosSeleccionados = [];
                     const tarjetas = document.querySelectorAll('.tarjeta-flor');
-                    
+                    const precio = "";
                     tarjetas.forEach(tarjeta =>
                     {
                         const nombre = tarjeta.querySelector('.nombre-flor').textContent;
                         const cantidad = tarjeta.querySelector('.input-cantidad').value;
                         
                         if (cantidad > 0) {
-                            productosSeleccionados.push({ nombre, cantidad });
+                            productosSeleccionados.push({ nombre, precio, cantidad});
                         }
                     });
                     
                     let design =
                     {
-                        nombre: document.getElementById('nombre-design-form').value,
                         productos: productosSeleccionados,
+                        nombre: document.getElementById('nombre-design-form').value,
                         precioTotal: parseFloat(document.querySelector('#total-design p').textContent.replace(/[^0-9.-]+/g,""))
                     };
                     let emailCliente = localStorage.getItem('email');
-                    const respuesta = await fetch(`/admin/CrearDiseño?correo=${emailCliente}`,
+                    const respuesta = await fetch(`/cliente/crearDesign?correo=${emailCliente}`,
                     {
                         method: 'POST',
                         headers: {
