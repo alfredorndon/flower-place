@@ -85,8 +85,8 @@ function actualizarTotal() {
     localStorage.setItem('totalPedido', total);
 }
 
-async function cargarPedidos() {
-    const respuesta = await fetch("/admin/Pedidos", {
+async function cargarPedidos(ruta) {
+    const respuesta = await fetch(ruta, {
         method: 'GET',
         headers: {
             "Accept": "application/json",
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function ()
                 ocultarPorID("crear-pedido");
                 ocultarPorID("editar-pedido");
                 ocultarPorID("volver-pedidos")
-                document.getElementById('volver-pedidos').addEventListener('click', function(){windoew.location.href = "gestion-pedidos.html"})
+                document.getElementById('volver-pedidos').addEventListener('click', function(){window.location.href = "gestion-pedidos.html"})
 
                 //Sección de Editar Pedido
                 document.getElementById("boton-editar-pedido").addEventListener('click', function()
@@ -252,7 +252,14 @@ document.addEventListener('DOMContentLoaded', function ()
             }
         }
         pedirDesigns();
-        cargarPedidos();
+        if (localStorage.getItem('email') == correoAdmin)
+        {
+            cargarPedidos("/admin/cargarPedidos");
+        }
+        else
+        {
+            cargarPedidos(`/cliente/cargarPedidos?correo=${localStorage.getItem('email')}`);
+        }
     }
     else
     {
