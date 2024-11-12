@@ -89,7 +89,6 @@ document.addEventListener('DOMContentLoaded', function ()
         ocultarPorID("consultar-perfil");
         ocultarPorID("iniciar-sesion");
         ocultarPorID("crear-perfil");
-        ocultarPorID("volver-perfil");
         document.getElementById('ir-a-iniciar-sesion').addEventListener('click', function () {mostrarPorID("iniciar-sesion"); ocultarPorID("crear-perfil");});
         document.getElementById('ir-a-registrarse').addEventListener('click', function() {mostrarPorID("crear-perfil"); ocultarPorID("iniciar-sesion")});
         if (inicioSesion)
