@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function()
 {
     if (login)
     {
+        ocultarPorID('volver-productos');
         let pedirProductos = async () => 
         {
             const respuesta = await fetch("/admin/Productos",
@@ -96,6 +97,7 @@ document.addEventListener('DOMContentLoaded', function()
                 //Este if solo ocurre si el Admin entra
                 if (localStorage.getItem('email') == correoAdmin)
                 {
+                    document.getElementById("volver-productos").addEventListener("click", function (){window.location.href = "gestion-productos.html";})
                     elementos[1].style.setProperty('display', 'none', 'important');
 
                     //Sección de Editar Producto
@@ -103,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function()
                     {
                         ocultarPorID("catalogo-productos");
                         mostrarPorID("editar-producto");
+                        mostrarPorID("volver-productos");
                     });
                     const tarjetas = document.querySelectorAll('.tarjeta-flor');
                     const botonEditar = document.getElementById('boton-editar-producto');
@@ -173,6 +176,7 @@ document.addEventListener('DOMContentLoaded', function()
                     {
                         ocultarPorID("catalogo-productos");
                         mostrarPorID("agregar-producto");
+                        mostrarPorID("volver-productos");
                     });
                     let botonAgregarProducto = document.getElementById("agregar-confirmar");
                     botonAgregarProducto.addEventListener("click", async () =>
@@ -205,6 +209,11 @@ document.addEventListener('DOMContentLoaded', function()
                             alert(errorRespuesta);
                         }
                     });
+                }
+                else
+                {
+                    ocultarPorID('boton-editar-producto');
+                    ocultarPorID('boton-nuevo-producto');
                 }
             }
             else
