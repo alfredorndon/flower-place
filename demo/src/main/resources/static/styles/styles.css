@@ -325,6 +325,10 @@ button:active {
     overflow: hidden; /* Ocultar el desbordamiento */
 }
 
+.tarjeta-pedido.seleccionada {
+    background-color: #D4C1EC;
+}
+
 .email-cliente {
     overflow: hidden; /* Ocultar el desbordamiento */
     text-overflow: ellipsis; /* Mostrar puntos suspensivos si el texto es muy largo */
