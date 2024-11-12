@@ -73,4 +73,19 @@ public class AdministradorController {
         else
         return new ResponseEntity<String>("Datos invalidos",HttpStatus.CONFLICT);
     }
+    @GetMapping("/ConsultarPerfil")
+    public Cliente consultarPerfil(@RequestBody String correo) throws IOException
+    {
+        Cliente cliente;
+        if (correo.equals("administrador@gmail.com"))
+        {
+            cliente= new Cliente(correo,"admin1234","Administrador","04120998105");
+        }
+        else
+        {
+            cliente= ClienteJson.obtenerClientes(correo);
+            cliente=new Cliente (cliente.getCorreo(),cliente.getContrasena(),cliente.getNombre(),cliente.getNumeroTelefonico());
+        }
+        return cliente;
+    }
 }
