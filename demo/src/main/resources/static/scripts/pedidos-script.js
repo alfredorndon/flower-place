@@ -143,6 +143,7 @@ document.addEventListener('DOMContentLoaded', function ()
                 if (localStorage.getItem('email') == correoAdmin)
                 {
                     elementos[1].style.setProperty('display', 'none', 'important');
+                    elementos[2].style.setProperty('display', 'none', 'important');
                     ocultarPorID('boton-nuevo-pedido');
                 }
                 else

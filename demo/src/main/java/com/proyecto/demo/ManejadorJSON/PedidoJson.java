@@ -1,19 +1,18 @@
 package com.proyecto.demo.ManejadorJSON;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.google.gson.Gson;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.proyecto.demo.Model.Design;
 import com.proyecto.demo.Model.Pedido;
-import com.proyecto.demo.Model.Producto;
-
-import java.io.*;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class PedidoJson extends Pedido {
 
@@ -30,7 +29,7 @@ public class PedidoJson extends Pedido {
         try {
             Gson gson = new Gson();
             Object FilePath;
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\pedido.json"));
+            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\alfre\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\pedido.json"));
             Pedido[] pedidos = gson.fromJson(reader, Pedido[].class);
             List<Pedido> pedidoLista = new ArrayList<>(Arrays.asList(pedidos));
             List<Pedido> nuevaLista = new ArrayList<>();
@@ -52,7 +51,7 @@ public class PedidoJson extends Pedido {
     static public ArrayList<Pedido> obtenerPedidosTotales() {
         try {
             Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\pedido.json"));
+            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\alfre\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\pedido.json"));
             Pedido[] pedidos = gson.fromJson(reader, Pedido[].class);
             if (pedidos == null || pedidos.length == 0) {
                 return new ArrayList<>(); // Retorna un ArrayList vacío
@@ -70,13 +69,13 @@ public class PedidoJson extends Pedido {
     static public void guardarPedido(Pedido pedido) { //Le paso el objeto que quiero guardar en la lista del json
         try {
             Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\pedido.json"));
+            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\alfre\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\pedido.json"));
             Pedido[] pedidos = gson.fromJson(reader, Pedido[].class);
             List<Pedido> pedidoLista= new ArrayList<>(Arrays.asList(pedidos));
 
             pedidoLista.add(pedido);
 
-            FileWriter fw = new FileWriter("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\pedido.json");
+            FileWriter fw = new FileWriter("C:\\Users\\alfre\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\pedido.json");
             StringWriter sw = new StringWriter();
             sw.write(gson.toJson(pedidoLista));
             fw.write(sw.toString());

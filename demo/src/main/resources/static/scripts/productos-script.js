@@ -99,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function()
                 {
                     document.getElementById("volver-productos").addEventListener("click", function (){window.location.href = "gestion-productos.html";})
                     elementos[1].style.setProperty('display', 'none', 'important');
+                    elementos[2].style.setProperty('display', 'none', 'important');
 
                     //Sección de Editar Producto
                     document.getElementById("boton-editar-producto").addEventListener('click', function()

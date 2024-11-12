@@ -1,12 +1,5 @@
 package com.proyecto.demo.ManejadorJSON;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-import com.proyecto.demo.Model.Cliente;
-import com.proyecto.demo.Model.Design;
-import com.proyecto.demo.Model.Producto;
-
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,6 +7,12 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
+import com.proyecto.demo.Model.Design;
+import com.proyecto.demo.Model.Producto;
 
 public class DesignJson extends Design {
     public DesignJson(ArrayList<Producto> productos, String nombre, float precio) {
@@ -26,7 +25,7 @@ public class DesignJson extends Design {
         try {
             Gson gson = new Gson();
             Object FilePath;
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\design.json"));
+            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\alfre\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\design.json"));
             Design[] designs = gson.fromJson(reader, Design[].class);
             List<Design> designLista = new ArrayList<>(Arrays.asList(designs));
             List<Design> nuevaLista = new ArrayList<>();
@@ -48,13 +47,13 @@ public class DesignJson extends Design {
     static public void guardarDesign (Design design) { //Le paso el objeto que quiero guardar en la lista del json
         try {
             Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\design.json"));
+            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\alfre\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\design.json"));
             Design[] designs = gson.fromJson(reader, Design[].class);
             List<Design> designLista= new ArrayList<>(Arrays.asList(designs));
 
             designLista.add(design);
 
-            FileWriter fw = new FileWriter("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\design.json");
+            FileWriter fw = new FileWriter("C:\\Users\\alfre\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\design.json");
             StringWriter sw = new StringWriter();
             sw.write(gson.toJson(designLista));
             fw.write(sw.toString());
@@ -69,7 +68,7 @@ public class DesignJson extends Design {
     public static void eliminarDesign(String nombreDesign) throws IOException {
         // Leer el JSON existente
         Gson gson = new Gson();
-        List<Design> designs = gson.fromJson(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\design.json"), new TypeToken<List<Design>>() {}.getType());
+        List<Design> designs = gson.fromJson(new FileReader("C:\\Users\\alfre\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\design.json"), new TypeToken<List<Design>>() {}.getType());
 
         // Eliminar el producto
         List<Design> designsActualizados = new ArrayList<>();
@@ -80,7 +79,7 @@ public class DesignJson extends Design {
         }
 
         // Escribir el JSON actualizado
-        try (FileWriter writer = new FileWriter("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\design.json")) {
+        try (FileWriter writer = new FileWriter("C:\\Users\\alfre\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\design.json")) {
             gson.toJson(designsActualizados, writer);
         }
     }
