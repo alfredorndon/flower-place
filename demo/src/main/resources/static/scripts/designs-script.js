@@ -44,40 +44,7 @@ function cerrarSesion()
     window.location.href = "index.html";
 }
 
-//Main del programa
-const correoAdmin = "admin@gmail.com";
-const contraAdmin = "admin1234";
-
-var login = comprobarLogIn();
-let menuBar = document.getElementsByClassName("menu-bar");
-let elementos = menuBar[0].querySelectorAll("h3");
-
-document.addEventListener('DOMContentLoaded', function ()
-{
-    if (login)
-    {
-        document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
-        ocultarPorID("nuevo-design");
-
-        //Sección de Nuevo Diseño
-        document.getElementById("boton-nuevo-design").addEventListener('click', function()
-        {
-            ocultarPorID("designs-guardados");
-            mostrarPorID("nuevo-design");
-        });
-    }
-    else
-    {
-        ocultarPorID("designs-guardados");
-        ocultarPorID("nuevo-design");
-        ocultarPorID("volver-designs");
-    }
-});
-
-
-
-// tarjeta de producto en la sección de diseño
-function crearTarjeta(nombre, cantidad, precio) {
+function crearTarjetaFlor(nombre, cantidad, precio) {
     const contenedor = document.getElementById("tarjetas-catalogo-design");
     const tarjeta = document.createElement("div");
     tarjeta.classList.add("tarjeta-flor");
@@ -99,62 +66,6 @@ function crearTarjeta(nombre, cantidad, precio) {
     contenedor.appendChild(tarjeta);
 }
 
-function actualizarTotal() {
-    const tarjetas = document.querySelectorAll('.tarjeta-flor');
-    let total = 0;
-
-    tarjetas.forEach(tarjeta => {
-        const precioTexto = tarjeta.querySelector('.precio-flor').textContent;
-        const precio = parseFloat(precioTexto.replace('$', ''));
-        const cantidadInput = tarjeta.querySelector('.input-cantidad').value;
-
-        total += precio * cantidadInput;
-    });
-
-    document.querySelector('#total-design p').innerHTML = `<strong>Precio total del diseño:</strong> $${total.toFixed(2)}`;
-}
-
-document.getElementById('nuevo-design-form').addEventListener('submit', async (event) => {
-    event.preventDefault(); // Evitar el envío del formulario por defecto
-
-    const productosSeleccionados = [];
-    const tarjetas = document.querySelectorAll('.tarjeta-flor');
-
-    tarjetas.forEach(tarjeta => {
-        const nombre = tarjeta.querySelector('.nombre-flor').textContent;
-        const cantidad = tarjeta.querySelector('.input-cantidad').value;
-
-        if (cantidad > 0) {
-            productosSeleccionados.push({ nombre, cantidad });
-        }
-    });
-
-    const diseño = {
-        nombre: document.getElementById('nombre-design-form').value,
-        productos: productosSeleccionados,
-        precioTotal: parseFloat(document.querySelector('#total-design p').textContent.replace(/[^0-9.-]+/g,""))
-    };
-
-    const respuesta = await fetch('/admin/CrearDiseño', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(diseño)
-    });
-
-    if (respuesta.ok) {
-        alert('Diseño creado con éxito');
-        // Redirigir o limpiar el formulario
-    } else {
-        const errorRespuesta = await respuesta.text();
-        console.log(errorRespuesta);
-        alert('Error al crear el diseño: ' + errorRespuesta);
-    }
-});
-
-//crear tarjeta de diseño guardado
 function crearTarjetaDiseño(diseño) {
     const contenedor = document.getElementById("tarjetas-design");
     const tarjeta = document.createElement("div");
@@ -182,42 +93,153 @@ function crearTarjetaDiseño(diseño) {
     contenedor.appendChild(tarjeta);
 }
 
-async function cargarDiseños() {
-    const respuesta = await fetch("/admin/Diseños", {
-        method: 'GET',
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
+function actualizarTotal() {
+    const tarjetas = document.querySelectorAll('.tarjeta-flor');
+    let total = 0;
+
+    tarjetas.forEach(tarjeta => {
+        const precioTexto = tarjeta.querySelector('.precio-flor').textContent;
+        const precio = parseFloat(precioTexto.replace('$', ''));
+        const cantidadInput = tarjeta.querySelector('.input-cantidad').value;
+
+        total += precio * cantidadInput;
     });
 
-    if (respuesta.ok) {
-        const diseños = await respuesta.json();
-        diseños.forEach(diseño => {
-            crearTarjetaDiseño(diseño);
-        });
-    } else {
-        const errorRespuesta = await respuesta.text();
-        console.log(errorRespuesta);
-        alert('Error al cargar los diseños: ' + errorRespuesta);
-    }
+    document.querySelector('#total-design p').innerHTML = `<strong>Precio total del diseño:</strong> $${total.toFixed(2)}`;
 }
 
-// Llama a la función para cargar los diseños cuando se carga la página
-document.addEventListener('DOMContentLoaded', cargarDiseños);
+//Main del programa
 
-// Estructura de Datos Esperada
-// {
-//     "nombre": "Diseño Floral",
-//     "precioTotal": 150.00,
-//     "productos": [
-//         {
-//             "nombre": "Rosa",
-//             "cantidad": 10
-//         },
-//         {
-//             "nombre": "Lirio",
-//             "cantidad": 5
-//         }
-//     ]
-// }
+const correoAdmin = "admin@gmail.com";
+const contraAdmin = "admin1234";
+
+var login = comprobarLogIn();
+let menuBar = document.getElementsByClassName("menu-bar");
+let elementos = menuBar[0].querySelectorAll("h3");
+
+document.addEventListener('DOMContentLoaded', function ()
+{
+    if (login)
+    {
+        let pedirProductos = async () => 
+        {
+            const respuesta = await fetch("/admin/Productos",
+            {
+                method:'GET',
+                headers:
+                {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
+            });
+
+            if(respuesta.ok)
+            {
+                const datos = await respuesta.json();
+                datos.forEach(producto =>
+                {
+                    crearTarjetaFlor(producto.nombre, producto.cantidad, producto.precio, producto.foto);
+                });
+                document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
+                ocultarPorID("nuevo-design");
+                ocultarPorID('volver-designs');
+                document.getElementById("volver-designs").addEventListener('click', function (){window.location.href = "gestion-designs.html";});
+
+                //Sección de Nuevo Diseño
+                document.getElementById("boton-nuevo-design").addEventListener('click', function()
+                {
+                    ocultarPorID("designs-guardados");
+                    mostrarPorID("nuevo-design");
+                    mostrarPorID("volver-designs");
+                });
+
+                document.getElementById('confirmar-design').addEventListener('click', async (event) => {
+                    event.preventDefault(); // Evitar el envío del formulario por defecto
+                    
+                    const productosSeleccionados = [];
+                    const tarjetas = document.querySelectorAll('.tarjeta-flor');
+                    
+                    tarjetas.forEach(tarjeta =>
+                    {
+                        const nombre = tarjeta.querySelector('.nombre-flor').textContent;
+                        const cantidad = tarjeta.querySelector('.input-cantidad').value;
+                        
+                        if (cantidad > 0) {
+                            productosSeleccionados.push({ nombre, cantidad });
+                        }
+                    });
+                    
+                    let design =
+                    {
+                        nombre: document.getElementById('nombre-design-form').value,
+                        productos: productosSeleccionados,
+                        precioTotal: parseFloat(document.querySelector('#total-design p').textContent.replace(/[^0-9.-]+/g,""))
+                    };
+                    let emailCliente = localStorage.getItem('email');
+                    const respuesta = await fetch(`/admin/CrearDiseño?correo=${emailCliente}`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(design)
+                    });
+                
+                    if (respuesta.ok)
+                    {
+                        alert('Diseño creado con éxito');
+                        window.location.href = "gestionar-design.html"
+                    } 
+                    else
+                    {
+                        const errorRespuesta = await respuesta.text();
+                        console.log(errorRespuesta);
+                        alert('Error al crear el diseño: ' + errorRespuesta);
+                    }
+                });
+            }
+            else
+            {
+                const errorRespuesta = await respuesta.text();
+                console.log(errorRespuesta);
+                alert(errorRespuesta);
+            }
+        }
+        pedirProductos();
+        // let pedirDesigns = async() =>
+        // {
+        //     event.preventDefault();
+        //     const respuesta = await fetch(`/cliente/CrearDesign?correo=${emailCliente}`,
+        //     {
+        //         method: 'GET',
+        //         headers:
+        //         {
+        //             'Accept': 'application/json',
+        //             'Content-Type': 'application/json',
+        //         }
+        //     });
+        //     if (respuesta.ok)
+        //     {
+        //         const diseños = await respuesta.json();
+        //         diseños.forEach(diseño =>
+        //         {
+        //             crearTarjetaDiseño(diseño);
+        //         });
+        //     }
+        //     else
+        //     {
+        //         const errorRespuesta = await respuesta.text();
+        //         console.log(errorRespuesta);
+        //         alert('Error al cargar los diseños: ' + errorRespuesta);
+        //     }
+        // }
+        // pedirDesigns();
+    }
+    else
+    {
+        ocultarPorID("designs-guardados");
+        ocultarPorID("nuevo-design");
+        ocultarPorID("volver-designs");
+    }
+});

@@ -10,7 +10,6 @@ import com.proyecto.demo.ManejadorJSON.ProductoJson;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.proyecto.demo.Model.Cliente;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -74,7 +73,7 @@ public class AdministradorController {
         return new ResponseEntity<String>("Datos invalidos",HttpStatus.CONFLICT);
     }
     @GetMapping("/ConsultarPerfil")
-    public Cliente consultarPerfil(@RequestBody String correo) throws IOException
+    public Cliente consultarPerfil(@RequestParam("correo") String correo) throws IOException
     {
         Cliente cliente;
         if (correo.equals("administrador@gmail.com"))
@@ -83,7 +82,7 @@ public class AdministradorController {
         }
         else
         {
-            cliente= ClienteJson.obtenerClientes(correo);
+            cliente= ClienteJson.obtenerClientes(correo).get(0);
             cliente=new Cliente (cliente.getCorreo(),cliente.getContrasena(),cliente.getNombre(),cliente.getNumeroTelefonico());
         }
         return cliente;
