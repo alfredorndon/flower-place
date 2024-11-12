@@ -70,18 +70,38 @@ document.addEventListener('DOMContentLoaded', function ()
 {
     if (login) //Si está logueado
     {
-        document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
-        if (localStorage.getItem('email') == correoAdmin)
-            elementos[1].style.setProperty('display', 'none', 'important');
-
         ocultarPorID("iniciar-sesion");
         ocultarPorID("crear-perfil");
-        let divDatos = document.getElementById("datos-perfil");
-        let parrafos = divDatos.querySelectorAll("p");
-        parrafos[0].textContent = "Nombre: "+localStorage.getItem('nombre');
-        parrafos[1].textContent = "Teléfono: "+localStorage.getItem('telefono');
-        parrafos[2].textContent = "E-mail: "+localStorage.getItem('email');
-        parrafos[3].textContent = "Contraseña: "+localStorage.getItem('contrasena');
+        let pedirDatos = async () =>
+        {
+            const respuesta = await fetch (`/admin/ConsultarPerfil?correo=${localStorage.getItem('email')}`,
+            {
+                method: 'GET',
+                headers:
+                {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                }
+            });
+            if (respuesta.ok)
+            {
+                const datos = await respuesta.json();
+                document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
+                if (localStorage.getItem('email') == correoAdmin)
+                    elementos[1].style.setProperty('display', 'none', 'important');
+                let divDatos = document.getElementById("datos-perfil");
+                let parrafos = divDatos.querySelectorAll("p");
+                parrafos[0].textContent = "Nombre: "+datos.nombre;
+                parrafos[1].textContent = "Teléfono: "+datos.numeroTelefonico;
+                parrafos[2].textContent = "E-mail: "+localStorage.getItem('email');
+                parrafos[3].textContent = "Contraseña: "+localStorage.getItem('contrasena');
+            }
+            else
+            {
+
+            }
+        }
+        pedirDatos();
     }
     else    //Si no está logueado
     {
