@@ -237,6 +237,13 @@ public class Cliente extends Persona {
                 designValidado=true;
             }
         }
+        for (int k=0;k<design.getProductos().size();k++)
+        {
+            if (design.getProductos().get(k).getCantidad()<=0 || design.getProductos().get(k).getCantidad()>20)
+            {
+                designValidado=true;
+            }
+        }
         return designValidado;
     }
     public void agregarDiseno(Design design , String correo) throws IOException

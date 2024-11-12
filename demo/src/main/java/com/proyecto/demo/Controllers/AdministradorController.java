@@ -76,7 +76,7 @@ public class AdministradorController {
     public Cliente consultarPerfil(@RequestParam("correo") String correo) throws IOException
     {
         Cliente cliente;
-        if (correo.equals("administrador@gmail.com"))
+        if (correo.equals("admin@gmail.com"))
         {
             cliente= new Cliente(correo,"admin1234","Administrador","04120998105");
         }
