@@ -237,6 +237,13 @@ public class Cliente extends Persona {
                 designValidado=true;
             }
         }
+        for (int k=0;k<design.getProductos().size();k++)
+        {
+            if (design.getProductos().get(k).getCantidad()<=0 || design.getProductos().get(k).getCantidad()>20)
+            {
+                designValidado=true;
+            }
+        }
         return designValidado;
     }
     public void agregarDiseno(Design design , String correo) throws IOException
@@ -253,6 +260,42 @@ public class Cliente extends Persona {
         }
                 clienteActual.designs.add(design);
                 ClienteJson.guardarCliente(clienteActual);
+    }
+    public void agregarPedido(Pedido pedido , String correo) throws IOException
+    {
+        ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
+        Cliente clienteActual= new Cliente();
+        for (int i=0;i<listaClientes.size();i++)
+        {
+            if (listaClientes.get(i).getCorreo().equals(correo))
+            {
+                clienteActual=listaClientes.get(i);
+                ClienteJson.eliminarCliente(correo);
+            }
+        }
+                clienteActual.pedidos.add(pedido);
+                ClienteJson.guardarCliente(clienteActual);
+    }
+    public boolean validarPedido(Pedido pedido , String correo)
+    {
+        ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
+        Cliente clienteActual= new Cliente();
+        boolean pedidoValidado=false;
+        for (int i=0;i<listaClientes.size();i++)
+        {
+            if (listaClientes.get(i).getCorreo().equals(correo))
+            {
+                clienteActual=listaClientes.get(i);
+            }
+        }
+        for (int j=0;j<clienteActual.pedidos.size();j++)
+        {
+            if (pedido.getId() == clienteActual.pedidos.get(j).getId())
+            {
+                pedidoValidado=true;
+            }
+        }
+        return pedidoValidado;
     }
 }
 

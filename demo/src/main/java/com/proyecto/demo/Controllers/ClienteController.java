@@ -31,7 +31,7 @@ public class ClienteController {
             return new ResponseEntity<String>("Diseño agregado", HttpStatus.OK);
         }
         else
-        return new ResponseEntity<String>("Diseño existente", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<String>("Diseño existente o cantidad de productos invalida", HttpStatus.BAD_REQUEST);
     }
 
     @GetMapping("/cargarDesigns")
