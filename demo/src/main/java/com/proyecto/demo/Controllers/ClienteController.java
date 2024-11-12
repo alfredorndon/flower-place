@@ -37,7 +37,7 @@ public class ClienteController {
     @GetMapping("/cargarDesigns")
     public ResponseEntity<ArrayList<Design>> cargarDesigns(@RequestParam("correo") String correo)
     {
-        Cliente cliente= ClienteJson.obtenerClientes(correo);
+        Cliente cliente= ClienteJson.obtenerClientes(correo).get(0);
         if (cliente.getDesigns().isEmpty())
         {
             return new ResponseEntity<ArrayList<Design>>(cliente.getDesigns(),HttpStatus.BAD_REQUEST);
