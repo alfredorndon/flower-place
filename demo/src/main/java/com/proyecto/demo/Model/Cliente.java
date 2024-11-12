@@ -1,6 +1,6 @@
 package com.proyecto.demo.Model;
 
-import com.proyecto.demo.ManejadorJSON.ProductoJson;
+import com.proyecto.demo.ManejadorJSON.ProductoJson;  
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.proyecto.demo.ManejadorJSON.ClienteJson;
 import com.proyecto.demo.ManejadorJSON.PedidoJson;
