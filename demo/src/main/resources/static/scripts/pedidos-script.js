@@ -85,42 +85,6 @@ function actualizarTotal() {
     localStorage.setItem('totalPedido', total);
 }
 
-async function cargarPedidos(ruta) {
-    const respuesta = await fetch(ruta, {
-        method: 'GET',
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
-    });
-
-    if (respuesta.ok) {
-        const pedidos = await respuesta.json();
-        const contenedor = document.getElementById("tarjetas-pedidos");
-
-        pedidos.forEach((pedido, index) => {
-            const tarjeta = document.createElement("div");
-            tarjeta.classList.add("tarjeta-pedido");
-            tarjeta.id = `tarjeta-pedido-${index + 1}`;
-            tarjeta.innerHTML = 
-                `<p class="nombre-cliente"><strong>Nombre del Cliente:</strong> ${pedido.nombreCliente}</p>
-                <p class="email-cliente"><strong>Correo:</strong> ${pedido.emailCliente}</p>
-                <p class="designs-incluidos"><strong>designs Incluidos:</strong></p>
-                <ul class="lista-designs">
-                    ${Array.from(pedido.designs).map(design => `<li>${design}</li>`).join('')}
-                </ul>
-                <p class="precio-total"><strong>Precio total:</strong> $${pedido.precioTotal.toFixed(2)}</p>
-                <div class="estado-pedido">
-                    <strong>Estado del Pedido:</strong> <span class="estado-abierto">${pedido.estado}</span>
-                </div>`
-            ;
-            contenedor.appendChild(tarjeta);
-        });
-    } else {
-        console.error('Error al cargar los pedidos');
-    }
-}
-
 //Main del programa
 const correoAdmin = "admin@gmail.com";
 const contraAdmin = "admin1234";
@@ -252,14 +216,6 @@ document.addEventListener('DOMContentLoaded', function ()
             }
         }
         pedirDesigns();
-        if (localStorage.getItem('email') == correoAdmin)
-        {
-            cargarPedidos("/admin/cargarPedidos");
-        }
-        else
-        {
-            cargarPedidos(`/cliente/cargarPedidos?correo=${localStorage.getItem('email')}`);
-        }
     }
     else
     {
