@@ -52,6 +52,7 @@ public class ClienteController {
     public ResponseEntity<String> crearPedido(@RequestBody Pedido pedido, @RequestParam("correo") String correo) throws IOException
     {
         Cliente cliente= new Cliente(correo,"","","");
+        cliente.actualizarProductosTotales();
         cliente.agregarPedido(pedido, correo);
         return new ResponseEntity<String>("Pedido creado", HttpStatus.OK);
     }
@@ -59,13 +60,10 @@ public class ClienteController {
     public ResponseEntity<ArrayList<Pedido>> obtenerPedidos(@RequestParam("correo") String correo) throws IOException
     {
         Cliente cliente= ClienteJson.obtenerClientes(correo).get(0);
-        if (cliente.getDesigns().isEmpty())
-        {
-            return new ResponseEntity<ArrayList<Design>>(cliente.getDesigns(),HttpStatus.BAD_REQUEST);
-        }
+        if (cliente.getPedidos().isEmpty())
+            return new ResponseEntity<ArrayList<Pedido>>(cliente.getPedidos(),HttpStatus.BAD_REQUEST);
         else
-        return new ResponseEntity<ArrayList<Design>>(cliente.getDesigns(),HttpStatus.OK);
+        return new ResponseEntity<ArrayList<Pedido>>(cliente.getPedidos(),HttpStatus.OK);
     }
-
 }
 

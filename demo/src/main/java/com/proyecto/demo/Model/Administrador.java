@@ -1,6 +1,7 @@
 package com.proyecto.demo.Model;
 
 import com.proyecto.demo.ManejadorJSON.AdministradorJson;
+import com.proyecto.demo.ManejadorJSON.ClienteJson;
 import com.proyecto.demo.ManejadorJSON.ProductoJson;
 import com.proyecto.demo.ManejadorJSON.PedidoJson;
 
@@ -147,6 +148,38 @@ public class Administrador extends Persona {
         else
         {
             throw new RuntimeException("Datos de administrador erroneos");
+        }
+    }
+    public void editarPedido(String estado, int id) throws IOException
+    {
+        ArrayList<Pedido> pedidosTotales=PedidoJson.obtenerPedidosTotales();
+        for (int i=0;i<pedidosTotales.size();i++)
+        {
+            if (pedidosTotales.get(i).getId()==id)
+            {
+                pedidosTotales.get(i).setEstado(estado);
+                PedidoJson.eliminarPedido(id);
+                PedidoJson.guardarPedido(pedidosTotales.get(i));
+            }
+        }
+    }
+    public void editarPedidoCliente(String estado, String correo, int id) throws IOException
+    {
+        ArrayList<Cliente> listaClientes= ClienteJson.obtenerClientesTotales();
+        for (int i=0;i<listaClientes.size();i++)
+        {
+            if (listaClientes.get(i).getCorreo().equals(correo))
+            {
+                for (int j=0;j<listaClientes.get(i).getPedidos().size();j++)
+                {
+                    if (listaClientes.get(i).getPedidos().get(j).getId()==id)
+                    {
+                        listaClientes.get(i).getPedidos().get(j).setEstado(estado);
+                        ClienteJson.eliminarCliente(listaClientes.get(i).getCorreo());
+                        ClienteJson.guardarCliente(listaClientes.get(i));
+                    }
+                }
+            }
         }
     }
     public boolean validarDatosProducto(int cantidad, float precio)

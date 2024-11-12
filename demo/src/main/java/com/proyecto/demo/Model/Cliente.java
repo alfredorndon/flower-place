@@ -74,6 +74,10 @@ public class Cliente extends Persona {
         pedidos=new ArrayList<Pedido>();
         return pedidos;
     }
+    public ArrayList<Pedido> getPedidos()
+    {
+        return this.pedidos;
+    }
 
     public void setPedidos(ArrayList<Pedido> pedidos)
     {

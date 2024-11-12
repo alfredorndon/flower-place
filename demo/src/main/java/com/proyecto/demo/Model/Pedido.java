@@ -11,7 +11,7 @@ public class Pedido {
     //Constructor
     public Pedido(ArrayList<Design> designs, String estado, int id, String correo) {
         this.designs = designs;
-        this.estado = estado;
+        this.estado = "Abierto";
         this.id = id;
         this.correo = correo;
     }

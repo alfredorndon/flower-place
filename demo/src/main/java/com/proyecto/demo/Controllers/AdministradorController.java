@@ -87,12 +87,21 @@ public class AdministradorController {
         }
         return cliente;
     }
-    @GetMapping("/Pedidos")
+    @GetMapping("/cargarPedidos")
     public ResponseEntity<ArrayList<Pedido>> obtenerPedidos() throws IOException
     {
         if (PedidoJson.obtenerPedidosTotales().isEmpty())
             return new ResponseEntity<ArrayList<Pedido>>(PedidoJson.obtenerPedidosTotales(),HttpStatus.BAD_REQUEST);
         else
             return new ResponseEntity<ArrayList<Pedido>>(PedidoJson.obtenerPedidosTotales(),HttpStatus.OK);
+    }
+
+    @PostMapping("/editarPedido")
+    public ResponseEntity<String> editarPedido (@RequestBody String estado,  @RequestParam("id") int id, @RequestParam ("correo") String correo) throws IOException
+    {
+        Administrador admin= new Administrador(1);
+        admin.editarPedido(estado,id);
+        admin.editarPedidoCliente(estado, correo, id);
+        return new ResponseEntity<String>("Pedido Editado",HttpStatus.OK);
     }
 }
