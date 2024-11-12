@@ -152,7 +152,7 @@ public class Cliente extends Persona {
     }
 
 
-    public void actualizarProductosTotales()
+    public void actualizarProductosTotales() throws IOException
     {
         ArrayList<Producto> productosTotales=ProductoJson.obtenerProductosTotales();
         if (productosTotales==null)
@@ -170,26 +170,14 @@ public class Cliente extends Persona {
                         {
                             productosTotales.get(k).setCantidad(0);
                         }
+                        ProductoJson.eliminarProducto(productosTotales.get(k).getNombre());
+                        ProductoJson.guardarProducto(productosTotales.get(k));
                     }
                 }
             }
         }
-        for (int i=0;i<productosTotales.size();i++)
-        {
-            ProductoJson.guardarProducto(productosTotales.get(i));
-        }
     }
 
-
-    public void agregarPedido(ArrayList<Design> designs, String estado)
-    {
-        ArrayList<Pedido> pedidos=obtenerCliente(this.getCorreo()).pedidos;
-        int id=pedidos.size()+1;
-        this.actualizarProductosTotales();
-        this.pedidos.add(new Pedido(designs, estado, id, this.getCorreo()));
-        //ClienteJson.editarCliente(this.getCorreo(),pedidos);
-        PedidoJson.guardarPedido(new Pedido(designs, estado, id, this.getCorreo()));
-    }
 
     public boolean verificarDatos(String correo, String contrasena)
     {
@@ -251,8 +239,11 @@ public class Cliente extends Persona {
                 clienteActual.designs.add(design);
                 ClienteJson.guardarCliente(clienteActual);
     }
+
     public void agregarPedido(Pedido pedido , String correo) throws IOException
     {
+        ArrayList<Pedido> pedidosTotales=PedidoJson.obtenerPedidosTotales();
+        pedido.setId((pedidosTotales.size())+1);
         ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
         Cliente clienteActual= new Cliente();
         for (int i=0;i<listaClientes.size();i++)
@@ -266,8 +257,10 @@ public class Cliente extends Persona {
                 clienteActual.pedidos.add(pedido);
                 ClienteJson.guardarCliente(clienteActual);
     }
+
     public boolean validarPedido(Pedido pedido , String correo)
     {
+        
         ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
         Cliente clienteActual= new Cliente();
         boolean pedidoValidado=false;

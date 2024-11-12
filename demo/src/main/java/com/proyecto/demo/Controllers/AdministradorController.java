@@ -87,4 +87,12 @@ public class AdministradorController {
         }
         return cliente;
     }
+    @GetMapping("/Pedidos")
+    public ResponseEntity<ArrayList<Pedido>> obtenerPedidos() throws IOException
+    {
+        if (PedidoJson.obtenerPedidosTotales().isEmpty())
+            return new ResponseEntity<ArrayList<Pedido>>(PedidoJson.obtenerPedidosTotales(),HttpStatus.BAD_REQUEST);
+        else
+            return new ResponseEntity<ArrayList<Pedido>>(PedidoJson.obtenerPedidosTotales(),HttpStatus.OK);
+    }
 }
