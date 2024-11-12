@@ -48,7 +48,7 @@ public class ClienteController {
         return new ResponseEntity<ArrayList<Design>>(cliente.getDesigns(),HttpStatus.OK);
     }
 
-    @PostMapping("/crearPedido")
+    @PostMapping("/crearPedidos")
     public ResponseEntity<String> crearPedido(@RequestBody Pedido pedido, @RequestParam("correo") String correo) throws IOException
     {
         Cliente cliente= new Cliente(correo,"","","");

@@ -107,7 +107,7 @@ async function cargarPedidos(ruta) {
                 <p class="email-cliente"><strong>Correo:</strong> ${pedido.emailCliente}</p>
                 <p class="designs-incluidos"><strong>designs Incluidos:</strong></p>
                 <ul class="lista-designs">
-                    ${pedido.designs.map(design => `<li>${design}</li>`).join('')}
+                    ${Array.from(pedido.designs).map(design => `<li>${design}</li>`).join('')}
                 </ul>
                 <p class="precio-total"><strong>Precio total:</strong> $${pedido.precioTotal.toFixed(2)}</p>
                 <div class="estado-pedido">
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function ()
                 ocultarPorID("crear-pedido");
                 ocultarPorID("editar-pedido");
                 ocultarPorID("volver-pedidos")
-                document.getElementById('volver-pedidos').addEventListener('click', function(){window.location.href = "gestion-pedidos.html"})
+                document.getElementById('volver-pedidos').addEventListener('click', function(){window.location.href = "gestion-pedidos.html";});
 
                 //Sección de Editar Pedido
                 document.getElementById("boton-editar-pedido").addEventListener('click', function()
@@ -208,9 +208,9 @@ document.addEventListener('DOMContentLoaded', function ()
                         while (parrafos[i+2].id != "precio-design")
                         {
                             i+= 2;
-                            productos.push({nombre:parrafos[i].textContent.split(" ")[1],precio:" ",cantidad:parrafos[i+1].textContent.split(" ")});
+                            productos.push({nombre:parrafos[i].textContent.split(" ")[1],precio:" ",cantidad:parrafos[i+1].textContent.split(" ")[1]});
                         }
-                        cualesSeleccionados.push({productos:productos,nombre:parrafos[0].textContent,precio:parrafos[i+2].textContent});
+                        cualesSeleccionados.push({productos:productos,nombre:parrafos[0].textContent,precio:parrafos[i+2].textContent.split("$")[1]});
                         actualizarTotal();
                     });
                 });
@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', function ()
                         pedido.estado = "Abierto";
                         pedido.id = 0;
                         pedido.correo = localStorage.getItem('email');
-                        const peticion = await fetch (`/cliente/crearPedido?correo=${localStorage.getItem('email')}`,
+                        const peticion = await fetch (`/cliente/crearPedidos?correo=${localStorage.getItem('email')}`,
                         {
                             method: 'POST',
                             headers:
@@ -237,13 +237,13 @@ document.addEventListener('DOMContentLoaded', function ()
                         });
                         if (peticion.ok)
                         {
-                            console.log ("exito!!!!");
                             alert("Pedido creado con exito");
                             window.location.href = "gestion-pedidos.html";
                         }
                         else
                         {
                             const error = await peticion.text();
+                            console.log(error);
                             alert("Error al crear el pedido: " + error);
                         }
                     }
