@@ -44,19 +44,19 @@ function cerrarSesion()
     window.location.href = "index.html";
 }
 
-function crearTarjetaDiseño(diseño) {
-    const contenedor = document.getElementById("tarjetas-design");
+function crearTarjetadesign(design) {
+    const contenedor = document.getElementById("tarjetas-design-pedido-nuevo");
     const tarjeta = document.createElement("div");
     tarjeta.classList.add("tarjeta-design");
 
-    // Asumiendo que diseño tiene las propiedades necesarias
+    // Asumiendo que design tiene las propiedades necesarias
     tarjeta.innerHTML = `
-        <p id="nombre-design">${diseño.nombre}</p>
-        <p id="precio-design">Precio Total: $${diseño.precio}</p>
+        <p id="nombre-design">${design.nombre}</p>
+        <p id="precio-design">Precio Total: $${design.precio}</p>
     `;
 
     // Añadir las flores y cantidades
-    diseño.productos.forEach((producto, index) => {
+    design.productos.forEach((producto, index) => {
         const florElemento = document.createElement("p");
         florElemento.id = `flor-${index + 1}`;
         florElemento.innerHTML = `<strong>Flor:</strong> ${producto.nombre}`;
@@ -76,13 +76,49 @@ function actualizarTotal() {
     let total = 0;
 
     tarjetas.forEach(tarjeta => {
-        const precioTexto = tarjeta.querySelector('.precio-design').textContent;
+        const precioTexto = tarjeta.querySelector('#precio-design').textContent;
         const precio = parseFloat(precioTexto.split('$')[1]);
         total += precio;
     });
 
     document.querySelector('#total-pedido p').innerHTML = `<strong>Precio total del pedido:</strong> $${total}`;
     localStorage.setItem('totalPedido', total);
+}
+
+async function cargarPedidos() {
+    const respuesta = await fetch("/admin/Pedidos", {
+        method: 'GET',
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        }
+    });
+
+    if (respuesta.ok) {
+        const pedidos = await respuesta.json();
+        const contenedor = document.getElementById("tarjetas-pedidos");
+
+        pedidos.forEach((pedido, index) => {
+            const tarjeta = document.createElement("div");
+            tarjeta.classList.add("tarjeta-pedido");
+            tarjeta.id = `tarjeta-pedido-${index + 1}`;
+            tarjeta.innerHTML = 
+                `<p class="nombre-cliente"><strong>Nombre del Cliente:</strong> ${pedido.nombreCliente}</p>
+                <p class="email-cliente"><strong>Correo:</strong> ${pedido.emailCliente}</p>
+                <p class="designs-incluidos"><strong>designs Incluidos:</strong></p>
+                <ul class="lista-designs">
+                    ${pedido.designs.map(design => `<li>${design}</li>`).join('')}
+                </ul>
+                <p class="precio-total"><strong>Precio total:</strong> $${pedido.precioTotal.toFixed(2)}</p>
+                <div class="estado-pedido">
+                    <strong>Estado del Pedido:</strong> <span class="estado-abierto">${pedido.estado}</span>
+                </div>`
+            ;
+            contenedor.appendChild(tarjeta);
+        });
+    } else {
+        console.error('Error al cargar los pedidos');
+    }
 }
 
 //Main del programa
@@ -114,10 +150,10 @@ document.addEventListener('DOMContentLoaded', function ()
             });
             if (respuesta.ok)
             {
-                const diseños = await respuesta.json();
-                diseños.forEach(diseño =>
+                const designs = await respuesta.json();
+                designs.forEach(design =>
                 {
-                    crearTarjetaDiseño(diseño);
+                    crearTarjetadesign(design);
                 });
                 document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
                 ocultarPorID("crear-pedido");
@@ -144,6 +180,10 @@ document.addEventListener('DOMContentLoaded', function ()
                 {
                     elementos[1].style.setProperty('display', 'none', 'important');
                     ocultarPorID('boton-nuevo-pedido');
+                }
+                else
+                {
+                    ocultarPorID('boton-editar-pedido');
                 }
                 const tarjetas = document.querySelectorAll('.tarjeta-design');
                 let tarjetaSeleccionada = null;
@@ -185,13 +225,34 @@ document.addEventListener('DOMContentLoaded', function ()
                         pedido.estado = "Abierto";
                         pedido.id = 0;
                         pedido.correo = localStorage.getItem('email');
-                        const peticion = await fetch ()
+                        const peticion = await fetch (`/cliente/crearPedido?correo=${localStorage.getItem('email')}`,
+                        {
+                            method: 'POST',
+                            headers:
+                            {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(pedido)
+                        });
+                        if (peticion.ok)
+                        {
+                            console.log ("exito!!!!");
+                            alert("Pedido creado con exito");
+                            window.location.href = "gestion-pedidos.html";
+                        }
+                        else
+                        {
+                            const error = await peticion.text();
+                            alert("Error al crear el pedido: " + error);
+                        }
                     }
                     registrarPedido();
                 });
             }
         }
         pedirDesigns();
+        cargarPedidos();
     }
     else
     {
