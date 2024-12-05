@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es-VE">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta author="Alfredo Rondon, Oscar Manrique"/>
+        <meta name="Description" content="Flower Place" />
+        <title>Flower Place | Productos</title>
+        <link rel="icon" href="../styles/images/logo-web.png" type="image/x-icon">
+        <link rel="stylesheet" href="../styles/styles.css"/>
+    </head>
+    <body>
+        <header>
+            <div id="main-title">
+                <h1><a href="index.html">Flower Place</a></h1>
+            </div>
+            <div class="menu-bar">
+                <h3><a href="gestion-productos.html">Productos</a></h3>
+                <h3><a href="gestion-designs.html">Diseños</a></h3>
+                <h3><a href="gestion-pedidos.html">Pedidos</a></h3>
+                <h3><a href="gestion-perfil.html">Perfil</a></h3>
+                <h3><a href="index.html"><img src="../styles/images/logout.svg" alt="Icono" id="icono-logout"></a></h3>
+            </div>
+        </header>
+        <main>
+            <section class="volver" id="volver-productos">
+                <button>Volver</button>
+            </section>
+            <section id="catalogo-productos">
+                <div class="section-title">
+                    <h2>Catálogo de Productos</h2>
+                </div>
+                <div id="opciones-producto">
+                    <button id="boton-nuevo-producto">Nuevo</button>
+                    <button id="boton-editar-producto" disabled>Editar</button>
+                </div>
+                <section id="tarjetas-catalogo">
+                    <div class="tarjeta-flor" id="tarjeta-individual-flor" data-nombre="Nombre del Producto" data-cantidad="10" data-precio="XX.XX">
+                        <p class="nombre-flor">Nombre del Producto</p>
+                        <p class="cantidad-flor">Cantidad: 10</p>
+                        <p class="precio-flor">Precio: $XX.XX</p>
+                    </div>
+                </section>
+            </section>
+            <section id="editar-producto">
+                <div class="section-title">
+                    <h2>Editar Producto</h2>
+                </div>
+                <form class="formulario-producto" action="#" method="post" id="editar-producto-form" enctype="multipart/form-data">
+                    <label for="nombre-flor-form">Nombre de la Flor</label>
+                    <input type="text" id="nombre-flor-editar" name="nombre-flor-editar" placeholder="Nombre" required readonly/>
+
+                    <label for="cantidad-flor-form">Cantidad</label>
+                    <input type="number" id="cantidad-flor-editar" name="cantidad-flor-editar" placeholder="Cantidad" min="1" required />
+                    
+                    <label for="precio-flor-form">Precio</label>
+                    <input type="number" id="precio-flor-editar" name="precio-flor-editar" placeholder="Precio" step="0.10" min="1.00" required />
+                    
+                    <div class="confirmar">
+                        <button type="submit" id="editar-confirmar">Confirmar</button>
+                    </div>
+                </form>
+            </section>
+            <section id="agregar-producto">
+                <div class="section-title">
+                    <h2>Agregar Producto</h2>
+                </div>
+                <form class="formulario-producto" action="#" method="post" id="agregar-producto-form" enctype="multipart/form-data">
+                    <label for="nombre-flor-form">Nombre de la Flor</label>
+                    <input type="text" id="nombre-flor-form" name="nombre-flor-form" placeholder="Nombre" required />
+                    
+                    <label for="cantidad-flor-form">Cantidad</label>
+                    <input type="number" id="cantidad-flor-form" name="cantidad-flor-form" placeholder="Cantidad" min="1" required />
+                    
+                    <label for="precio-flor-form">Precio</label>
+                    <input type="number" id="precio-flor-form" name="precio-flor-form" placeholder="Precio" step="0.10" min="1.00" required />
+                    
+                    <div class="confirmar">
+                        <button type="submit" id="agregar-confirmar">Confirmar</button>
+                    </div>
+                </form>
+            </section>
+        </main>
+        <script src="../scripts/productos-script.js" type="text/javascript"></script>
+    </body>
+</html>
