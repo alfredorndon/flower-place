@@ -32,7 +32,7 @@
                 </div>
                 <div id="opciones-pedido">
                     <button id="boton-nuevo-pedido">Nuevo</button>
-                    <button id="boton-editar-pedido" disabled>Editar</button>
+                    <button id="boton-editar-pedido">Editar</button><!--colocar el disabled al lado del id de editar-->
                 </div>
                 <section id="tarjetas-pedidos">
                 </section>
@@ -58,9 +58,26 @@
                 </div>
                 <form class="formulario-pedido" action="#" method="post" id="editar-pedido-form" enctype="multipart/form-data">
                     <section id="tarjetas-design-pedido-editar">
+                        <div class="tarjeta-pedido" id="tarjeta-pedido-1">
+                            <p class="nombre-cliente"><strong>Nombre del Cliente:</strong> Juan Pérez</p>
+                            <p class="telefono-cliente"><strong>Teléfono:</strong> +123456789</p>
+                            <p class="email-cliente"><strong>Correo:</strong> juan.perez@example.com</p>
+                            <p class="designs-incluidos"><strong>Diseños Incluidos:</strong></p>
+                            <ul class="lista-designs">
+                                <li>Diseño 1</li>
+                                <li>Diseño 2</li>
+                                <li>Diseño 3</li>
+                            </ul>
+                            <div class="estado-pedido">
+                                <strong>Estado del Pedido:</strong> <span class="estado-abierto">Abierto</span>
+                            </div>
+                        </div>
                     </section>
                     <div class="text" id="total-pedido">
                         <p><strong>Precio total del pedido:</strong> $1500.00</p>
+                    </div>
+                    <div class="cerrado">
+                        <button type="button">Cerrar Pedido</button>
                     </div>
                     <div class="confirmar">
                         <button type="submit">Confirmar</button>

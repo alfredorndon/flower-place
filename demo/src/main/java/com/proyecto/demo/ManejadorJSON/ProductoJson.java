@@ -54,7 +54,7 @@ public class ProductoJson extends Producto {
     static public ArrayList<Producto> obtenerProductosTotales() {
         try {
             Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\alfre\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\producto.json"));
+            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\producto.json"));
             Producto[] productos = gson.fromJson(reader, Producto[].class);
             if (productos == null || productos.length == 0) {
                 return new ArrayList<>(); // Retorna un ArrayList vacío
@@ -73,7 +73,7 @@ public class ProductoJson extends Producto {
     static public void guardarProducto(Producto producto) { //Le paso el objeto que quiero guardar en la lista del json
         try {
             Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\alfre\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\producto.json"));
+            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\producto.json"));
             Producto[] productos = gson.fromJson(reader, Producto[].class);
             List<Producto> productoLista= new ArrayList<>(Arrays.asList(productos));
 

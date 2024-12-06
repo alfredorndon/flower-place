@@ -86,20 +86,22 @@ document.addEventListener('DOMContentLoaded', function()
             if(respuesta.ok)
             {
                 const datos = await respuesta.json();
-                datos.forEach(producto =>
+                if (datos != null)
                 {
-                    crearTarjeta(producto.nombre, producto.cantidad, producto.precio, producto.foto);
-                });
-                ocultarPorID("editar-producto");
-                ocultarPorID("agregar-producto");
-                document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
+                    datos.forEach(producto =>
+                    {
+                        crearTarjeta(producto.nombre, producto.cantidad, producto.precio, producto.foto);
+                    });
+                    ocultarPorID("editar-producto");
+                    ocultarPorID("agregar-producto");
+                    document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
+                }
 
                 //Este if solo ocurre si el Admin entra
                 if (localStorage.getItem('email') == correoAdmin)
                 {
                     document.getElementById("volver-productos").addEventListener("click", function (){window.location.href = "gestion-productos.html";})
                     elementos[1].style.setProperty('display', 'none', 'important');
-                    elementos[2].style.setProperty('display', 'none', 'important');
 
                     //Sección de Editar Producto
                     document.getElementById("boton-editar-producto").addEventListener('click', function()

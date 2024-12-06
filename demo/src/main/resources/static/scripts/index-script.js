@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function ()
     {
         document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
         if (localStorage.getItem('email') == correoAdmin)
-            {elementos[1].style.setProperty('display', 'none', 'important');elementos[2].style.setProperty('display', 'none', 'important');}
+            {elementos[1].style.setProperty('display', 'none', 'important');}
         ocultarPorID ('texto-no-login');
         ocultarPorClase ('opcion-inicio');
     }
