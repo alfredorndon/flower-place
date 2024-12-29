@@ -300,7 +300,7 @@ button:active {
 
 /* pedidos styles */
 
-#opciones-pedido {
+#opciones-pedido-cliente, #opciones-pedido-admin {
     display: flex;
     justify-content: space-around;
     margin-bottom: 20px;
