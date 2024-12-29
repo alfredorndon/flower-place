@@ -74,17 +74,17 @@ public class ClienteController {
         return new ResponseEntity<String>("Perfil eliminado", HttpStatus.OK);
     }
     
-    @PostMapping("/editarPerfilCliente")
-    public ResponseEntity<String> editarPerfilCliente (@RequestParam("correo") String correo, @RequestParam("contra") String contra, @RequestParam("nombre") String nombre, @RequestParam("numeroTelefonico") String numeroTelefonico ) throws IOException
-    {
-        Cliente cliente = new Cliente(correo,contra,nombre,numeroTelefonico);
-        if (cliente.verificarNumeroTelefonico (correo, numeroTelefonico))
-        {
-        cliente.editarPerfilCliente(correo, contra, nombre, numeroTelefonico);
-        return new ResponseEntity<String>("Perfil editado con exito", HttpStatus.OK);
-        }
-        else
-        return new ResponseEntity<String>("Numero Telefonico ya existente", HttpStatus.BAD_REQUEST);
-    }
+    // @PostMapping("/editarPerfilCliente")
+    // public ResponseEntity<String> editarPerfilCliente (@RequestParam("correo") String correo, @RequestParam("contra") String contra, @RequestParam("nombre") String nombre, @RequestParam("numeroTelefonico") String numeroTelefonico ) throws IOException
+    // {
+    //     Cliente cliente = new Cliente(correo,contra,nombre,numeroTelefonico);
+    //     if (cliente.verificarNumeroTelefonico (correo, numeroTelefonico))
+    //     {
+    //     cliente.editarPerfilCliente(correo, contra, nombre, numeroTelefonico);
+    //     return new ResponseEntity<String>("Perfil editado con exito", HttpStatus.OK);
+    //     }
+    //     else
+    //     return new ResponseEntity<String>("Numero Telefonico ya existente", HttpStatus.BAD_REQUEST);
+    // }
 }
 

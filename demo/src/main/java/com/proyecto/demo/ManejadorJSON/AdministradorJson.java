@@ -8,5 +8,6 @@ import java.util.ArrayList;
 
 public class AdministradorJson extends Administrador {
     public AdministradorJson() {
+        super(1);
     }
 }
