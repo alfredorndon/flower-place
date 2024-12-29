@@ -125,7 +125,7 @@ button:active {
     background-color: #d4c1ec;
 }
 
-.confirmar {
+.confirmar, .cerrado {
     display: flex; /* Usar flexbox para centrar */
     justify-content: center; /* Centrar horizontalmente */
     margin-top: 20px; /* Margen superior para separar del último campo */

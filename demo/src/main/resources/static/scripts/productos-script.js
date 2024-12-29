@@ -86,13 +86,16 @@ document.addEventListener('DOMContentLoaded', function()
             if(respuesta.ok)
             {
                 const datos = await respuesta.json();
-                datos.forEach(producto =>
+                if (datos != null)
                 {
-                    crearTarjeta(producto.nombre, producto.cantidad, producto.precio, producto.foto);
-                });
-                ocultarPorID("editar-producto");
-                ocultarPorID("agregar-producto");
-                document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
+                    datos.forEach(producto =>
+                    {
+                        crearTarjeta(producto.nombre, producto.cantidad, producto.precio, producto.foto);
+                    });
+                    ocultarPorID("editar-producto");
+                    ocultarPorID("agregar-producto");
+                    document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
+                }
 
                 //Este if solo ocurre si el Admin entra
                 if (localStorage.getItem('email') == correoAdmin)

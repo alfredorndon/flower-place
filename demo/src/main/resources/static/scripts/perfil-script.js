@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function ()
                 const datos = await respuesta.json();
                 document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
                 if (localStorage.getItem('email') == correoAdmin)
-                    elementos[1].style.setProperty('display', 'none', 'important');
+                    {elementos[1].style.setProperty('display', 'none', 'important');}
                 let divDatos = document.getElementById("datos-perfil");
                 let parrafos = divDatos.querySelectorAll("p");
                 parrafos[0].textContent = "Nombre: "+datos.nombre;

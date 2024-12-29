@@ -14,7 +14,6 @@ import com.google.gson.stream.JsonReader;
 import com.proyecto.demo.Model.Cliente;
 import com.proyecto.demo.Model.Design;
 import com.proyecto.demo.Model.Pedido;
-import com.proyecto.demo.Model.Producto;
 
 public class ClienteJson extends Cliente {
     public ClienteJson(String correo, String contrasena, String nombre, String numeroTelefonico, ArrayList<Design> designs, ArrayList<Pedido> pedidos) {
