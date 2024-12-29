@@ -42,22 +42,27 @@ public class AdministradorController {
     @GetMapping("/Productos")
     public ResponseEntity<ArrayList<Producto>> obtenerProductos(){
         if (ProductoJson.obtenerProductosTotales().isEmpty())
-        return new ResponseEntity<ArrayList<Producto>>(ProductoJson.obtenerProductosTotales(),HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<ArrayList<Producto>>(ProductoJson.obtenerProductosTotales(),HttpStatus.BAD_REQUEST);
         else
-        return new ResponseEntity<ArrayList<Producto>>(ProductoJson.obtenerProductosTotales(),HttpStatus.OK);
+            return new ResponseEntity<ArrayList<Producto>>(ProductoJson.obtenerProductosTotales(),HttpStatus.OK);
     }
 
     @PostMapping("/AgregarProducto")
     public ResponseEntity<String> agregarProducto (@RequestBody Producto productoAgregado)
     {
         Administrador administrador= new Administrador();
-        if (administrador.verificarProducto(productoAgregado))
+        if (administrador.validarDatosProducto(productoAgregado.getCantidad(), productoAgregado.getPrecio()) && !productoAgregado.getNombre().equalsIgnoreCase("") && !productoAgregado.getNombre().equalsIgnoreCase(" "))
         {
-            ProductoJson.guardarProducto(productoAgregado);
-            return new ResponseEntity<String>("Producto Agregado",HttpStatus.OK);
+            if (administrador.verificarProducto(productoAgregado))
+            {
+                ProductoJson.guardarProducto(productoAgregado);
+                return new ResponseEntity<String>("Producto Agregado",HttpStatus.OK);
+            }
+            else
+                return new ResponseEntity<String>("Producto ya agregado",HttpStatus.CONFLICT);
         }
         else
-        return new ResponseEntity<String>("Datos Invalidos",HttpStatus.CONFLICT);
+            return new ResponseEntity<String>("Datos Invalidos",HttpStatus.CONFLICT);
     }
 
     @PostMapping("/EditarProducto")

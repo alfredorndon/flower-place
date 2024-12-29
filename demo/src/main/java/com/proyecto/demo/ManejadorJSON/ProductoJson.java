@@ -24,7 +24,7 @@ public class ProductoJson extends Producto {
         try {
             Gson gson = new Gson();
             Object FilePath;
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\alfre\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\producto.json"));
+            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\producto.json"));
             Producto[] productos = gson.fromJson(reader, Producto[].class);
             ArrayList<Producto> productoLista = new ArrayList<>(Arrays.asList(productos));
             ArrayList<Producto> nuevaLista = new ArrayList<Producto>();
@@ -79,7 +79,7 @@ public class ProductoJson extends Producto {
 
             productoLista.add(producto);
 
-            FileWriter fw = new FileWriter("C:\\Users\\alfre\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\producto.json");
+            FileWriter fw = new FileWriter("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\producto.json");
             StringWriter sw = new StringWriter();
             sw.write(gson.toJson(productoLista));
             fw.write(sw.toString());
@@ -94,7 +94,7 @@ public class ProductoJson extends Producto {
     public static void eliminarProducto(String nombreProducto) throws IOException {
         // Leer el JSON existente
         Gson gson = new Gson();
-        List<Producto> productos = gson.fromJson(new FileReader("C:\\Users\\alfre\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\producto.json"), new TypeToken<List<Producto>>() {}.getType());
+        List<Producto> productos = gson.fromJson(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\producto.json"), new TypeToken<List<Producto>>() {}.getType());
 
         // Eliminar el producto
         List<Producto> productosActualizados = new ArrayList<>();
@@ -105,7 +105,7 @@ public class ProductoJson extends Producto {
         }
 
         // Escribir el JSON actualizado
-        try (FileWriter writer = new FileWriter("C:\\Users\\alfre\\Documents\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\producto.json")) {
+        try (FileWriter writer = new FileWriter("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\producto.json")) {
             gson.toJson(productosActualizados, writer);
         }
         catch (IOException e) {
