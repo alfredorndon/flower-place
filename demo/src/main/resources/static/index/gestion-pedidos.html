@@ -30,11 +30,29 @@
                 <div class="section-title">
                     <h2>Pedidos Creados</h2>
                 </div>
-                <div id="opciones-pedido">
+                <div id="opciones-pedido-cliente">
                     <button id="boton-nuevo-pedido">Nuevo</button>
                     <button id="boton-editar-pedido">Editar</button><!--colocar el disabled al lado del id de editar-->
                 </div>
+                <div id="opciones-pedido-admin">
+                    <button id="boton-consultar-pedido">Consultar</button>
+                    <button id="boton-cancelar-pedido">Cancelar</button>
+                </div>
                 <section id="tarjetas-pedidos">
+                    <div class="tarjeta-pedido" id="tarjeta-pedido-1">
+                        <p class="nombre-cliente"><strong>Nombre del Cliente:</strong> Juan Pérez</p>
+                        <p class="telefono-cliente"><strong>Teléfono:</strong> +123456789</p>
+                        <p class="email-cliente"><strong>Correo:</strong> juan.perez@example.com</p>
+                        <p class="designs-incluidos"><strong>Diseños Incluidos:</strong></p>
+                        <ul class="lista-designs">
+                            <li>Diseño 1</li>
+                            <li>Diseño 2</li>
+                            <li>Diseño 3</li>
+                        </ul>
+                        <div class="estado-pedido">
+                            <strong>Estado del Pedido:</strong> <span class="estado-abierto">Abierto</span>
+                        </div>
+                    </div>
                 </section>
             </section>
             <section id="crear-pedido">
@@ -43,6 +61,30 @@
                 </div>
                 <form class="formulario-pedido" action="#" method="post" id="nuevo-pedido-form" enctype="multipart/form-data">
                     <section id="tarjetas-design-pedido-nuevo">
+                        <div class="tarjeta-design" id="tarjeta-1">
+                            <p id="nombre-design">Nombre del Diseño</p>
+                            <p id="flor-1">Flor: Rosa</p>
+                            <p id="cantidad-flor-1">Cantidad: 10</p>
+                            <p id="flor-2">Flor: Lirio</p>
+                            <p id="cantidad-flor-2">Cantidad: 5</p>
+                            <p id="precio-design">Precio Total: $150.00</p>
+                        </div>
+                        <div class="tarjeta-design" id="tarjeta-2">
+                            <p id="nombre-design">Nombre del Diseño</p>
+                            <p id="flor-1">Flor: Rosa</p>
+                            <p id="cantidad-flor-1">Cantidad: 10</p>
+                            <p id="flor-2">Flor: Lirio</p>
+                            <p id="cantidad-flor-2">Cantidad: 5</p>
+                            <p id="precio-design">Precio Total: $150.00</p>
+                        </div>
+                        <div class="tarjeta-design" id="tarjeta-3">
+                            <p id="nombre-design">Nombre del Diseño</p>
+                            <p id="flor-1">Flor: Rosa</p>
+                            <p id="cantidad-flor-1">Cantidad: 10</p>
+                            <p id="flor-2">Flor: Lirio</p>
+                            <p id="cantidad-flor-2">Cantidad: 5</p>
+                            <p id="precio-design">Precio Total: $150.00</p>
+                        </div>
                     </section>
                     <div class="text" id="total-pedido">
                         <p><strong>Precio total del pedido:</strong></p>
@@ -58,6 +100,46 @@
                 </div>
                 <form class="formulario-pedido" action="#" method="post" id="editar-pedido-form" enctype="multipart/form-data">
                     <section id="tarjetas-design-pedido-editar">
+                        <div class="tarjeta-design" id="tarjeta-1">
+                            <p id="nombre-design">Nombre del Diseño</p>
+                            <p id="flor-1">Flor: Rosa</p>
+                            <p id="cantidad-flor-1">Cantidad: 10</p>
+                            <p id="flor-2">Flor: Lirio</p>
+                            <p id="cantidad-flor-2">Cantidad: 5</p>
+                            <p id="precio-design">Precio Total: $150.00</p>
+                        </div>
+                        <div class="tarjeta-design" id="tarjeta-2">
+                            <p id="nombre-design">Nombre del Diseño</p>
+                            <p id="flor-1">Flor: Rosa</p>
+                            <p id="cantidad-flor-1">Cantidad: 10</p>
+                            <p id="flor-2">Flor: Lirio</p>
+                            <p id="cantidad-flor-2">Cantidad: 5</p>
+                            <p id="precio-design">Precio Total: $150.00</p>
+                        </div>
+                        <div class="tarjeta-design" id="tarjeta-3">
+                            <p id="nombre-design">Nombre del Diseño</p>
+                            <p id="flor-1">Flor: Rosa</p>
+                            <p id="cantidad-flor-1">Cantidad: 10</p>
+                            <p id="flor-2">Flor: Lirio</p>
+                            <p id="cantidad-flor-2">Cantidad: 5</p>
+                            <p id="precio-design">Precio Total: $150.00</p>
+                        </div>
+                    </section>
+                    <div class="text" id="total-pedido">
+                        <p><strong>Precio total del pedido:</strong> $1500.00</p>
+                    </div>
+                    <div class="confirmar">
+                        <button type="submit">Confirmar</button>
+                    </div>
+                </form>
+                </section>
+            </section>
+            <section id="consultar-pedido">
+                <div class="section-title">
+                    <h2>Consultar Pedido</h2>
+                </div>
+                <form class="formulario-pedido" action="#" method="post" id="consultar-pedido-form" enctype="multipart/form-data">
+                    <section id="tarjetas-design-pedido-consultar">
                         <div class="tarjeta-pedido" id="tarjeta-pedido-1">
                             <p class="nombre-cliente"><strong>Nombre del Cliente:</strong> Juan Pérez</p>
                             <p class="telefono-cliente"><strong>Teléfono:</strong> +123456789</p>
@@ -78,9 +160,6 @@
                     </div>
                     <div class="cerrado">
                         <button type="button">Cerrar Pedido</button>
-                    </div>
-                    <div class="confirmar">
-                        <button type="submit">Confirmar</button>
                     </div>
                 </form>
                 </section>
