@@ -86,5 +86,14 @@ public class ClienteController {
     //     else
     //     return new ResponseEntity<String>("Numero Telefonico ya existente", HttpStatus.BAD_REQUEST);
     // }
+
+    @PostMapping("/eliminarDesign")
+    public ResponseEntity<String> eliminarDesign(@RequestParam("correo") String correo, @RequestParam("nombreDesign") String nombreDesign) throws IOException
+    {
+        Cliente cliente = new Cliente(correo, "", "", "");
+        cliente= ClienteJson.obtenerClientes(correo).get(0);
+        cliente.eliminarDesign(correo, nombreDesign);
+        return new ResponseEntity<String> ("Diseño borrado exitosamente", HttpStatus.OK);
+    }
 }
 

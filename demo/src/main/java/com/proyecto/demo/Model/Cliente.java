@@ -305,5 +305,19 @@ public class Cliente extends Persona {
     //     else
     //     return true;
     // }
+
+    public void eliminarDesign (String correo, String nombreDesign) throws IOException
+    {
+                for (int j=0; j<this.getDesigns().size(); j++)
+                {
+                    if (this.getDesigns().get(j).getNombre().equals(nombreDesign))
+                    {
+                        this.getDesigns().remove(j);
+                        ClienteJson.eliminarCliente(correo);
+                        ClienteJson.guardarCliente(this);
+                    }
+                }
+    }
+
 }
 
