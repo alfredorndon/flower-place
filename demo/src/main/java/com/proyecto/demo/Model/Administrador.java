@@ -81,13 +81,11 @@ public class Administrador extends Persona {
 
     public boolean verificarProducto(Producto productoAgregado)
     {
-        boolean verificacionProducto=false;
-        if (validarDatosProducto(productoAgregado.getCantidad(), productoAgregado.getPrecio()))
-        verificacionProducto=true;
+        boolean verificacionProducto=true;
             for (int i = 0; i < productos.size(); i++)
             {
                 if (productos.get(i).getNombre().equalsIgnoreCase(productoAgregado.getNombre()))
-                    verificacionProducto=true;
+                    verificacionProducto=false;
             }
         return verificacionProducto;
     }
@@ -179,9 +177,9 @@ public class Administrador extends Persona {
     public boolean validarDatosProducto(int cantidad, float precio)
     {
         if (cantidad<0 || precio<=0)
-        return false;
+            return false;
         else
-        return true;
+            return true;
     }
 
     public boolean verificarNumeroTelefonico( String numeroTelefonico)
