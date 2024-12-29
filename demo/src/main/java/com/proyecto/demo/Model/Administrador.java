@@ -14,7 +14,7 @@ public class Administrador extends Persona {
 
     //Constructor
     public Administrador() {
-        super("admin@gmail.com", "admnin1234", "Administrador" ,"04120998105");
+        super("admin@gmail.com", AdministradorJson.obtenerAdmin().getContrasena(), AdministradorJson.obtenerAdmin().getNombre() ,AdministradorJson.obtenerAdmin().getNumeroTelefonico());
         this.productos=ProductoJson.obtenerProductosTotales();
         this.pedidos=PedidoJson.obtenerPedidosTotales();
         if (productos==null)
@@ -53,6 +53,7 @@ public class Administrador extends Persona {
         productos.add(producto);
         ProductoJson.guardarProducto(producto);
     }
+
     public Producto obtenerProducto(String nombreProducto)
     {
         Producto productoElegido=new Producto("",0,0);
@@ -101,6 +102,8 @@ public class Administrador extends Persona {
             adminObtenido=true;
         return adminObtenido;
     }
+
+
     @Override
     public boolean verificarContra(String contrasena)
     {
@@ -119,24 +122,15 @@ public class Administrador extends Persona {
         return adminObtenido;
     }
 
-    public boolean verificarDatos(String correo, String Contrasena)
+    public boolean verificarDatos(String correo, String contrasena)
     {
         Administrador admin = new Administrador(1);
         boolean adminObtenido= false;
-        if (admin.getNumeroTelefonico().equals(correo) && admin.getContrasena().equals(Contrasena))
+        if (admin.getNumeroTelefonico().equals(correo) && admin.getContrasena().equals(contrasena))
         {
                 adminObtenido=true;
         }
             return adminObtenido;
-    }
-    public void editarPedido(String correo, int id, String estado)
-    {
-        for (int i = 0; i < pedidos.size(); i++) {
-            if (pedidos.get(i).getId() == id && pedidos.get(i).getCorreo().equals(correo))
-            {
-                pedidos.get(i).setEstado(estado);
-            }
-        }
     }
 
     public Administrador login(Administrador admin)
@@ -188,5 +182,28 @@ public class Administrador extends Persona {
         return false;
         else
         return true;
+    }
+
+    public boolean verificarNumeroTelefonico( String numeroTelefonico)
+    {
+        ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
+        int contador=0;
+        for (int i=0; i<listaClientes.size(); i++)
+        {
+            if (listaClientes.get(i).getNumeroTelefonico().equals(numeroTelefonico))
+            contador++;
+        }
+        if (contador!=0)
+        return false;
+        else
+        return true;
+    }
+    public void editarPerfilAdministrador(String correo, String contrasena, String nombre, String numeroTelefonico ) throws IOException
+    {
+        this.setContrasena(contrasena);
+        this.setNombre(nombre);
+        this.setNumeroTelefonico(numeroTelefonico);
+        AdministradorJson.eliminarAdmin();
+        AdministradorJson.guardarAdmin(this);
     }
 }

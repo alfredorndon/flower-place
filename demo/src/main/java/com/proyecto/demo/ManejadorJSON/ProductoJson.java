@@ -57,7 +57,7 @@ public class ProductoJson extends Producto {
             JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\producto.json"));
             Producto[] productos = gson.fromJson(reader, Producto[].class);
             if (productos == null || productos.length == 0) {
-                return new ArrayList<>(); // Retorna un ArrayList vacío
+                return new ArrayList<Producto>(); // Retorna un ArrayList vacío
             }
             ArrayList<Producto> productosLista = new ArrayList<>(Arrays.asList(productos));
 
