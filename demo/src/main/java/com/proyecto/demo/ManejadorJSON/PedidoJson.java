@@ -16,7 +16,6 @@ import com.proyecto.demo.Model.Pedido;
 
 public class PedidoJson extends Pedido {
 
-    public static Object obtenerPedidosTotales;
 
     public PedidoJson(ArrayList<Design> designs, String estado, int id, String correo) {
         super(designs, estado, id, correo);

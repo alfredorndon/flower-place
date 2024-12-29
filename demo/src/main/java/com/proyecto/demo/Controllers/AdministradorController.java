@@ -17,8 +17,6 @@ import java.util.ArrayList;
 @RequestMapping ("/admin")
 public class AdministradorController {
 
-    DesignJson designs = new DesignJson(new ArrayList<Producto>(), "", 0);
-    PedidoJson pedidos = new PedidoJson(new ArrayList<Design>(), "", 0, "");
     public AdministradorController() {}
 
     @PostMapping("/login")
@@ -104,9 +102,36 @@ public class AdministradorController {
     @PostMapping("/editarPedido")
     public ResponseEntity<String> editarPedido (@RequestBody String estado,  @RequestParam("id") int id, @RequestParam ("correo") String correo) throws IOException
     {
-        Administrador admin= new Administrador(1);
+        Administrador admin= new Administrador();
         admin.editarPedido(estado,id);
         admin.editarPedidoCliente(estado, correo, id);
         return new ResponseEntity<String>("Pedido Editado",HttpStatus.OK);
+    }
+
+    @PostMapping("/editarPerfilAdministrador")
+    public ResponseEntity<String> editarPerfilAdministrador(@RequestParam("correo") String correo, @RequestParam("contra") String contra, @RequestParam("nombre") String nombre, @RequestParam("numeroTelefonico") String numeroTelefonico ) throws IOException
+    {
+        Administrador admin= new Administrador();
+        if (admin.verificarNumeroTelefonico (numeroTelefonico))
+        {
+        admin.editarPerfilAdministrador(correo, contra, nombre, numeroTelefonico);
+        return new ResponseEntity<String>("Perfil editado con exito", HttpStatus.OK);
+        }
+        else
+        return new ResponseEntity<String>("Numero Telefonico ya existente", HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/consultarProducto")
+    public Producto consultarProducto (@RequestParam("nombre") String nombre) 
+    {
+        Administrador admin= new Administrador();
+        return admin.obtenerProducto(nombre);
+    }
+    
+    @PostMapping("/eliminarProducto")
+    public ResponseEntity<String> eliminarProducto (@RequestParam("nombre") String nombre) throws IOException
+    {
+        ProductoJson.eliminarProducto(nombre);
+        return new ResponseEntity<String>("Producto eliminado con exito", HttpStatus.OK);
     }
 }

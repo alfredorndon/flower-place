@@ -2,6 +2,7 @@ package com.proyecto.demo.Model;
 
 import com.proyecto.demo.ManejadorJSON.ProductoJson;  
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.proyecto.demo.ManejadorJSON.AdministradorJson;
 import com.proyecto.demo.ManejadorJSON.ClienteJson;
 import com.proyecto.demo.ManejadorJSON.PedidoJson;
 
@@ -12,18 +13,14 @@ import java.util.ArrayList;
 public class Cliente extends Persona {
     private ArrayList<Design> designs;
     private ArrayList<Pedido> pedidos;
-    private ArrayList<Producto> productos;
 
     //Constructor
     public Cliente(String correo, String contrasena, String nombre, String numeroTelefonico, ArrayList<Design> designs, ArrayList<Pedido> pedidos) {
         super(correo, contrasena, nombre, numeroTelefonico);
         this.designs =obtenerCliente(correo).designs;
-        this.productos= ProductoJson.obtenerProductosTotales();
         this.pedidos=obtenerCliente(correo).pedidos;
         if (designs==null)
             designs=new ArrayList<Design>();
-        if (productos==null)
-            productos=new ArrayList<Producto>();
         if (pedidos==null)
             pedidos=new ArrayList<Pedido>();
     }
@@ -32,14 +29,12 @@ public class Cliente extends Persona {
         super(correo, contrasena, nombre, numeroTelefonico);
         this.designs =new ArrayList<Design>();
         this.pedidos=new ArrayList<Pedido>();
-        this.productos=new ArrayList<Producto>();
     }
     public Cliente()
     {
         super("","","","");
         this.designs =new ArrayList<Design>();
         this.pedidos=new ArrayList<Pedido>();
-        this.productos=new ArrayList<Producto>();
     }
 
     //Getters and setters
@@ -52,14 +47,6 @@ public class Cliente extends Persona {
     public ArrayList<Design> getDesigns()
     {
         return this.designs;
-    }
-
-    public ArrayList<Producto> getProductos()
-    {
-        this.productos= ProductoJson.obtenerProductosTotales();
-        if (productos==null)
-            productos=new ArrayList<Producto>();
-        return productos;
     }
 
     public void setDiseños(ArrayList<Design> designs)
@@ -144,13 +131,13 @@ public class Cliente extends Persona {
         }
         return clienteObtenido;
     }
-    public void registrarCliente(String correo, String contraseña, String nombre, String numeroTelefonico )
+    public void registrarCliente(String correo, String contrasena, String nombre, String numeroTelefonico )
     {
         ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
         listaClientes=ClienteJson.obtenerClientesTotales();
         if (listaClientes==null)
             listaClientes=new ArrayList<Cliente>();
-        Cliente clienteNuevo= new Cliente(correo,contraseña,nombre, numeroTelefonico);
+        Cliente clienteNuevo= new Cliente(correo,contrasena,nombre, numeroTelefonico);
         listaClientes.add(clienteNuevo);
         ClienteJson.guardarCliente(clienteNuevo);
     }
@@ -283,6 +270,40 @@ public class Cliente extends Persona {
             }
         }
         return pedidoValidado;
+    }
+
+    public void editarPerfilCliente(String correo, String contrasena, String nombre, String numeroTelefonico ) throws IOException
+    {
+        Cliente clienteActual= new Cliente();
+        ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
+
+        for (int i=0; i<listaClientes.size(); i++)
+        {
+            if (correo.equals(listaClientes.get(i).getCorreo()))
+            {
+                clienteActual= listaClientes.get(i);
+                clienteActual.setContrasena(contrasena);
+                clienteActual.setNombre(nombre);
+                clienteActual.setNumeroTelefonico(numeroTelefonico);
+                ClienteJson.eliminarCliente(correo);
+                ClienteJson.guardarCliente(clienteActual);
+            }
+        }
+    }
+
+    public boolean verificarNumeroTelefonico(String correo, String numeroTelefonico)
+    {
+        ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
+        int contador=0;
+        for (int i=0; i<listaClientes.size(); i++)
+        {
+            if (listaClientes.get(i).getNumeroTelefonico().equals(numeroTelefonico) && !listaClientes.get(i).getCorreo().equals(correo))
+            contador++;
+        }
+        if (contador!=0 || AdministradorJson.obtenerAdmin().getNumeroTelefonico().equals(numeroTelefonico))
+        return false;
+        else
+        return true;
     }
 }
 

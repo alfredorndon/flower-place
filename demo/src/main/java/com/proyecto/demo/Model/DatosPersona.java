@@ -35,7 +35,10 @@ public class DatosPersona {
     public boolean validarDatosLogIn (String correo, String contrasena)
     {
         Cliente cliente= new Cliente(correo,contrasena,"","");
-        if (cliente.verificarDatos(correo, contrasena))
+        Administrador admin= new Administrador();
+        if (correo.equals("admin@gmail.com") && contrasena.equals(admin.getContrasena()))
+            return true;
+        else if (cliente.verificarDatos(correo, contrasena))
             return true;
         else
             return false;

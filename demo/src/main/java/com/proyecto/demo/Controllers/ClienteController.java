@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
@@ -64,6 +65,26 @@ public class ClienteController {
             return new ResponseEntity<ArrayList<Pedido>>(cliente.getPedidos(),HttpStatus.BAD_REQUEST);
         else
             return new ResponseEntity<ArrayList<Pedido>>(cliente.getPedidos(),HttpStatus.OK);
+    }
+
+    @PostMapping("/eliminarPerfil")
+    public ResponseEntity<String> eliminarPerfil(@RequestParam("correo") String correo) throws IOException 
+    {
+        ClienteJson.eliminarCliente(correo);
+        return new ResponseEntity<String>("Perfil eliminado", HttpStatus.OK);
+    }
+    
+    @PostMapping("/editarPerfilCliente")
+    public ResponseEntity<String> editarPerfilCliente (@RequestParam("correo") String correo, @RequestParam("contra") String contra, @RequestParam("nombre") String nombre, @RequestParam("numeroTelefonico") String numeroTelefonico ) throws IOException
+    {
+        Cliente cliente = new Cliente(correo,contra,nombre,numeroTelefonico);
+        if (cliente.verificarNumeroTelefonico (correo, numeroTelefonico))
+        {
+        cliente.editarPerfilCliente(correo, contra, nombre, numeroTelefonico);
+        return new ResponseEntity<String>("Perfil editado con exito", HttpStatus.OK);
+        }
+        else
+        return new ResponseEntity<String>("Numero Telefonico ya existente", HttpStatus.BAD_REQUEST);
     }
 }
 
