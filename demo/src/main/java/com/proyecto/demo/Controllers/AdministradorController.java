@@ -75,9 +75,8 @@ public class AdministradorController {
     {
         Cliente cliente;
         if (correo.equals("admin@gmail.com"))
-        {
-            cliente= new Cliente(correo,"admin1234","Administrador","04120998105");
-        }
+            cliente= new Cliente(correo,"admin1234","Administrador","04120998105"); //quitar
+            // cliente= new Cliente(correo,AdministradorJson.obtenerAdmin().getContrasena(),AdministradorJson.obtenerAdmin().getNombre(),AdministradorJson.obtenerAdmin().getNumeroTelefonico());
         else
         {
             cliente= ClienteJson.obtenerClientes(correo).get(0);
@@ -129,4 +128,11 @@ public class AdministradorController {
     //     ProductoJson.eliminarProducto(nombre);
     //     return new ResponseEntity<String>("Producto eliminado con exito", HttpStatus.OK);
     // }
+
+    @GetMapping("/consultarPedido")
+    public Pedido consultarPedido (@RequestParam("id") int id)
+    {
+        Administrador admin= new Administrador(1); //quitar
+        return admin.obtenerPedido(id);
+    }
 }

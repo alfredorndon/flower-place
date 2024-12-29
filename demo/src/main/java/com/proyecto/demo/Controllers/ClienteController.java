@@ -95,5 +95,19 @@ public class ClienteController {
         cliente.eliminarDesign(correo, nombreDesign);
         return new ResponseEntity<String> ("Diseño borrado exitosamente", HttpStatus.OK);
     }
+
+    @PostMapping("/modificarDesign")
+    public ResponseEntity<String> modificarDesign(@RequestParam("correo") String correo, @RequestBody Design design) throws IOException
+    {
+        Cliente cliente= new Cliente();
+        cliente= ClienteJson.obtenerClientes(correo).get(0);
+        if (!cliente.validarDesign(design, correo))
+        {
+            cliente.modificarDesign(correo, design);
+            return new ResponseEntity<String>("Su diseño ha sido modificado exitosamente", HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<String>("Diseño invalido para modificarse", HttpStatus.BAD_REQUEST);
+    }
 }
 

@@ -196,6 +196,7 @@ public class Administrador extends Persona {
         else
         return true;
     }
+    
     // public void editarPerfilAdministrador(String correo, String contrasena, String nombre, String numeroTelefonico ) throws IOException
     // {
     //     this.setContrasena(contrasena);
@@ -204,4 +205,16 @@ public class Administrador extends Persona {
     //     AdministradorJson.eliminarAdmin();
     //     AdministradorJson.guardarAdmin(this);
     // }
+
+    public Pedido obtenerPedido (int id)
+    {
+        ArrayList<Pedido> pedidos= PedidoJson.obtenerPedidosTotales();
+        Pedido pedidoBuscado= new Pedido();
+        for (int i=0; i<pedidos.size(); i++)
+        {
+            if (pedidos.get(i).getId()==id)
+            pedidoBuscado=pedidos.get(i);
+        }
+        return pedidoBuscado;
+    }
 }

@@ -16,6 +16,14 @@ public class Pedido {
         this.correo = correo;
     }
 
+    public Pedido() 
+    {
+        designs= new ArrayList<Design>();
+        estado="";
+        id=0;
+        correo="";
+    }
+    
     public String getCorreo() {
         return correo;
     }
