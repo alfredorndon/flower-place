@@ -1,4 +1,4 @@
-package com.proyecto.demo.Controllers;
+ package com.proyecto.demo.Controllers;
 
 
 import com.proyecto.demo.ManejadorJSON.ClienteJson;
@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
@@ -49,7 +48,7 @@ public class ClienteController {
         return new ResponseEntity<ArrayList<Design>>(cliente.getDesigns(),HttpStatus.OK);
     }
 
-    @PostMapping("/crearPedidos")
+    @PostMapping("/crearPedido")
     public ResponseEntity<String> crearPedido(@RequestBody Pedido pedido, @RequestParam("correo") String correo) throws IOException
     {
         Cliente cliente= new Cliente(correo,"","","");
@@ -64,50 +63,7 @@ public class ClienteController {
         if (cliente.getPedidos().isEmpty())
             return new ResponseEntity<ArrayList<Pedido>>(cliente.getPedidos(),HttpStatus.BAD_REQUEST);
         else
-            return new ResponseEntity<ArrayList<Pedido>>(cliente.getPedidos(),HttpStatus.OK);
-    }
-
-    @PostMapping("/eliminarPerfil")
-    public ResponseEntity<String> eliminarPerfil(@RequestParam("correo") String correo) throws IOException 
-    {
-        ClienteJson.eliminarCliente(correo);
-        return new ResponseEntity<String>("Perfil eliminado", HttpStatus.OK);
-    }
-    
-    // @PostMapping("/editarPerfilCliente")
-    // public ResponseEntity<String> editarPerfilCliente (@RequestParam("correo") String correo, @RequestParam("contra") String contra, @RequestParam("nombre") String nombre, @RequestParam("numeroTelefonico") String numeroTelefonico ) throws IOException
-    // {
-    //     Cliente cliente = new Cliente(correo,contra,nombre,numeroTelefonico);
-    //     if (cliente.verificarNumeroTelefonico (correo, numeroTelefonico))
-    //     {
-    //     cliente.editarPerfilCliente(correo, contra, nombre, numeroTelefonico);
-    //     return new ResponseEntity<String>("Perfil editado con exito", HttpStatus.OK);
-    //     }
-    //     else
-    //     return new ResponseEntity<String>("Numero Telefonico ya existente", HttpStatus.BAD_REQUEST);
-    // }
-
-    @PostMapping("/eliminarDesign")
-    public ResponseEntity<String> eliminarDesign(@RequestParam("correo") String correo, @RequestParam("nombreDesign") String nombreDesign) throws IOException
-    {
-        Cliente cliente = new Cliente(correo, "", "", "");
-        cliente= ClienteJson.obtenerClientes(correo).get(0);
-        cliente.eliminarDesign(correo, nombreDesign);
-        return new ResponseEntity<String> ("Diseño borrado exitosamente", HttpStatus.OK);
-    }
-
-    @PostMapping("/modificarDesign")
-    public ResponseEntity<String> modificarDesign(@RequestParam("correo") String correo, @RequestBody Design design) throws IOException
-    {
-        Cliente cliente= new Cliente();
-        cliente= ClienteJson.obtenerClientes(correo).get(0);
-        if (!cliente.validarDesign(design, correo))
-        {
-            cliente.modificarDesign(correo, design);
-            return new ResponseEntity<String>("Su diseño ha sido modificado exitosamente", HttpStatus.OK);
-        }
-        else
-            return new ResponseEntity<String>("Diseño invalido para modificarse", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<ArrayList<Pedido>>(cliente.getPedidos(),HttpStatus.OK);
     }
 }
 
