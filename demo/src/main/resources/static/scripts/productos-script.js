@@ -111,6 +111,7 @@ document.addEventListener('DOMContentLoaded', function()
                     });
                     const tarjetas = document.querySelectorAll('.tarjeta-flor');
                     const botonEditar = document.getElementById('boton-editar-producto');
+                    const botonEliminar = document.getElementById("boton-eliminar-producto");
                     let tarjetaSeleccionada = null;
 
                     tarjetas.forEach(tarjeta => {
@@ -124,6 +125,7 @@ document.addEventListener('DOMContentLoaded', function()
                             tarjetaSeleccionada = tarjeta;
                             tarjetaSeleccionada.classList.add('seleccionada');
                             botonEditar.disabled = false; // Habilitar el botón de editar
+                            botonEliminar.disabled = false; // Habilitar el botón de eliminar
                         });
                     });
                     
@@ -216,7 +218,48 @@ document.addEventListener('DOMContentLoaded', function()
                     //Sección Eliminar Prodcuto
                     document.getElementById("boton-eliminar-producto").addEventListener('click', function()
                     {
-                        
+                        let texto = tarjetaSeleccionada.querySelectorAll("p");
+                        let nombreProducto = texto[0].textContent;
+                        if (tarjetaSeleccionada)
+                        {
+                            swal({
+                                title: "¿Estás seguro de eliminar el producto?",
+                                text: "No podrás recuperar el producto eliminado.",
+                                icon: "warning",
+                                buttons: true,
+                                dangerMode: true,
+                            }).then((seraEliminado)=>{
+                                if (seraEliminado) 
+                                {
+                                    eliminarProdcuto = async () =>
+                                    {
+                                        const peticion = await fetch(`/admin/eliminarProducto?nombre=${nombreProducto}`,
+                                        {
+                                            method: 'POST',
+                                            headers:
+                                            {
+                                                'Accept': 'application/json',
+                                                'Content-Type': 'application/json',
+                                            }
+                                        });
+                                        if (peticion.ok)
+                                        {
+                                            swal ({
+                                                title: await peticion.text(),
+                                                icon: "success",
+                                            }).then((resultado) => {window.location.href = "gestion-productos.html";});
+                                        }
+                                        else
+                                        {
+                                            const errorRespuesta = await peticion.text();
+                                            console.log(errorRespuesta);
+                                            swal ("Un error inesperado","El producto no pudo ser eliminado","error");
+                                        }
+                                    }
+                                    eliminarProdcuto();
+                                }
+                            });
+                        }
                     });
                 }
                 else

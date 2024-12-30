@@ -60,7 +60,7 @@ import com.google.gson.stream.JsonReader;
             Administrador[] administradores = gson.fromJson(reader, Administrador[].class);
             
             if (administradores == null || administradores.length == 0) {
-                return new ArrayList<>(); // Retorna un ArrayList vacío
+                return new ArrayList<>(); // Retorna un ArrayList vacÃ­o
             }
             ArrayList<Administrador> administradoresLista = new ArrayList<>(Arrays.asList(administradores));
 
@@ -112,6 +112,4 @@ import com.google.gson.stream.JsonReader;
             gson.toJson(administradoresActualizados, writer);
         }
     }
-
 }
-

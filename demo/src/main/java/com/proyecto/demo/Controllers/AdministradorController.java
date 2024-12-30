@@ -134,4 +134,13 @@ public class AdministradorController {
         Administrador admin= new Administrador();
         return admin.obtenerPedido(id);
     }
+
+    @PostMapping("/cancelarPedido")
+    public ResponseEntity<String> cancelarPedido (@RequestBody Pedido pedido, @RequestParam("id") int id, @RequestParam ("correo") String correo) throws IOException
+    {
+        Administrador admin= new Administrador();
+        admin.cancelarPedido(id, correo);
+        admin.actualizarProductosTotales(pedido);
+        return new ResponseEntity<String>("Pedido cancelado con exito", HttpStatus.OK);
+    }
 }

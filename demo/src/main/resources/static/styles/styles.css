@@ -152,7 +152,7 @@ button:active {
 
 /* product styles */
 
-#opciones-producto {
+.opciones {
     display: flex;
     justify-content: space-around;
     margin-bottom: 20px;
@@ -222,12 +222,6 @@ button:active {
 }
 
 /* designs styles */
-
-#opciones-design {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-}
 
 #tarjetas-design {
     display: flex; /* Usar flexbox para alinear las tarjetas */
@@ -299,12 +293,6 @@ button:active {
 }
 
 /* pedidos styles */
-
-#opciones-pedido-cliente, #opciones-pedido-admin {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-}
 
 .tarjetas-pedidos {
     display: flex; /* Usar flexbox para el contenedor */
@@ -420,10 +408,14 @@ input[type="password"] {
     width: 120px; /* Ancho fijo para los nombres de los campos */
 }
 
-#boton-eliminar-producto {
-    background-color: rgb(168, 32, 32);
+.eliminar {
+    background-color: #9f9fed;
 }
 
-#boton-eliminar-producto:hover {
+.eliminar:hover {
     background-color: rgb(219, 68, 68);
+}
+
+#opciones-perfil {
+    padding-top: 20px;
 }
