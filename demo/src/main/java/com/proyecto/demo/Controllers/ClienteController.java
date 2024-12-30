@@ -52,8 +52,8 @@ public class ClienteController {
     public ResponseEntity<String> crearPedido(@RequestBody Pedido pedido, @RequestParam("correo") String correo) throws IOException
     {
         Cliente cliente= new Cliente(correo,"","","");
-        cliente.actualizarProductosTotales();
         cliente.agregarPedido(pedido, correo);
+        cliente.actualizarProductosTotales(pedido);
         return new ResponseEntity<String>("Pedido creado", HttpStatus.OK);
     }
     @GetMapping("/cargarPedidos")
@@ -64,6 +64,48 @@ public class ClienteController {
             return new ResponseEntity<ArrayList<Pedido>>(cliente.getPedidos(),HttpStatus.BAD_REQUEST);
         else
         return new ResponseEntity<ArrayList<Pedido>>(cliente.getPedidos(),HttpStatus.OK);
+    }
+
+    @PostMapping("/editarPerfilCliente")
+    public ResponseEntity<String> editarPerfilCliente(@RequestParam("correo") String correo, @RequestParam("contrasena") String contrasena,@RequestParam("nombre") String nombre, @RequestParam("numeroTelefonico") String numeroTelefonico) throws IOException
+    {
+        Cliente cliente = new Cliente();
+        if (cliente.verificarNumeroTelefonico(correo, numeroTelefonico))
+        {
+            cliente.editarPerfilCliente(correo, contrasena, nombre, numeroTelefonico);
+            return new ResponseEntity<String>("Perfil editado exitosamente", HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<String>("Número de teléfono ya existente", HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping("/eliminarPerfil")
+    public ResponseEntity<String> eliminarPerfil(@RequestParam("correo") String correo) throws IOException
+    {
+        ClienteJson.eliminarCliente(correo);
+        return new ResponseEntity<String>("Perfil eliminado exitosamente", HttpStatus.OK);
+    }
+
+    @PostMapping ("/eliminarDesign")
+    public ResponseEntity<String> eliminarDesign(@RequestParam("correo") String correo, @RequestParam("nombre") String nombreDesign) throws IOException
+    {
+        Cliente cliente = new Cliente();
+        cliente= ClienteJson.obtenerClientes(correo).get(0);
+        cliente.eliminarDesign(correo, nombreDesign);
+        return new ResponseEntity<>("Diseño eliminado exitosamente",HttpStatus.OK);
+    }
+
+    @PostMapping ("/modificarDesign")
+    public ResponseEntity<String> modificarDesign(@RequestParam("correo") String correo, @RequestBody Design design) throws IOException
+    {
+        Cliente cliente = new Cliente();
+        if (!cliente.validarDesignModificado(design, correo))
+        {
+            cliente.modificarDesign(correo, design);
+            return new ResponseEntity<String>("Diseño editado exitosamente", HttpStatus.OK);
+        }
+        else
+        return new ResponseEntity<String>("Cada producto debe tener entre 0 y 20 unidades", HttpStatus.BAD_REQUEST);
     }
 }
 

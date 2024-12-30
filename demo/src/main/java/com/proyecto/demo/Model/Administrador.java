@@ -12,16 +12,15 @@ public class Administrador extends Persona {
     private ArrayList<Producto> productos;
     private ArrayList<Pedido>  pedidos;
 
-    //Constructor
-    // public Administrador() {
-    //     super("admin@gmail.com", AdministradorJson.obtenerAdmin().getContrasena(), AdministradorJson.obtenerAdmin().getNombre() ,AdministradorJson.obtenerAdmin().getNumeroTelefonico());
-    //     this.productos=ProductoJson.obtenerProductosTotales();
-    //     this.pedidos=PedidoJson.obtenerPedidosTotales();
-    //     if (productos==null)
-    //         productos=new ArrayList<Producto>();
-    //     if (pedidos==null)
-    //         pedidos=new ArrayList<Pedido>();
-    // }
+    public Administrador() {
+        super("admin@gmail.com", AdministradorJson.obtenerAdmin("admin@gmail.com").get(0).getContrasena(), AdministradorJson.obtenerAdmin("admin@gmail.com").get(0).getNombre() ,AdministradorJson.obtenerAdmin("admin@gmail.com").get(0).getNumeroTelefonico());
+        this.productos=ProductoJson.obtenerProductosTotales();
+        this.pedidos=PedidoJson.obtenerPedidosTotales();
+        if (productos==null)
+            productos=new ArrayList<Producto>();
+        if (pedidos==null)
+            pedidos=new ArrayList<Pedido>();
+    }
 
     public Administrador(int confirmacion)
     {
@@ -197,14 +196,14 @@ public class Administrador extends Persona {
         return true;
     }
     
-    // public void editarPerfilAdministrador(String correo, String contrasena, String nombre, String numeroTelefonico ) throws IOException
-    // {
-    //     this.setContrasena(contrasena);
-    //     this.setNombre(nombre);
-    //     this.setNumeroTelefonico(numeroTelefonico);
-    //     AdministradorJson.eliminarAdmin();
-    //     AdministradorJson.guardarAdmin(this);
-    // }
+    public void editarPerfilAdministrador(String correo, String contrasena, String nombre, String numeroTelefonico ) throws IOException
+    {
+        this.setContrasena(contrasena);
+        this.setNombre(nombre);
+        this.setNumeroTelefonico(numeroTelefonico);
+        AdministradorJson.eliminarAdministrador(correo);
+        AdministradorJson.guardarAdministrador(this);
+    }
 
     public Pedido obtenerPedido (int id)
     {
@@ -216,5 +215,57 @@ public class Administrador extends Persona {
             pedidoBuscado=pedidos.get(i);
         }
         return pedidoBuscado;
+    }
+
+    public void cancelarPedido (int id, String correo) throws IOException
+    {
+        for (int i=0;i<this.pedidos.size();i++)
+        {
+            if (this.pedidos.get(i).getId()==id)
+            {
+                this.pedidos.remove(i);
+                PedidoJson.eliminarPedido(id);
+            }
+        }
+        ArrayList<Cliente> clientes= ClienteJson.obtenerClientesTotales();
+        Cliente clienteActual= new Cliente();
+        for (int j=0;j<clientes.size();j++)
+        {
+            if (clientes.get(j).getCorreo().equals(correo))
+            {
+                clienteActual= clientes.get(j);
+                for (int k=0;k<clienteActual.getPedidos().size();k++)
+                {
+                    if (clienteActual.getPedidos().get(k).getId()==id)
+                    {
+                        clienteActual.getPedidos().remove(k);
+                        ClienteJson.eliminarCliente(correo);
+                        ClienteJson.guardarCliente(clienteActual);
+                    }
+                }
+            }
+        }
+    }
+
+    public void actualizarProductosTotales(Pedido pedido) throws IOException
+    {
+        ArrayList<Producto> productosTotales=ProductoJson.obtenerProductosTotales();
+        if (productosTotales==null)
+            productosTotales=new ArrayList<Producto>();
+        for (int i = 0; i< pedido.getDisenos().size(); i++)
+        {
+            for (int j = 0; j< pedido.getDisenos().get(i).getProductos().size(); j++)
+            {
+                for(int k=0;k<productosTotales.size();k++)
+                {
+                    if (productosTotales.get(k).getNombre()==pedido.getDisenos().get(i).getProductos().get(j).getNombre())
+                    {
+                        productosTotales.get(k).setCantidad(productosTotales.get(k).getCantidad()+ pedido.getDisenos().get(i).getProductos().get(j).getCantidad());
+                        ProductoJson.eliminarProducto(productosTotales.get(k).getNombre());
+                        ProductoJson.guardarProducto(productosTotales.get(k));
+                    }
+                }
+            }
+        }
     }
 }

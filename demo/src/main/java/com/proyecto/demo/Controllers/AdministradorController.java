@@ -49,7 +49,7 @@ public class AdministradorController {
     @PostMapping("/AgregarProducto")
     public ResponseEntity<String> agregarProducto (@RequestBody Producto productoAgregado)
     {
-        Administrador administrador= new Administrador(1); //quitar
+        Administrador administrador= new Administrador(); 
         if (administrador.verificarProducto(productoAgregado))
         {
             ProductoJson.guardarProducto(productoAgregado);
@@ -62,7 +62,7 @@ public class AdministradorController {
     @PostMapping("/EditarProducto")
     public ResponseEntity<String> editarProducto(@RequestBody Producto productoEditado) throws IOException
     {
-        Administrador admin =new Administrador(1); //quitar
+        Administrador admin =new Administrador(); 
         if (admin.validarDatosProducto(productoEditado.getCantidad(),productoEditado.getPrecio()))
         {
             admin.editarProducto(productoEditado.getNombre(), productoEditado.getPrecio(), productoEditado.getCantidad());
@@ -76,10 +76,7 @@ public class AdministradorController {
     {
         Cliente cliente;
         if (correo.equals("admin@gmail.com"))
-            {
-                List<Administrador> administrador = AdministradorJson.obtenerAdmin(correo);
-                cliente= new Cliente(correo,administrador.getFirst().getContrasena(),administrador.getFirst().getNombre(),administrador.getFirst().getNumeroTelefonico());
-            }
+            cliente= new Cliente(correo,AdministradorJson.obtenerAdmin("admin@gmail.com").get(0).getContrasena(),AdministradorJson.obtenerAdmin("admin@gmail.com").get(0).getNombre(),AdministradorJson.obtenerAdmin("admin@gmail.com").get(0).getNumeroTelefonico());
         else
         {
             cliente= ClienteJson.obtenerClientes(correo).get(0);
@@ -99,31 +96,31 @@ public class AdministradorController {
     @PostMapping("/editarPedido")
     public ResponseEntity<String> editarPedido (@RequestBody String estado,  @RequestParam("id") int id, @RequestParam ("correo") String correo) throws IOException
     {
-        Administrador admin= new Administrador(1); //quitar
+        Administrador admin= new Administrador(); 
         admin.editarPedido(estado,id);
         admin.editarPedidoCliente(estado, correo, id);
         return new ResponseEntity<String>("Pedido Editado",HttpStatus.OK);
     }
 
-    // @PostMapping("/editarPerfilAdministrador")
-    // public ResponseEntity<String> editarPerfilAdministrador(@RequestParam("correo") String correo, @RequestParam("contra") String contra, @RequestParam("nombre") String nombre, @RequestParam("numeroTelefonico") String numeroTelefonico ) throws IOException
-    // {
-    //     Administrador admin= new Administrador(1); //quitar
-    //     if (admin.verificarNumeroTelefonico (numeroTelefonico))
-    //     {
-    //     admin.editarPerfilAdministrador(correo, contra, nombre, numeroTelefonico);
-    //     return new ResponseEntity<String>("Perfil editado con exito", HttpStatus.OK);
-    //     }
-    //     else
-    //     return new ResponseEntity<String>("Numero Telefonico ya existente", HttpStatus.BAD_REQUEST);
-    // }
+    @PostMapping("/editarPerfilAdministrador")
+    public ResponseEntity<String> editarPerfilAdministrador(@RequestParam("correo") String correo, @RequestParam("contra") String contra, @RequestParam("nombre") String nombre, @RequestParam("numeroTelefonico") String numeroTelefonico ) throws IOException
+    {
+        Administrador admin= new Administrador(); 
+        if (admin.verificarNumeroTelefonico (numeroTelefonico))
+        {
+        admin.editarPerfilAdministrador(correo, contra, nombre, numeroTelefonico);
+        return new ResponseEntity<String>("Perfil editado con exito", HttpStatus.OK);
+        }
+        else
+        return new ResponseEntity<String>("Numero Telefonico ya existente", HttpStatus.BAD_REQUEST);
+    }
 
-    // @GetMapping("/consultarProducto")
-    // public Producto consultarProducto (@RequestParam("nombre") String nombre) 
-    // {
-    //     Administrador admin= new Administrador(1); //quitar
-    //     return admin.obtenerProducto(nombre);
-    // }
+    @GetMapping("/consultarProducto")
+    public Producto consultarProducto (@RequestParam("nombre") String nombre) 
+    {
+        Administrador admin= new Administrador(); 
+        return admin.obtenerProducto(nombre);
+    }
     
     @PostMapping("/eliminarProducto")
     public ResponseEntity<String> eliminarProducto (@RequestParam("nombre") String nombre) throws IOException
@@ -135,7 +132,16 @@ public class AdministradorController {
     @GetMapping("/consultarPedido")
     public Pedido consultarPedido (@RequestParam("id") int id)
     {
-        Administrador admin= new Administrador(1); //quitar
+        Administrador admin= new Administrador();
         return admin.obtenerPedido(id);
+    }
+
+    @PostMapping("/cancelarPedido")
+    public ResponseEntity<String> cancelarPedido (@RequestBody Pedido pedido, @RequestParam("id") int id, @RequestParam ("correo") String correo) throws IOException
+    {
+        Administrador admin= new Administrador();
+        admin.cancelarPedido(id, correo);
+        admin.actualizarProductosTotales(pedido);
+        return new ResponseEntity<String>("Pedido cancelado con exito", HttpStatus.OK);
     }
 }
