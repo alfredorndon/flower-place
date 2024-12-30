@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 @RestController
 @RequestMapping ("/admin")
 public class AdministradorController {
@@ -75,8 +76,10 @@ public class AdministradorController {
     {
         Cliente cliente;
         if (correo.equals("admin@gmail.com"))
-            cliente= new Cliente(correo,"admin1234","Administrador","04120998105"); //quitar
-            // cliente= new Cliente(correo,AdministradorJson.obtenerAdmin().getContrasena(),AdministradorJson.obtenerAdmin().getNombre(),AdministradorJson.obtenerAdmin().getNumeroTelefonico());
+            {
+                List<Administrador> administrador = AdministradorJson.obtenerAdmin(correo);
+                cliente= new Cliente(correo,administrador.getFirst().getContrasena(),administrador.getFirst().getNombre(),administrador.getFirst().getNumeroTelefonico());
+            }
         else
         {
             cliente= ClienteJson.obtenerClientes(correo).get(0);
@@ -122,12 +125,12 @@ public class AdministradorController {
     //     return admin.obtenerProducto(nombre);
     // }
     
-    // @PostMapping("/eliminarProducto")
-    // public ResponseEntity<String> eliminarProducto (@RequestParam("nombre") String nombre) throws IOException
-    // {
-    //     ProductoJson.eliminarProducto(nombre);
-    //     return new ResponseEntity<String>("Producto eliminado con exito", HttpStatus.OK);
-    // }
+    @PostMapping("/eliminarProducto")
+    public ResponseEntity<String> eliminarProducto (@RequestParam("nombre") String nombre) throws IOException
+    {
+        ProductoJson.eliminarProducto(nombre);
+        return new ResponseEntity<String>("Producto eliminado con exito", HttpStatus.OK);
+    }
 
     @GetMapping("/consultarPedido")
     public Pedido consultarPedido (@RequestParam("id") int id)

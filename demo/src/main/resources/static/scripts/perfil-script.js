@@ -98,6 +98,12 @@ document.addEventListener('DOMContentLoaded', function ()
             }
         }
         pedirDatos();
+
+        //Sección Editar Perfil
+        document.getElementById("boton-editar-perfil").addEventListener('click', function ()
+        {
+
+        });
     }
     else    //Si no está logueado
     {
@@ -140,10 +146,7 @@ document.addEventListener('DOMContentLoaded', function ()
                     });
                 if (peticion.ok)
                 {
-                    localStorage.setItem('nombre', document.getElementById('nombre').value);
-                    localStorage.setItem('telefono', document.getElementById('telefono').value);
                     localStorage.setItem('email', document.getElementById('email').value);
-                    localStorage.setItem('contrasena', document.getElementById('contrasena').value);
                     document.getElementById('nombre').value = '';
                     document.getElementById('telefono').value = '';
                     document.getElementById('email').value = '';
@@ -170,6 +173,7 @@ document.addEventListener('DOMContentLoaded', function ()
         let botonIniciarSesion = document.getElementById('boton-iniciar-sesion');
         botonIniciarSesion.addEventListener('click', async()=>
         {
+            const peticion = await fetch ()
             if (document.getElementById('email-inicio').value == correoAdmin && document.getElementById('contrasena-inicio').value == contraAdmin)
             {
                 event.preventDefault();
