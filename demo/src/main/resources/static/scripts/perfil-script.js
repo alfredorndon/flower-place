@@ -173,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function ()
         let botonIniciarSesion = document.getElementById('boton-iniciar-sesion');
         botonIniciarSesion.addEventListener('click', async()=>
         {
-            const peticion = await fetch ()
+            
             if (document.getElementById('email-inicio').value == correoAdmin && document.getElementById('contrasena-inicio').value == contraAdmin)
             {
                 event.preventDefault();

@@ -356,4 +356,3 @@ public class Cliente extends Persona {
         return designValidado;
     }
 }
-
