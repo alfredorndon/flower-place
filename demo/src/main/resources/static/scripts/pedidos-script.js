@@ -87,7 +87,6 @@ function actualizarTotal() {
 
 //Main del programa
 const correoAdmin = "admin@gmail.com";
-const contraAdmin = "admin1234";
 
 var login = comprobarLogIn();
 let menuBar = document.getElementsByClassName("menu-bar");
@@ -123,18 +122,35 @@ document.addEventListener('DOMContentLoaded', function ()
         }
         if (!localStorage.getItem('email') == correoAdmin)
         {
+            ocultarPorID("opciones-pedido-admin")
             pedirDesigns();
+        }
+        else
+        {
+            elementos[1].style.setProperty('display', 'none', 'important');
+            ocultarPorID("opciones-pedido-cliente");
         }
         document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
         ocultarPorID("crear-pedido");
         ocultarPorID("editar-pedido");
-        ocultarPorID("volver-pedidos")
+        ocultarPorID("volver-pedidos");
+        ocultarPorID("consultar-pedido");
         document.getElementById('volver-pedidos').addEventListener('click', function(){window.location.href = "gestion-pedidos.html";});
+
+        //Sección de Consultar Pedido
+        document.getElementById("boton-consultar-pedido").addEventListener('click', function()
+        {
+            ocultarPorID("pedidos-creados");
+            ocultarPorID("opciones-pedido-cliente");
+            mostrarPorID("consultar-pedido");
+            mostrarPorID("volver-pedidos");
+        });
 
         //Sección de Editar Pedido
         document.getElementById("boton-editar-pedido").addEventListener('click', function()
         {
             ocultarPorID("pedidos-creados");
+            ocultarPorID("opciones-pedido-cliente");
             mostrarPorID("editar-pedido");
             mostrarPorID("volver-pedidos");
         });
@@ -144,17 +160,10 @@ document.addEventListener('DOMContentLoaded', function ()
         nuevoPedido.addEventListener('click', function()
         {
             ocultarPorID("pedidos-creados");
+            ocultarPorID("opciones-pedido-cliente");
             mostrarPorID("crear-pedido");
+            mostrarPorID("volver-pedidos");
         });
-        if (localStorage.getItem('email') == correoAdmin)
-        {
-            elementos[1].style.setProperty('display', 'none', 'important');
-            ocultarPorID('boton-nuevo-pedido');
-        }
-        else
-        {
-            ocultarPorID('boton-editar-pedido');
-        }
         const tarjetas = document.querySelectorAll('.tarjeta-design');
         let tarjetaSeleccionada = null;
 
