@@ -12,16 +12,15 @@ public class Administrador extends Persona {
     private ArrayList<Producto> productos;
     private ArrayList<Pedido>  pedidos;
 
-    //Constructor
-    // public Administrador() {
-    //     super("admin@gmail.com", AdministradorJson.obtenerAdmin().getContrasena(), AdministradorJson.obtenerAdmin().getNombre() ,AdministradorJson.obtenerAdmin().getNumeroTelefonico());
-    //     this.productos=ProductoJson.obtenerProductosTotales();
-    //     this.pedidos=PedidoJson.obtenerPedidosTotales();
-    //     if (productos==null)
-    //         productos=new ArrayList<Producto>();
-    //     if (pedidos==null)
-    //         pedidos=new ArrayList<Pedido>();
-    // }
+    public Administrador() {
+        super("admin@gmail.com", AdministradorJson.obtenerAdmin("admin@gmail.com").get(0).getContrasena(), AdministradorJson.obtenerAdmin("admin@gmail.com").get(0).getNombre() ,AdministradorJson.obtenerAdmin("admin@gmail.com").get(0).getNumeroTelefonico());
+        this.productos=ProductoJson.obtenerProductosTotales();
+        this.pedidos=PedidoJson.obtenerPedidosTotales();
+        if (productos==null)
+            productos=new ArrayList<Producto>();
+        if (pedidos==null)
+            pedidos=new ArrayList<Pedido>();
+    }
 
     public Administrador(int confirmacion)
     {
@@ -197,14 +196,14 @@ public class Administrador extends Persona {
         return true;
     }
     
-    // public void editarPerfilAdministrador(String correo, String contrasena, String nombre, String numeroTelefonico ) throws IOException
-    // {
-    //     this.setContrasena(contrasena);
-    //     this.setNombre(nombre);
-    //     this.setNumeroTelefonico(numeroTelefonico);
-    //     AdministradorJson.eliminarAdmin();
-    //     AdministradorJson.guardarAdmin(this);
-    // }
+    public void editarPerfilAdministrador(String correo, String contrasena, String nombre, String numeroTelefonico ) throws IOException
+    {
+        this.setContrasena(contrasena);
+        this.setNombre(nombre);
+        this.setNumeroTelefonico(numeroTelefonico);
+        AdministradorJson.eliminarAdministrador(correo);
+        AdministradorJson.guardarAdministrador(this);
+    }
 
     public Pedido obtenerPedido (int id)
     {
