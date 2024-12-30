@@ -60,7 +60,6 @@ function cerrarSesion()
 //Main del programa
 
 const correoAdmin = "admin@gmail.com";
-const contraAdmin = "admin1234";
 
 var login = comprobarLogIn();
 let menuBar = document.getElementsByClassName("menu-bar");
@@ -143,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function()
                             ocultarPorID("catalogo-productos");
                             mostrarPorID("editar-producto");
                         }
+
                         document.getElementById('editar-confirmar').addEventListener('click', async () =>
                         {
                             event.preventDefault();
@@ -211,6 +211,12 @@ document.addEventListener('DOMContentLoaded', function()
                             console.log(errorRespuesta);
                             alert(errorRespuesta);
                         }
+                    });
+
+                    //Sección Eliminar Prodcuto
+                    document.getElementById("boton-eliminar-producto").addEventListener('click', function()
+                    {
+                        
                     });
                 }
                 else

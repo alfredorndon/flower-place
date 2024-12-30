@@ -306,7 +306,7 @@ button:active {
     margin-bottom: 20px;
 }
 
-#tarjetas-pedidos {
+.tarjetas-pedidos {
     display: flex; /* Usar flexbox para el contenedor */
     flex-wrap: wrap; /* Permitir que las tarjetas se envuelvan en varias filas */
     justify-content: space-around; /* Distribuir el espacio entre las tarjetas */
@@ -418,4 +418,12 @@ input[type="password"] {
 #datos-perfil strong {
     display: inline-block; /* Hacer que el texto en negrita se alinee a la izquierda */
     width: 120px; /* Ancho fijo para los nombres de los campos */
+}
+
+#boton-eliminar-producto {
+    background-color: rgb(168, 32, 32);
+}
+
+#boton-eliminar-producto:hover {
+    background-color: rgb(219, 68, 68);
 }

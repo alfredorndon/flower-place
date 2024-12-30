@@ -47,7 +47,6 @@ function cerrarSesion()
 //Main del programa
 
 const correoAdmin = "admin@gmail.com";
-const contraAdmin = "admin1234";
 
 var login = comprobarLogIn();
 let menuBar = document.getElementsByClassName("menu-bar");
