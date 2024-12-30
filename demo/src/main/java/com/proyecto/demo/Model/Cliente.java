@@ -143,20 +143,20 @@ public class Cliente extends Persona {
     }
 
 
-    public void actualizarProductosTotales() throws IOException
+    public void actualizarProductosTotales(Pedido pedido) throws IOException
     {
         ArrayList<Producto> productosTotales=ProductoJson.obtenerProductosTotales();
         if (productosTotales==null)
             productosTotales=new ArrayList<Producto>();
-        for (int i = 0; i< designs.size(); i++)
+        for (int i = 0; i< pedido.getDisenos().size(); i++)
         {
-            for (int j = 0; j< designs.get(i).getProductos().size(); j++)
+            for (int j = 0; j< pedido.getDisenos().get(i).getProductos().size(); j++)
             {
                 for(int k=0;k<productosTotales.size();k++)
                 {
-                    if (productosTotales.get(k).getNombre()== designs.get(i).getProductos().get(j).getNombre())
+                    if (productosTotales.get(k).getNombre()==pedido.getDisenos().get(i).getProductos().get(j).getNombre())
                     {
-                        productosTotales.get(k).setCantidad(productosTotales.get(k).getCantidad()- designs.get(i).getProductos().get(j).getCantidad());
+                        productosTotales.get(k).setCantidad(productosTotales.get(k).getCantidad()- pedido.getDisenos().get(i).getProductos().get(j).getCantidad());
                         if (productosTotales.get(k).getCantidad()<0)
                         {
                             productosTotales.get(k).setCantidad(0);
@@ -215,6 +215,7 @@ public class Cliente extends Persona {
         }
         return designValidado;
     }
+
     public void agregarDiseno(Design design , String correo) throws IOException
     {
         ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
@@ -333,5 +334,26 @@ public class Cliente extends Persona {
         }
     }
 
+    public boolean validarDesignModificado(Design design , String correo)
+    {
+        ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
+        Cliente clienteActual= new Cliente();
+        boolean designValidado=false;
+        for (int i=0;i<listaClientes.size();i++)
+        {
+            if (listaClientes.get(i).getCorreo().equals(correo))
+            {
+                clienteActual=listaClientes.get(i);
+            }
+        }
+        for (int k=0;k<design.getProductos().size();k++)
+        {
+            if (design.getProductos().get(k).getCantidad()<=0 || design.getProductos().get(k).getCantidad()>20)
+            {
+                designValidado=true;
+            }
+        }
+        return designValidado;
+    }
 }
 
