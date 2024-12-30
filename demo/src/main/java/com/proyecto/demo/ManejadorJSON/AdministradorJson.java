@@ -34,7 +34,7 @@ import com.google.gson.stream.JsonReader;
         try {
             Gson gson = new Gson();
             Object FilePath;
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\administrador.json")); 
+            JsonReader reader = new JsonReader(new FileReader("src//main//java//com//proyecto//demo//Json//administrador.json")); 
             Administrador[] administradores = gson.fromJson(reader, Administrador[].class);
             List<Administrador> administradorLista = new ArrayList<>(Arrays.asList(administradores));
             List<Administrador> nuevaLista = new ArrayList<>();
@@ -56,7 +56,7 @@ import com.google.gson.stream.JsonReader;
     static public ArrayList<Administrador> obtenerAdministradoresTotales() {
         try {
             Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\administrador.json"));
+            JsonReader reader = new JsonReader(new FileReader("src//main//java//com//proyecto//demo//Json//administrador.json"));
             Administrador[] administradores = gson.fromJson(reader, Administrador[].class);
             
             if (administradores == null || administradores.length == 0) {
@@ -76,13 +76,13 @@ import com.google.gson.stream.JsonReader;
     static public void guardarAdministrador(Administrador administrador) { //Le paso el objeto que quiero guardar en la lista del json
         try {
             Gson gson = new Gson();
-            JsonReader reader = new JsonReader(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\administrador.json"));
+            JsonReader reader = new JsonReader(new FileReader("src//main//java//com//proyecto//demo//Json//administrador.json"));
             Administrador[] administradores = gson.fromJson(reader, Administrador[].class);
             List<Administrador> administradorLista= new ArrayList<>(Arrays.asList(administradores));
 
             administradorLista.add(administrador);
 
-            FileWriter fw = new FileWriter("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\administrador.json");
+            FileWriter fw = new FileWriter("src//main//java//com//proyecto//demo//Json//administrador.json");
             StringWriter sw = new StringWriter();
             sw.write(gson.toJson(administradorLista));
             fw.write(sw.toString());
@@ -97,7 +97,7 @@ import com.google.gson.stream.JsonReader;
     public static void eliminarAdministrador(String correoAdmin) throws IOException {
         // Leer el JSON existente
         Gson gson = new Gson();
-        List<Administrador> administradores = gson.fromJson(new FileReader("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\administrador.json"), new TypeToken<List<Administrador>>() {}.getType());
+        List<Administrador> administradores = gson.fromJson(new FileReader("src//main//java//com//proyecto//demo//Json//administrador.json"), new TypeToken<List<Administrador>>() {}.getType());
 
         // Eliminar el producto
         List<Administrador> administradoresActualizados = new ArrayList<>();
@@ -108,7 +108,7 @@ import com.google.gson.stream.JsonReader;
         }
 
         // Escribir el JSON actualizado
-        try (FileWriter writer = new FileWriter("C:\\Users\\User\\Desktop\\Programación\\Ingeniería de Software\\flower-place\\demo\\src\\main\\java\\com\\proyecto\\demo\\Json\\administrador.json")) {
+        try (FileWriter writer = new FileWriter("src//main//java//com//proyecto//demo//Json//administrador.json")) {
             gson.toJson(administradoresActualizados, writer);
         }
     }
