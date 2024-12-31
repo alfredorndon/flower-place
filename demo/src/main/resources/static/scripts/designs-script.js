@@ -242,7 +242,8 @@ document.addEventListener("DOMContentLoaded", function ()
                     mostrarPorID("volver-designs");
                 });
 
-                document.getElementById("confirmar-design").addEventListener("click", async (event) => {
+                document.getElementById("confirmar-design").addEventListener("click", async (event) => 
+                {
                     event.preventDefault(); // Evitar el envío del formulario por defecto
                     
                     const productosSeleccionados = [];

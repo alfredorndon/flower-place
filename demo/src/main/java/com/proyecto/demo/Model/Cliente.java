@@ -192,27 +192,32 @@ public class Cliente extends Persona {
         ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
         Cliente clienteActual= new Cliente();
         boolean designValidado=false;
-        for (int i=0;i<listaClientes.size();i++)
+        if (design.getNombre() == null || design.getNombre().trim().isEmpty())
+            designValidado = true;
+        else
         {
-            if (listaClientes.get(i).getCorreo().equals(correo))
+            for (int i=0;i<listaClientes.size();i++)
             {
-                clienteActual=listaClientes.get(i);
+                if (listaClientes.get(i).getCorreo().equals(correo))
+                {
+                    clienteActual=listaClientes.get(i);
+                }
             }
-        }
-        for (int j=0;j<clienteActual.designs.size();j++)
-        {
-            if (design.getNombre().equals(clienteActual.designs.get(j).getNombre()))
+            for (int j=0;j<clienteActual.designs.size();j++)
             {
-                designValidado=true;
+                if (design.getNombre().equals(clienteActual.designs.get(j).getNombre()))
+                {
+                    designValidado=true;
+                }
             }
-        }
-        int cantidadTotal=0;
-        for (int k=0;k<design.getProductos().size();k++)
-        {
-            cantidadTotal+=design.getProductos().get(k).getCantidad();
-            if (design.getProductos().get(k).getCantidad()<=0 || cantidadTotal>20)
+            int cantidadTotal=0;
+            for (int k=0;k<design.getProductos().size();k++)
             {
-                designValidado=true;
+                cantidadTotal+=design.getProductos().get(k).getCantidad();
+                if (design.getProductos().get(k).getCantidad()<=0 || cantidadTotal>20)
+                {
+                    designValidado=true;
+                }
             }
         }
         return designValidado;
