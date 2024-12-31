@@ -187,6 +187,20 @@ document.addEventListener("DOMContentLoaded", function ()
                     });
                 });
 
+                //Sección de Editar Diseño
+                botonEditar.addEventListener("click", async function ()
+                {
+                    if (tarjetaSeleccionada)
+                    {
+                        ocultarPorID("designs-guardados");
+                        ocultarPorID("confirmar-design");
+                        document.getElementsByClassName("section-title")[1].innerHTML = "<h2>Editar Diseño</h2>";
+                        mostrarPorID("nuevo-design");
+                        let texto = tarjetaSeleccionada.querySelectorAll("p");
+
+                    }
+                });
+
                 //Sección de Eliminar Diseño
                 botonEliminar.addEventListener("click", function ()
                 {
@@ -240,6 +254,7 @@ document.addEventListener("DOMContentLoaded", function ()
                     ocultarPorID("designs-guardados");
                     mostrarPorID("nuevo-design");
                     mostrarPorID("volver-designs");
+                    ocultarPorID("confirmar-edicion");
                 });
 
                 document.getElementById("confirmar-design").addEventListener("click", async (event) => 
