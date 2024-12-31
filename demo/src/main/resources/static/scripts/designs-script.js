@@ -183,6 +183,7 @@ document.addEventListener("DOMContentLoaded", function ()
                         tarjetaSeleccionada.classList.add("seleccionada");
                         botonEditar.disabled = false; // Habilitar el botón de editar
                         botonEliminar.disabled = false; // Habilitar el botón de eliminar
+                        console.log('me selecciono');
                     });
                 });
 

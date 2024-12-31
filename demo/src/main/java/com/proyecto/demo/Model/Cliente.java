@@ -294,7 +294,7 @@ public class Cliente extends Persona {
         }
     }
 
-    public boolean verificarNumeroTelefonico(String correo, String numeroTelefonico)
+    public boolean verificarNumeroTelefonico(String correo, String numeroTelefonico) throws IOException
     {
         ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
         int contador=0;
@@ -303,7 +303,7 @@ public class Cliente extends Persona {
             if (listaClientes.get(i).getNumeroTelefonico().equals(numeroTelefonico) && !listaClientes.get(i).getCorreo().equals(correo))
             contador++;
         }
-        if (contador!=0 || AdministradorJson.obtenerAdmin().get(0).getNumeroTelefonico().equals(numeroTelefonico))
+        if (contador!=0 || AdministradorJson.obtenerAdmin().getNumeroTelefonico().equals(numeroTelefonico))
         return false;
         else
         return true;

@@ -48,19 +48,19 @@ import com.proyecto.demo.Model.Producto;
 
     //Funcion usando la funcion base 
     //Para extraer el objeto Admin del JSON
-    static public Administrador obtenerAdmin() throws Exception {
+    static public Administrador obtenerAdmin() throws IOException {
         Gson gson = new Gson();
         JsonReader reader = new JsonReader(new FileReader("src//main//java//com//proyecto//demo//Json//administrador.json"));
         try { //Primero tomamos en cuenta que el archivo si contenga un Admin
         
-            Administrador administrador = gson.fromJson(reader, Administrador.class);   
+            Administrador administrador = gson.fromJson(reader, Administrador.class);
+            reader.close();  
             return administrador;
         } catch (JsonSyntaxException e) { //Si no es asi, lanza una excepcion por el error
             // Esta es una excepción de sintaxis, lo que indica que es probable que el archivo esté vacío o tenga un formato incorrecto
             System.err.println("El archivo JSON está vacío o tiene un formato inválido");
-            return null;
-        } finally {
             reader.close();
+            return null;
         }
     }
 
@@ -85,7 +85,7 @@ import com.proyecto.demo.Model.Producto;
         }
     }*/
 
- 
+
     //Para guardar un objeto en json 
     public static void guardarAdministrador(Administrador administrador) throws IOException { //Se le pasa el objeto que deseo guardar
         // Validar si el archivo existe y está vacío
@@ -103,7 +103,7 @@ import com.proyecto.demo.Model.Producto;
         writer.close();
     }
 
-   /* 
+    /* 
     //Para Eliminar un objeto especifico de la lista (Original)
     public static void eliminarAdministrador(String correoAdmin) throws IOException {
         // Leer el JSON existente

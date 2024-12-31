@@ -46,7 +46,7 @@ public class AdministradorController {
     }
 
     @PostMapping("/AgregarProducto")
-    public ResponseEntity<String> agregarProducto (@RequestBody Producto productoAgregado)
+    public ResponseEntity<String> agregarProducto (@RequestBody Producto productoAgregado) throws IOException
     {
         Administrador administrador= new Administrador(); 
         if (administrador.verificarProducto(productoAgregado))
@@ -75,7 +75,7 @@ public class AdministradorController {
     {
         Cliente cliente;
         if (correo.equals("admin@gmail.com"))
-            cliente= new Cliente(correo,AdministradorJson.obtenerAdmin("admin@gmail.com").get(0).getContrasena(),AdministradorJson.obtenerAdmin("admin@gmail.com").get(0).getNombre(),AdministradorJson.obtenerAdmin("admin@gmail.com").get(0).getNumeroTelefonico());
+            cliente= new Cliente(correo,AdministradorJson.obtenerAdmin().getContrasena(),AdministradorJson.obtenerAdmin().getNombre(),AdministradorJson.obtenerAdmin().getNumeroTelefonico());
         else
         {
             cliente= ClienteJson.obtenerClientes(correo).get(0);
@@ -115,7 +115,7 @@ public class AdministradorController {
     }
 
     @GetMapping("/consultarProducto")
-    public Producto consultarProducto (@RequestParam("nombre") String nombre) 
+    public Producto consultarProducto (@RequestParam("nombre") String nombre) throws IOException
     {
         Administrador admin= new Administrador(); 
         return admin.obtenerProducto(nombre);
@@ -129,7 +129,7 @@ public class AdministradorController {
     }
 
     @GetMapping("/consultarPedido")
-    public Pedido consultarPedido (@RequestParam("id") int id)
+    public Pedido consultarPedido (@RequestParam("id") int id) throws IOException
     {
         Administrador admin= new Administrador();
         return admin.obtenerPedido(id);
