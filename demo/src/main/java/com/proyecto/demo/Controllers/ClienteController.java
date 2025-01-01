@@ -69,14 +69,9 @@ public class ClienteController {
     @GetMapping("/editarPerfilCliente")
     public ResponseEntity<String> editarPerfilCliente(@RequestParam("correo") String correo, @RequestParam("contrasena") String contrasena,@RequestParam("nombre") String nombre, @RequestParam("numeroTelefonico") String numeroTelefonico) throws IOException
     {
-        Cliente cliente = new Cliente();
-        if (cliente.verificarNumeroTelefonico(correo, numeroTelefonico))
-        {
+            Cliente cliente = new Cliente();
             cliente.editarPerfilCliente(correo, contrasena, nombre, numeroTelefonico);
             return new ResponseEntity<String>("Perfil editado exitosamente", HttpStatus.OK);
-        }
-        else
-            return new ResponseEntity<String>("Número de teléfono ya existente", HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/eliminarPerfil")
