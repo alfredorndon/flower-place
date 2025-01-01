@@ -98,6 +98,50 @@ document.addEventListener('DOMContentLoaded', function ()
                 parrafos[1].textContent = "Teléfono: "+datos.numeroTelefonico;
                 parrafos[2].textContent = "E-mail: "+localStorage.getItem('email');
                 parrafos[3].textContent = "Contraseña: "+localStorage.getItem('contrasena');
+
+                //Sección de Eliminar Perfil
+                const botonEliminar = document.getElementById("boton-eliminar-perfil");
+                botonEliminar.addEventListener('click', function ()
+                {
+                    swal({
+                        title: "¿Estás seguro de eliminar el Perfil?",
+                        text: "Se perderán todos tus diseños",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    }).then((seraEliminado)=>{
+                        if (seraEliminado) 
+                        {
+                            eliminarPerfil = async () =>
+                            {
+                                const peticion = await fetch(`/cliente/eliminarPerfil?correo=${localStorage.getItem("email")}`,
+                                {
+                                    method: "POST",
+                                    headers:
+                                    {
+                                        "Accept": "application/json",
+                                        "Content-Type": "application/json",
+                                    }
+                                });
+                                if (peticion.ok)
+                                {
+                                    swal ({
+                                        title: await peticion.text(),
+                                        icon: "success"
+                                    }).then((valor) => {cerrarSesion();});
+                                }
+                                else
+                                    swal ("Un error inesperado","El perfil no pudo ser eliminado","error");
+                            }
+                            eliminarPerfil();
+                        }
+                    });
+                });
+
+                if (localStorage.getItem("email") != correoAdmin)
+                {
+
+                }
             }
         }
         pedirDatos();
@@ -105,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function ()
         //Sección Editar Perfil
         document.getElementById("boton-editar-perfil").addEventListener('click', function ()
         {
-            
+
         });
     }
     else    //Si no está logueado
