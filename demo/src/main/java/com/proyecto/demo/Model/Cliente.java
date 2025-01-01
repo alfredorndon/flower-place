@@ -309,9 +309,9 @@ public class Cliente extends Persona {
             contador++;
         }
         if (contador!=0 || AdministradorJson.obtenerAdmin().getNumeroTelefonico().equals(numeroTelefonico))
-        return false;
+            return false;
         else
-        return true;
+            return true;
     }
 
     public void eliminarDesign (String correo, String nombreDesign) throws IOException

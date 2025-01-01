@@ -142,7 +142,6 @@ document.addEventListener('DOMContentLoaded', function ()
 
                 //Sección de Editar Perfil
                 const botonEditar = document.getElementById("boton-editar-perfil");
-                const guardarCambios = document.getElementById("confirmar-edicion");
                 const espacioDatos = document.getElementById("datos-perfil");
                 const texto = espacioDatos.querySelectorAll("p");
                 let nombre = document.getElementById("nombre");
@@ -157,6 +156,11 @@ document.addEventListener('DOMContentLoaded', function ()
                     let titulo = document.querySelectorAll(".section-title")[1];
                     titulo.innerHTML = "<h2>Editar Perfil</h2>";
                     nombre.value = texto[0].textContent.split(" ")[1];
+                    if (texto[0].textContent.split(" ").length > 2)
+                    {
+                        for (let i = 2; i < texto[0].textContent.split(" ").length; i++)
+                            nombre.value +=" "+texto[0].textContent.split(" ")[i];
+                    }
                     telefono.value = texto[1].textContent.split(" ")[1];
                     email.setAttribute("readonly","");
                     email.value = texto[2].textContent.split(" ")[1];
@@ -165,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function ()
                     mostrarPorID("volver-perfil");
                     mostrarPorID("crear-perfil");
                 });
-                guardarCambios.addEventListener("click", async function ()
+                document.getElementById("confirmar-edicion").addEventListener("click", async function ()
                 {
                     event.preventDefault;
                     if (nombre.value.trim().length != 0)
@@ -176,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function ()
                             {
                                 const peticion = await fetch (`/cliente/editarPerfilCliente?correo=${String(email.value)}&contrasena=${String(contrasena.value)}&nombre=${nombre.value}&numeroTelefonico=${telefono.value}`,
                                 {
-                                    method:'POST',
+                                    method:'GET',
                                     headers:
                                     {
                                         'Accept': 'application/json',

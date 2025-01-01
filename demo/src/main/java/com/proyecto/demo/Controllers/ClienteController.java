@@ -66,7 +66,7 @@ public class ClienteController {
         return new ResponseEntity<ArrayList<Pedido>>(cliente.getPedidos(),HttpStatus.OK);
     }
 
-    @PostMapping("/editarPerfilCliente")
+    @GetMapping("/editarPerfilCliente")
     public ResponseEntity<String> editarPerfilCliente(@RequestParam("correo") String correo, @RequestParam("contrasena") String contrasena,@RequestParam("nombre") String nombre, @RequestParam("numeroTelefonico") String numeroTelefonico) throws IOException
     {
         Cliente cliente = new Cliente();
