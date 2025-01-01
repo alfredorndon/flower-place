@@ -70,6 +70,8 @@ document.addEventListener('DOMContentLoaded', function ()
 {
     if (login) //Si está logueado
     {
+        document.getElementById("volver-perfil").addEventListener("click", function () {window.location.href = "gestion-perfil.html"});
+        ocultarPorID("volver-perfil");
         ocultarPorID("iniciar-sesion");
         ocultarPorID("crear-perfil");
         let pedirDatos = async () =>
@@ -138,10 +140,66 @@ document.addEventListener('DOMContentLoaded', function ()
                     });
                 });
 
-                if (localStorage.getItem("email") != correoAdmin)
+                //Sección de Editar Perfil
+                const botonEditar = document.getElementById("boton-editar-perfil");
+                const guardarCambios = document.getElementById("confirmar-edicion");
+                const espacioDatos = document.getElementById("datos-perfil");
+                const texto = espacioDatos.querySelectorAll("p");
+                let nombre = document.getElementById("nombre");
+                let telefono = document.getElementById("telefono");
+                let email = document.getElementById("email");
+                let contrasena = document.getElementById("contrasena");
+                let confirmar_contrasena = document.getElementById("confirmar-contrasena");
+                botonEditar.addEventListener("click", function ()
                 {
-
-                }
+                    ocultarPorID("consultar-perfil");
+                    ocultarPorID("boton-registrarse");
+                    let titulo = document.querySelectorAll(".section-title")[1];
+                    titulo.innerHTML = "<h2>Editar Perfil</h2>";
+                    nombre.value = texto[0].textContent.split(" ")[1];
+                    telefono.value = texto[1].textContent.split(" ")[1];
+                    email.setAttribute("readonly","");
+                    email.value = texto[2].textContent.split(" ")[1];
+                    contrasena.value = texto[3].textContent.split(" ")[1];
+                    confirmar_contrasena.value = texto[3].textContent.split(" ")[1];
+                    mostrarPorID("volver-perfil");
+                    mostrarPorID("crear-perfil");
+                });
+                guardarCambios.addEventListener("click", async function ()
+                {
+                    event.preventDefault;
+                    if (nombre.value.trim().length != 0)
+                    {
+                        if (document.getElementById('contrasena').value == document.getElementById('confirmar-contrasena').value)
+                        {
+                            if (localStorage.getItem("email") != correoAdmin)
+                            {
+                                const peticion = await fetch (`/cliente/editarPerfilCliente?correo=${String(email.value)}&contrasena=${String(contrasena.value)}&nombre=${nombre.value}&numeroTelefonico=${telefono.value}`,
+                                {
+                                    method:'POST',
+                                    headers:
+                                    {
+                                        'Accept': 'application/json',
+                                    }
+                                });
+                                if (peticion.ok)
+                                {
+                                    const respuesta = await peticion.text();
+                                    swal (respuesta,"success");
+                                }
+                                else
+                                {
+                                    const respuesta = await peticion.text();
+                                    swal ("Ha ocurrio un error",respuesta,"error");
+                                }
+                            }
+                        }
+                        else
+                            swal ("Ha ocurrio un error","Las contraseñas no coinciden","error");
+                    }
+                    else
+                        swal ("Ha ocurrio un error","El nombre no puede estar vacío o solo tener espacios en blanco","error");
+                });
             }
         }
         pedirDatos();
@@ -158,6 +216,8 @@ document.addEventListener('DOMContentLoaded', function ()
         ocultarPorID("consultar-perfil");
         ocultarPorID("iniciar-sesion");
         ocultarPorID("crear-perfil");
+        ocultarPorID("confirmar-edicion");
+        ocultarPorID("volver-perfil");
         document.getElementById('ir-a-iniciar-sesion').addEventListener('click', function () {mostrarPorID("iniciar-sesion"); ocultarPorID("crear-perfil");});
         document.getElementById('ir-a-registrarse').addEventListener('click', function() {mostrarPorID("crear-perfil"); ocultarPorID("iniciar-sesion")});
         if (inicioSesion)

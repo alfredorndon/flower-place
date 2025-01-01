@@ -1,4 +1,4 @@
- package com.proyecto.demo.Controllers;
+package com.proyecto.demo.Controllers;
 
 
 import com.proyecto.demo.ManejadorJSON.ClienteJson;
