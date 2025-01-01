@@ -188,16 +188,77 @@ document.addEventListener("DOMContentLoaded", function ()
                 });
 
                 //Sección de Editar Diseño
-                botonEditar.addEventListener("click", async function ()
+                botonEditar.addEventListener("click", function ()
                 {
                     if (tarjetaSeleccionada)
                     {
                         ocultarPorID("designs-guardados");
                         ocultarPorID("confirmar-design");
+                        mostrarPorID("volver-designs");
                         document.getElementsByClassName("section-title")[1].innerHTML = "<h2>Editar Diseño</h2>";
-                        mostrarPorID("nuevo-design");
                         let texto = tarjetaSeleccionada.querySelectorAll("p");
+                        document.getElementById("nombre-design-form").setAttribute("readonly","");
+                        document.getElementById("nombre-design-form").value = texto[0].textContent;
+                        let tarjetasFlores = document.querySelectorAll(".tarjeta-flor");
+                        for (let i = 2; i < texto.length; i+= 2)
+                        {
+                            for (let j = 0; j < tarjetasFlores.length; j++)
+                            {
+                                let textoFlor = tarjetasFlores[j].querySelectorAll("p");
+                                if (textoFlor[0].textContent == texto[i].textContent.split(" ")[1].split('"')[0])
+                                    tarjetasFlores[j].querySelector(".input-cantidad").value = texto[i+1].textContent.split(" ")[1].split('"')[0];
+                            }
+                        }
+                        document.getElementById("total-design").innerHTML = `<p><strong>Precio total del diseño:</strong>${" "+texto[1].textContent.split(" ")[2]}`
+                        mostrarPorID("nuevo-design");
+                    }
+                });
 
+                document.getElementById("confirmar-edicion").addEventListener('click', async () =>
+                {
+                    event.preventDefault();
+
+                    const productosSeleccionados = [];
+                    const tarjetas = document.querySelectorAll(".tarjeta-flor");
+                    tarjetas.forEach(tarjeta =>
+                    {
+                        const nombre = tarjeta.querySelector(".nombre-flor").textContent;
+                        const cantidad = tarjeta.querySelector(".input-cantidad").value;
+                        const precio = tarjeta.querySelector(".precio-flor").value;
+                        if (cantidad > 0) {
+                            productosSeleccionados.push({ nombre, precio, cantidad});
+                        }
+                    });
+                    
+                    let design =
+                    {
+                        productos: productosSeleccionados,
+                        nombre: document.getElementById("nombre-design-form").value,
+                        precio: localStorage.getItem("totalDesign")
+                    };
+                    emailCliente = localStorage.getItem("email");
+                    const peticion = await fetch(`/cliente/modificarDesign?correo=${emailCliente}`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Accept": "application/json",
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(design)
+                    });
+
+                    if (peticion.ok)
+                    {
+                        swal({
+                            title: await peticion.text(),
+                            icon: "success"
+                        }).then((resultado) => {window.location.href = "gestion-designs.html";});;
+                    }
+                    else
+                    {
+                        const errorRespuesta = await peticion.text();
+                        console.log(errorRespuesta);
+                        swal ("Un error inesperado",errorRespuesta,"error");
                     }
                 });
 
@@ -232,7 +293,7 @@ document.addEventListener("DOMContentLoaded", function ()
                                     {
                                         swal ({
                                             title: await peticion.text(),
-                                            icon: "success",
+                                            icon: "success"
                                         }).then((resultado) => {window.location.href = "gestion-designs.html";});
                                     }
                                     else

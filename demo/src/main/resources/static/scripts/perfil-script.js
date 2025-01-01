@@ -88,7 +88,10 @@ document.addEventListener('DOMContentLoaded', function ()
                 const datos = await respuesta.json();
                 document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
                 if (localStorage.getItem('email') == correoAdmin)
-                    {elementos[1].style.setProperty('display', 'none', 'important');}
+                {
+                    elementos[1].style.setProperty('display', 'none', 'important');
+                    ocultarPorID("boton-eliminar-perfil");
+                }
                 let divDatos = document.getElementById("datos-perfil");
                 let parrafos = divDatos.querySelectorAll("p");
                 parrafos[0].textContent = "Nombre: "+datos.nombre;
@@ -102,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function ()
         //Sección Editar Perfil
         document.getElementById("boton-editar-perfil").addEventListener('click', function ()
         {
-
+            
         });
     }
     else    //Si no está logueado

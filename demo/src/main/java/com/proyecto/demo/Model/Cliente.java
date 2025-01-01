@@ -353,9 +353,11 @@ public class Cliente extends Persona {
                 clienteActual=listaClientes.get(i);
             }
         }
+        int cantidadTotal=0;
         for (int k=0;k<design.getProductos().size();k++)
         {
-            if (design.getProductos().get(k).getCantidad()<=0 || design.getProductos().get(k).getCantidad()>20)
+            cantidadTotal+=design.getProductos().get(k).getCantidad();
+            if (design.getProductos().get(k).getCantidad()<=0 || cantidadTotal>20)
             {
                 designValidado=true;
             }
