@@ -192,25 +192,32 @@ public class Cliente extends Persona {
         ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
         Cliente clienteActual= new Cliente();
         boolean designValidado=false;
-        for (int i=0;i<listaClientes.size();i++)
+        if (design.getNombre() == null || design.getNombre().trim().isEmpty())
+            designValidado = true;
+        else
         {
-            if (listaClientes.get(i).getCorreo().equals(correo))
+            for (int i=0;i<listaClientes.size();i++)
             {
-                clienteActual=listaClientes.get(i);
+                if (listaClientes.get(i).getCorreo().equals(correo))
+                {
+                    clienteActual=listaClientes.get(i);
+                }
             }
-        }
-        for (int j=0;j<clienteActual.designs.size();j++)
-        {
-            if (design.getNombre().equals(clienteActual.designs.get(j).getNombre()))
+            for (int j=0;j<clienteActual.designs.size();j++)
             {
-                designValidado=true;
+                if (design.getNombre().equals(clienteActual.designs.get(j).getNombre()))
+                {
+                    designValidado=true;
+                }
             }
-        }
-        for (int k=0;k<design.getProductos().size();k++)
-        {
-            if (design.getProductos().get(k).getCantidad()<=0 || design.getProductos().get(k).getCantidad()>20)
+            int cantidadTotal=0;
+            for (int k=0;k<design.getProductos().size();k++)
             {
-                designValidado=true;
+                cantidadTotal+=design.getProductos().get(k).getCantidad();
+                if (design.getProductos().get(k).getCantidad()<=0 || cantidadTotal>20)
+                {
+                    designValidado=true;
+                }
             }
         }
         return designValidado;
@@ -292,7 +299,7 @@ public class Cliente extends Persona {
         }
     }
 
-    public boolean verificarNumeroTelefonico(String correo, String numeroTelefonico)
+    public boolean verificarNumeroTelefonico(String correo, String numeroTelefonico) throws IOException
     {
         ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
         int contador=0;
@@ -301,7 +308,7 @@ public class Cliente extends Persona {
             if (listaClientes.get(i).getNumeroTelefonico().equals(numeroTelefonico) && !listaClientes.get(i).getCorreo().equals(correo))
             contador++;
         }
-        if (contador!=0 || AdministradorJson.obtenerAdmin().get(0).getNumeroTelefonico().equals(numeroTelefonico))
+        if (contador!=0 || AdministradorJson.obtenerAdmin().getNumeroTelefonico().equals(numeroTelefonico))
         return false;
         else
         return true;
@@ -346,9 +353,11 @@ public class Cliente extends Persona {
                 clienteActual=listaClientes.get(i);
             }
         }
+        int cantidadTotal=0;
         for (int k=0;k<design.getProductos().size();k++)
         {
-            if (design.getProductos().get(k).getCantidad()<=0 || design.getProductos().get(k).getCantidad()>20)
+            cantidadTotal+=design.getProductos().get(k).getCantidad();
+            if (design.getProductos().get(k).getCantidad()<=0 || cantidadTotal>20)
             {
                 designValidado=true;
             }

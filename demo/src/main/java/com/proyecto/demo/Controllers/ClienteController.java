@@ -1,4 +1,4 @@
- package com.proyecto.demo.Controllers;
+package com.proyecto.demo.Controllers;
 
 
 import com.proyecto.demo.ManejadorJSON.ClienteJson;
@@ -99,13 +99,14 @@ public class ClienteController {
     public ResponseEntity<String> modificarDesign(@RequestParam("correo") String correo, @RequestBody Design design) throws IOException
     {
         Cliente cliente = new Cliente();
+        cliente = ClienteJson.obtenerClientes(correo).get(0);
         if (!cliente.validarDesignModificado(design, correo))
         {
             cliente.modificarDesign(correo, design);
             return new ResponseEntity<String>("Diseño editado exitosamente", HttpStatus.OK);
         }
         else
-        return new ResponseEntity<String>("Cada producto debe tener entre 0 y 20 unidades", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<String>("Ha seleccionado más productos de los debidos", HttpStatus.BAD_REQUEST);
     }
 }
 

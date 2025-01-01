@@ -264,6 +264,7 @@ document.addEventListener('DOMContentLoaded', function()
                 }
                 else
                 {
+                    ocultarPorID("boton-eliminar-producto");
                     ocultarPorID('boton-editar-producto');
                     ocultarPorID('boton-nuevo-producto');
                 }
