@@ -12,8 +12,8 @@ public class Administrador extends Persona {
     private ArrayList<Producto> productos;
     private ArrayList<Pedido>  pedidos;
 
-    public Administrador() {
-        super("admin@gmail.com", AdministradorJson.obtenerAdmin("admin@gmail.com").get(0).getContrasena(), AdministradorJson.obtenerAdmin("admin@gmail.com").get(0).getNombre() ,AdministradorJson.obtenerAdmin("admin@gmail.com").get(0).getNumeroTelefonico());
+    public Administrador() throws IOException {
+        super("admin@gmail.com", AdministradorJson.obtenerAdmin().getContrasena(), AdministradorJson.obtenerAdmin().getNombre() ,AdministradorJson.obtenerAdmin().getNumeroTelefonico());
         this.productos=ProductoJson.obtenerProductosTotales();
         this.pedidos=PedidoJson.obtenerPedidosTotales();
         if (productos==null)
@@ -201,7 +201,7 @@ public class Administrador extends Persona {
         this.setContrasena(contrasena);
         this.setNombre(nombre);
         this.setNumeroTelefonico(numeroTelefonico);
-        AdministradorJson.eliminarAdministrador(correo);
+        AdministradorJson.eliminarAdministrador();
         AdministradorJson.guardarAdministrador(this);
     }
 
