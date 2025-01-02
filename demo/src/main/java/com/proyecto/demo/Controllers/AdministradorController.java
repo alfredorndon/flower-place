@@ -48,7 +48,7 @@ public class AdministradorController {
     @PostMapping("/AgregarProducto")
     public ResponseEntity<String> agregarProducto (@RequestBody Producto productoAgregado) throws IOException
     {
-        Administrador administrador= new Administrador(); 
+        Administrador administrador= new Administrador(1); 
         if (administrador.verificarProducto(productoAgregado))
         {
             ProductoJson.guardarProducto(productoAgregado);
@@ -61,7 +61,7 @@ public class AdministradorController {
     @PostMapping("/EditarProducto")
     public ResponseEntity<String> editarProducto(@RequestBody Producto productoEditado) throws IOException
     {
-        Administrador admin =new Administrador(); 
+        Administrador admin =new Administrador(1); 
         if (admin.validarDatosProducto(productoEditado.getCantidad(),productoEditado.getPrecio()))
         {
             admin.editarProducto(productoEditado.getNombre(), productoEditado.getPrecio(), productoEditado.getCantidad());
@@ -95,7 +95,7 @@ public class AdministradorController {
     @PostMapping("/editarPedido")
     public ResponseEntity<String> editarPedido (@RequestBody String estado,  @RequestParam("id") int id, @RequestParam ("correo") String correo) throws IOException
     {
-        Administrador admin= new Administrador(); 
+        Administrador admin= new Administrador(1); 
         admin.editarPedido(estado,id);
         admin.editarPedidoCliente(estado, correo, id);
         return new ResponseEntity<String>("Pedido Editado",HttpStatus.OK);
@@ -104,7 +104,7 @@ public class AdministradorController {
     @PostMapping("/editarPerfilAdministrador")
     public ResponseEntity<String> editarPerfilAdministrador(@RequestParam("correo") String correo, @RequestParam("contra") String contra, @RequestParam("nombre") String nombre, @RequestParam("numeroTelefonico") String numeroTelefonico ) throws IOException
     {
-        Administrador admin= new Administrador(); 
+        Administrador admin= new Administrador(1); 
         if (admin.verificarNumeroTelefonico (numeroTelefonico))
         {
         admin.editarPerfilAdministrador(correo, contra, nombre, numeroTelefonico);
@@ -117,7 +117,7 @@ public class AdministradorController {
     @GetMapping("/consultarProducto")
     public Producto consultarProducto (@RequestParam("nombre") String nombre) throws IOException
     {
-        Administrador admin= new Administrador(); 
+        Administrador admin= new Administrador(1); 
         return admin.obtenerProducto(nombre);
     }
     
@@ -131,14 +131,14 @@ public class AdministradorController {
     @GetMapping("/consultarPedido")
     public Pedido consultarPedido (@RequestParam("id") int id) throws IOException
     {
-        Administrador admin= new Administrador();
+        Administrador admin= new Administrador(1);
         return admin.obtenerPedido(id);
     }
 
     @PostMapping("/cancelarPedido")
     public ResponseEntity<String> cancelarPedido (@RequestBody Pedido pedido, @RequestParam("id") int id, @RequestParam ("correo") String correo) throws IOException
     {
-        Administrador admin= new Administrador();
+        Administrador admin= new Administrador(1);
         admin.cancelarPedido(id, correo);
         admin.actualizarProductosTotales(pedido);
         return new ResponseEntity<String>("Pedido cancelado con exito", HttpStatus.OK);

@@ -189,7 +189,10 @@ document.addEventListener('DOMContentLoaded', function ()
                                 if (peticion.ok)
                                 {
                                     const respuesta = await peticion.text();
-                                    swal (respuesta,"success");
+                                    swal ({
+                                        title: respuesta,
+                                        icon: "success"
+                                    }).then((valor) => {window.location.href = "gestion-perfil.html";});
                                 }
                                 else
                                 {
