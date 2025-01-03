@@ -1,6 +1,7 @@
 package com.proyecto.demo.Model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,27 +19,20 @@ public class Pedido {
         this.correo = correo;
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(Pedido.class);
-
-    public void mostrarPedido ()
-    {
-        for (int i=0; i<designs.size(); i++)
-        {
-            ArrayList<Producto> productos = designs.get(i).getProductos();
-            for (int j=0; j<productos.size(); j++)
-            {
-                logger.info(productos.get(j).getNombre());
-                logger.info(" ");
-            }
-        }
-    }
-
     public Pedido() 
     {
         designs= new ArrayList<Design>();
         estado="";
         id=0;
         correo="";
+    }
+
+    public Pedido (String correo)
+    {
+        designs= new ArrayList<Design>();
+        estado="Abierto";
+        id=0;
+        this.correo = correo;
     }
     
     public String getCorreo() {
@@ -55,6 +49,7 @@ public class Pedido {
     }
 
     public void setDisenos(ArrayList<Design> designs) {
+        designs.removeIf(Objects::isNull);
         this.designs = designs;
     }
 

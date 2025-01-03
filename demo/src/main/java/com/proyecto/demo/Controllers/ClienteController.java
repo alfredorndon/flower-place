@@ -49,9 +49,10 @@ public class ClienteController {
     }
 
     @PostMapping("/crearPedido")
-    public ResponseEntity<String> crearPedido(@RequestBody Pedido pedido, @RequestParam("correo") String correo) throws IOException
+    public ResponseEntity<String> crearPedido(@RequestBody ArrayList<Design> Design, @RequestParam("correo") String correo) throws IOException
     {
-        pedido.mostrarPedido();
+        Pedido pedido = new Pedido(correo);
+        pedido.setDisenos(Design);
         Cliente cliente= new Cliente(correo,"","","");
         cliente.agregarPedido(pedido, correo);
         cliente.actualizarProductosTotales(pedido);

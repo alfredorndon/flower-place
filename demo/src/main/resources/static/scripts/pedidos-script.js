@@ -95,8 +95,6 @@ let elementos = menuBar[0].querySelectorAll("h3");
 var contadorSeleccionado = 0;
 var cualesSeleccionados = [];
 var productos = [];
-var productoEscogido = {};
-var designEscogido  = {};
 
 document.addEventListener('DOMContentLoaded', function ()
 {
@@ -138,14 +136,12 @@ document.addEventListener('DOMContentLoaded', function ()
                             contadorSeleccionado--;
                         }
 
-                        let j = -1;
                         // Seleccionar la nueva tarjeta
                         tarjetaSelect = tarjeta;
                         if (tarjetaSelect.classList.contains("seleccionada"))
                             return;
                         else
-                        {}
-                            j++;
+                        {
                             tarjetaSelect.classList.add("seleccionada");
                             todasSelect.push(tarjetaSelect);
                             contadorSeleccionado++;
@@ -155,23 +151,24 @@ document.addEventListener('DOMContentLoaded', function ()
                             while (parrafos[i+2].id != "precio-design")
                             {
                                 i+= 2;
+                                let productoEscogido = {};
                                 productoEscogido.nombre = parrafos[i].textContent.split(" ")[1];
                                 productoEscogido.precio = " ";
                                 productoEscogido.cantidad = parrafos[i+1].textContent.split(" ")[1];
                                 productos = productos.concat([productoEscogido]);
                             }
+                            let designEscogido  = {};
                             designEscogido.productos = productos;
                             designEscogido.nombre = parrafos[0].textContent;
                             designEscogido.precio = parrafos[i+2].textContent.split("$")[1];
                             cualesSeleccionados = cualesSeleccionados.concat([designEscogido]);
                             actualizarTotal("crear-pedido");
+                        }
                     });    
                 });
             }
         }
-
         pedirDesigns();
-
         if (localStorage.getItem('email') != correoAdmin)
             ocultarPorID("opciones-pedido-admin");
         else
@@ -240,11 +237,6 @@ document.addEventListener('DOMContentLoaded', function ()
         {
             let registrarPedido = async () =>
             {
-                let pedido = {};
-                pedido.designs = cualesSeleccionados;
-                pedido.estado = "Abierto";
-                pedido.id = 0;
-                pedido.correo = localStorage.getItem('email');
                 const peticion = await fetch (`/cliente/crearPedido?correo=${localStorage.getItem('email')}`,
                 {
                     method: 'POST',
@@ -253,7 +245,7 @@ document.addEventListener('DOMContentLoaded', function ()
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(pedido)
+                    body: JSON.stringify(cualesSeleccionados)
                 });
                 if (peticion.ok)
                 {
