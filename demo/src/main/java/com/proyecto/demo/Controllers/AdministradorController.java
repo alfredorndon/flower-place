@@ -75,7 +75,7 @@ public class AdministradorController {
     {
         Cliente cliente;
         if (correo.equals("admin@gmail.com"))
-            cliente= new Cliente(correo,AdministradorJson.obtenerAdmin().getContrasena(),AdministradorJson.obtenerAdmin().getNombre(),AdministradorJson.obtenerAdmin().getNumeroTelefonico());
+            cliente= new Cliente(correo,"admin1234","Administrador","04122398760");
         else
         {
             cliente= ClienteJson.obtenerClientes(correo).get(0);

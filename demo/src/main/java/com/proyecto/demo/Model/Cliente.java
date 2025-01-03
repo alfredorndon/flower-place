@@ -243,6 +243,7 @@ public class Cliente extends Persona {
     {
         ArrayList<Pedido> pedidosTotales=PedidoJson.obtenerPedidosTotales();
         pedido.setId((pedidosTotales.size())+1);
+        PedidoJson.guardarPedido(pedido);
         ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
         Cliente clienteActual= new Cliente();
         for (int i=0;i<listaClientes.size();i++)
@@ -251,10 +252,10 @@ public class Cliente extends Persona {
             {
                 clienteActual=listaClientes.get(i);
                 ClienteJson.eliminarCliente(correo);
-            }
-        }
                 clienteActual.pedidos.add(pedido);
                 ClienteJson.guardarCliente(clienteActual);
+            }
+        }
     }
 
     public boolean validarPedido(Pedido pedido , String correo)

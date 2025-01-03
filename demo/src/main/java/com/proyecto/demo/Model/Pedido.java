@@ -1,6 +1,8 @@
 package com.proyecto.demo.Model;
 
 import java.util.ArrayList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Pedido {
     private ArrayList<Design> designs;
@@ -14,6 +16,21 @@ public class Pedido {
         this.estado = "Abierto";
         this.id = id;
         this.correo = correo;
+    }
+
+    private static final Logger logger = LoggerFactory.getLogger(Pedido.class);
+
+    public void mostrarPedido ()
+    {
+        for (int i=0; i<designs.size(); i++)
+        {
+            ArrayList<Producto> productos = designs.get(i).getProductos();
+            for (int j=0; j<productos.size(); j++)
+            {
+                logger.info(productos.get(j).getNombre());
+                logger.info(" ");
+            }
+        }
     }
 
     public Pedido() 

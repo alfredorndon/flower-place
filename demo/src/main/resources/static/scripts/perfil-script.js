@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function ()
                 {
                     elementos[1].style.setProperty('display', 'none', 'important');
                     ocultarPorID("boton-eliminar-perfil");
+                    ocultarPorID("boton-editar-perfil");
                 }
                 let divDatos = document.getElementById("datos-perfil");
                 let parrafos = divDatos.querySelectorAll("p");
