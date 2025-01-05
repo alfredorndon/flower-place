@@ -52,6 +52,9 @@
                         <div class='estado-pedido'>
                             <strong>Estado del Pedido:</strong> <span class='estado-abierto'>Abierto</span>
                         </div>
+                        <div class='text' id='total-pedido'>
+                            <p><strong>Precio total del pedido:</strong></p>
+                        </div>
                     </div>
                 </section>
             </section>
@@ -62,9 +65,6 @@
                 <form class='formulario-pedido' action='#' method='post' id='nuevo-pedido-form' enctype='multipart/form-data'>
                     <section id='tarjetas-design-pedido-nuevo'>
                     </section>
-                    <div class='text' id='total-pedido'>
-                        <p><strong>Precio total del pedido:</strong></p>
-                    </div>
                     <div class='confirmar'>
                         <button type='button' id='confirmar-pedido'>Confirmar</button>
                     </div>
@@ -137,7 +137,6 @@
                         <button type='button' class='eliminar' id='cerrar-pedido'>Cerrar Pedido</button>
                     </div>
                 </form>
-                </section>
             </section>
         </main>
         <script src='../scripts/pedidos-script.js' type='text/javascript'></script>

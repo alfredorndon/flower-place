@@ -58,7 +58,7 @@ public class Cliente extends Persona {
     {
         this.pedidos=obtenerCliente(correo).pedidos;
         if (pedidos==null)
-        pedidos=new ArrayList<Pedido>();
+            pedidos=new ArrayList<Pedido>();
         return pedidos;
     }
     public ArrayList<Pedido> getPedidos()

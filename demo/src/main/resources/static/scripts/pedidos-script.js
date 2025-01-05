@@ -71,6 +71,44 @@ function crearTarjetadesign(design,id) {
     contenedor.appendChild(tarjetaTemporal);
 }
 
+function crearTarjetaPedido(pedido, cliente, id)
+{
+    const contenedor = document.getElementById(id);
+    let tarjetaTemporal = document.createElement("div");
+    tarjetaTemporal.classList.add("tarjeta-pedido");
+    tarjetaTemporal.innerHTML =`
+        <p class='nombre-cliente'><strong>Nombre del Cliente:</strong> ${cliente.nombre}</p>
+        <p class='telefono-cliente'><strong>Teléfono:</strong> ${cliente.numeroTelefonico}</p>
+        <p class='email-cliente'><strong>Correo:</strong> ${cliente.correo}</p>
+        <p class='designs-incluidos'><strong>Diseños Incluidos:</strong></p>
+    `;
+    let totalDesigns = 0;
+    let lista = document.createElement("ul");
+    lista.classList.add("lista-designs");
+    console.log(pedido);
+    pedido.disenos.forEach((design, index) =>
+    {
+        let elemento = document.createElement("li");
+        elemento.innerHTML = `${design.nombre}`;
+        totalDesigns += design.precio;
+        lista.appendChild(elemento);
+    });
+    tarjetaTemporal.appendChild(lista);
+
+    let estado = document.createElement("div");
+    estado.classList.add("estado-pedido");
+    estado.innerHTML = `<strong>Estado del Pedido:</strong> <span class='estado-abierto'>${pedido.estado}</span>`;
+    tarjetaTemporal.appendChild(estado);
+
+    let total = document.createElement("div");
+    total.classList.add("text");
+    total.setAttribute("id","total-pedido");
+    total.innerHTML = `<p><strong>Precio total del pedido:</strong> $${totalDesigns}</p>`;
+    tarjetaTemporal.appendChild(total);
+
+    contenedor.appendChild(tarjetaTemporal);
+}
+
 function actualizarTotal(id) {
     let tarjetasTemporales = document.getElementById(id).querySelectorAll('.tarjeta-design.seleccionada');
     console.log(tarjetasTemporales.length);
@@ -169,98 +207,137 @@ document.addEventListener('DOMContentLoaded', function ()
             }
         }
         pedirDesigns();
-        if (localStorage.getItem('email') != correoAdmin)
-            ocultarPorID("opciones-pedido-admin");
-        else
-            ocultarPorID("opciones-pedido-cliente");
-
-        document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
-        ocultarPorID("crear-pedido");
-        ocultarPorID("editar-pedido");
-        ocultarPorID("consultar-pedido");
-        ocultarPorID("volver-pedidos");
-        document.getElementById('volver-pedidos').addEventListener('click', function(){window.location.href = "gestion-pedidos.html";});
-
-        const tarjetasPedidos = document.querySelectorAll(".tarjeta-pedido");
-        const botonNuevo = document.getElementById("boton-nuevo-pedido");
-        const botonEditar = document.getElementById("boton-editar-pedido");
-        const botonConsultar = document.getElementById("boton-consultar-pedido");
-        const botonCancelar = document.getElementById("boton-cancelar-pedido");
-
-        let tarjetaSeleccionada = null;
-        tarjetasPedidos.forEach(tarjeta => 
+        
+        let pedirPedidos = async () => 
         {
-            tarjeta.addEventListener("click", function ()
+            if (localStorage.getItem("email") != correoAdmin)
             {
-                if (tarjetaSeleccionada)
-                    tarjetaSeleccionada.classList.remove("seleccionada");
-
-                tarjetaSeleccionada = tarjeta;
-                tarjeta.classList.add("seleccionada");
-                botonEditar.disabled = false;
-                botonConsultar.disabled = false;
-                botonCancelar.disabled = false;
-            })
-        });
-
-        //Sección de Cancelar Pedido
-
-        //Sección de Consultar Pedido
-        document.getElementById("boton-consultar-pedido").addEventListener('click', function()
-        {
-            ocultarPorID("pedidos-creados");
-            ocultarPorID("opciones-pedido-cliente");
-            mostrarPorID("consultar-pedido");
-            mostrarPorID("volver-pedidos");
-        });
-
-        //Sección de Editar Pedido
-        document.getElementById("boton-editar-pedido").addEventListener('click', function()
-        {
-            ocultarPorID("pedidos-creados");
-            ocultarPorID("opciones-pedido-cliente");
-            mostrarPorID("editar-pedido");
-            mostrarPorID("volver-pedidos");
-        });
-
-        //Sección de Nuevo Pedido
-        botonNuevo.addEventListener('click', function()
-        {
-            ocultarPorID("pedidos-creados");
-            ocultarPorID("opciones-pedido-cliente");
-            mostrarPorID("crear-pedido");
-            mostrarPorID("volver-pedidos");
-        });
-
-        const confirmarPedido = document.getElementById("confirmar-pedido");
-        confirmarPedido.addEventListener('click', function()
-        {
-            let registrarPedido = async () =>
-            {
-                const peticion = await fetch (`/cliente/crearPedido?correo=${localStorage.getItem('email')}`,
+                ocultarPorID("opciones-pedido-admin");
+                const pedir = await fetch(`/cliente/cargarPedidos?correo=${localStorage.getItem("email")}`,
                 {
-                    method: 'POST',
+                    method: 'GET',
                     headers:
                     {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(cualesSeleccionados)
+                    }
                 });
-                if (peticion.ok)
+                if (pedir.ok)
                 {
-                    alert("Pedido creado con exito");
-                    window.location.href = "gestion-pedidos.html";
-                }
-                else
-                {
-                    const error = await peticion.text();
-                    console.log(error);
-                    alert("Error al crear el pedido: " + error);
+                    const pedidosCargados = await pedir.json();
+                    const respuesta = await fetch(`/admin/ConsultarPerfil?correo=${localStorage.getItem("email")}`,
+                    {
+                        method: 'GET',
+                        headers:
+                        {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        }
+                    });
+                    if (respuesta.ok)
+                    {
+                        const cliente = await respuesta.json();
+                        pedidosCargados.forEach(pedido => {
+                            crearTarjetaPedido(pedido, cliente, "tarjetas-pedidos");
+                        });
+                    }
                 }
             }
-            registrarPedido();
-        });
+            else
+            {
+                ocultarPorID("opciones-pedido-cliente");
+            }
+    
+            document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
+            ocultarPorID("crear-pedido");
+            ocultarPorID("editar-pedido");
+            ocultarPorID("consultar-pedido");
+            ocultarPorID("volver-pedidos");
+            document.getElementById('volver-pedidos').addEventListener('click', function(){window.location.href = "gestion-pedidos.html";});
+    
+            const tarjetasPedidos = document.querySelectorAll(".tarjeta-pedido");
+            const botonNuevo = document.getElementById("boton-nuevo-pedido");
+            const botonEditar = document.getElementById("boton-editar-pedido");
+            const botonConsultar = document.getElementById("boton-consultar-pedido");
+            const botonCancelar = document.getElementById("boton-cancelar-pedido");
+    
+            
+            let tarjetaSeleccionada = null;
+            tarjetasPedidos.forEach(tarjeta => 
+            {
+                tarjeta.addEventListener("click", function ()
+                {
+                    if (tarjetaSeleccionada)
+                        tarjetaSeleccionada.classList.remove("seleccionada");
+    
+                    tarjetaSeleccionada = tarjeta;
+                    tarjeta.classList.add("seleccionada");
+                    botonEditar.disabled = false;
+                    botonConsultar.disabled = false;
+                    botonCancelar.disabled = false;
+                })
+            });
+    
+            //Sección de Cancelar Pedido
+    
+            //Sección de Consultar Pedido
+            document.getElementById("boton-consultar-pedido").addEventListener('click', function()
+            {
+                ocultarPorID("pedidos-creados");
+                ocultarPorID("opciones-pedido-cliente");
+                mostrarPorID("consultar-pedido");
+                mostrarPorID("volver-pedidos");
+            });
+    
+            //Sección de Editar Pedido
+            document.getElementById("boton-editar-pedido").addEventListener('click', function()
+            {
+                ocultarPorID("pedidos-creados");
+                ocultarPorID("opciones-pedido-cliente");
+                mostrarPorID("editar-pedido");
+                mostrarPorID("volver-pedidos");
+            });
+    
+            //Sección de Nuevo Pedido
+            botonNuevo.addEventListener('click', function()
+            {
+                ocultarPorID("pedidos-creados");
+                ocultarPorID("opciones-pedido-cliente");
+                mostrarPorID("crear-pedido");
+                mostrarPorID("volver-pedidos");
+            });
+    
+            const confirmarPedido = document.getElementById("confirmar-pedido");
+            confirmarPedido.addEventListener('click', function()
+            {
+                let registrarPedido = async () =>
+                {
+                    const peticion = await fetch (`/cliente/crearPedido?correo=${localStorage.getItem('email')}`,
+                    {
+                        method: 'POST',
+                        headers:
+                        {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(cualesSeleccionados)
+                    });
+                    if (peticion.ok)
+                    {
+                        alert("Pedido creado con exito");
+                        window.location.href = "gestion-pedidos.html";
+                    }
+                    else
+                    {
+                        const error = await peticion.text();
+                        console.log(error);
+                        alert("Error al crear el pedido: " + error);
+                    }
+                }
+                registrarPedido();
+            });
+        }
+        pedirPedidos();
     }
     else
     {

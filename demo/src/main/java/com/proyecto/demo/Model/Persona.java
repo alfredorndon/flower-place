@@ -3,8 +3,8 @@ package com.proyecto.demo.Model;
 import java.util.ArrayList;
 
 public abstract class Persona {
-    private  String correo;
-    private  String contrasena;
+    private String correo;
+    private String contrasena;
     private String nombre;
     private String numeroTelefonico;
 

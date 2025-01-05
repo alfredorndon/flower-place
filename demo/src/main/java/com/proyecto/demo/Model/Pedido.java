@@ -2,8 +2,6 @@ package com.proyecto.demo.Model;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class Pedido {
     private ArrayList<Design> designs;

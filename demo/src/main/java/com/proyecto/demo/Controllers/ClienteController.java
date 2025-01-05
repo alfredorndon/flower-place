@@ -65,7 +65,10 @@ public class ClienteController {
         if (cliente.getPedidos().isEmpty())
             return new ResponseEntity<ArrayList<Pedido>>(cliente.getPedidos(),HttpStatus.BAD_REQUEST);
         else
-        return new ResponseEntity<ArrayList<Pedido>>(cliente.getPedidos(),HttpStatus.OK);
+        {
+            ArrayList<Pedido> pedidos = cliente.getPedidos();
+            return new ResponseEntity<ArrayList<Pedido>>(pedidos,HttpStatus.OK);
+        }
     }
 
     @GetMapping("/editarPerfilCliente")
