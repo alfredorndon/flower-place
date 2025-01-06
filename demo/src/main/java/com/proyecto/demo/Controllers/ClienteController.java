@@ -49,8 +49,10 @@ public class ClienteController {
     }
 
     @PostMapping("/crearPedido")
-    public ResponseEntity<String> crearPedido(@RequestBody Pedido pedido, @RequestParam("correo") String correo) throws IOException
+    public ResponseEntity<String> crearPedido(@RequestBody ArrayList<Design> Design, @RequestParam("correo") String correo) throws IOException
     {
+        Pedido pedido = new Pedido(correo);
+        pedido.setDisenos(Design);
         Cliente cliente= new Cliente(correo,"","","");
         cliente.agregarPedido(pedido, correo);
         cliente.actualizarProductosTotales(pedido);
@@ -63,20 +65,18 @@ public class ClienteController {
         if (cliente.getPedidos().isEmpty())
             return new ResponseEntity<ArrayList<Pedido>>(cliente.getPedidos(),HttpStatus.BAD_REQUEST);
         else
-        return new ResponseEntity<ArrayList<Pedido>>(cliente.getPedidos(),HttpStatus.OK);
+        {
+            ArrayList<Pedido> pedidos = cliente.getPedidos();
+            return new ResponseEntity<ArrayList<Pedido>>(pedidos,HttpStatus.OK);
+        }
     }
 
-    @PostMapping("/editarPerfilCliente")
+    @GetMapping("/editarPerfilCliente")
     public ResponseEntity<String> editarPerfilCliente(@RequestParam("correo") String correo, @RequestParam("contrasena") String contrasena,@RequestParam("nombre") String nombre, @RequestParam("numeroTelefonico") String numeroTelefonico) throws IOException
     {
         Cliente cliente = new Cliente();
-        if (cliente.verificarNumeroTelefonico(correo, numeroTelefonico))
-        {
-            cliente.editarPerfilCliente(correo, contrasena, nombre, numeroTelefonico);
-            return new ResponseEntity<String>("Perfil editado exitosamente", HttpStatus.OK);
-        }
-        else
-            return new ResponseEntity<String>("Número de teléfono ya existente", HttpStatus.BAD_REQUEST);
+        cliente.editarPerfilCliente(correo, contrasena, nombre, numeroTelefonico);
+        return new ResponseEntity<String>("Perfil editado exitosamente", HttpStatus.OK);
     }
 
     @PostMapping("/eliminarPerfil")

@@ -22,7 +22,7 @@ import com.proyecto.demo.Model.Producto;
 
     public class AdministradorJson extends Administrador {
         public AdministradorJson(String correo, String contrasena, String nombre, String numeroTelefonico, ArrayList<Producto> productos, ArrayList<Pedido> pedidos) {
-            super(1);
+            super();
         }
 
    /////////////////////////////////////////////////////OBTENER/EXTRAER//////////////////////////////////////////
@@ -30,38 +30,34 @@ import com.proyecto.demo.Model.Producto;
     //FUNCIONAL
     //PRIMERA FORMA DE OBTENER OBJETO ADMIN
     //En esta forma no se toma en cuenta la opcion de que este vacio el JSON, solo extrae un objeto y lo guarda en administrador
-   /* static public Administrador obtenerAdmin() throws Exception {
-        Gson gson = new Gson();
-        JsonReader reader = new JsonReader(new FileReader("src//main//java//com//proyecto//demo//Json//administrador.json"));
-        //Guardo lo que extraje del json en un objeto administrador
-        Administrador administrador = gson.fromJson(reader, Administrador.class);
-        //Lo imprimo
-        System.out.println("    Nombre del Admin: " + administrador.getNombre());
-        System.out.println("    Correo del Admin: " + administrador.getCorreo());
-        System.out.println("    Contraseña: " + administrador.getContrasena());
-        System.out.println("    Numero de Telefonico: " + administrador.getNumeroTelefonico());
-        return administrador;
-    }*/
+    // static public Administrador obtenerAdmin() throws IOException {
+    //     Gson gson = new Gson();
+    //     JsonReader reader = new JsonReader(new FileReader("src//main//java//com//proyecto//demo//Json//administrador.json"));
+    //     //Guardo lo que extraje del json en un objeto administrador
+    //     Administrador administrador = gson.fromJson(reader, Administrador.class);
+    //     //Lo imprimo
+    //     System.out.println("    Nombre del Admin: " + administrador.getNombre());
+    //     System.out.println("    Correo del Admin: " + administrador.getCorreo());
+    //     System.out.println("    Contraseña: " + administrador.getContrasena());
+    //     System.out.println("    Numero de Telefonico: " + administrador.getNumeroTelefonico());
+    //     return administrador;
+    // }
 
     //FUNCIONAL
     //SEGUNDA FORMA DE OBTENER OBJETO ADMIN
     //En esta forma si se toma en cuenta la excepcion de que el json este vacio
-    static public Administrador obtenerAdmin() throws Exception {
-        //Se abre el archivo
+    static public Administrador obtenerAdmin() throws IOException {
         Gson gson = new Gson();
         JsonReader reader = new JsonReader(new FileReader("src//main//java//com//proyecto//demo//Json//administrador.json"));
-        try { //Primero tomamos en cuenta que el archivo si contenga un Admin
-            //Guardo lo que se extrajo del Json en un objeto admin
+        try {
             Administrador administrador = gson.fromJson(reader, Administrador.class);
-            reader.close(); //Cierro el archivo
-            //Lo imprimo
-           /* System.out.println("    Nombre del Admin: " + administrador.getNombre());
+            System.out.println("    Nombre del Admin: " + administrador.getNombre());
             System.out.println("    Correo del Admin: " + administrador.getCorreo());
             System.out.println("    Contraseña: " + administrador.getContrasena());
-            System.out.println("    Numero de Telefonico: " + administrador.getNumeroTelefonico());*/
+            System.out.println("    Numero de Telefonico: " + administrador.getNumeroTelefonico());
+            reader.close(); //Cierro el archivo
             return administrador;
-        } catch (JsonSyntaxException e) { //Si no es asi, lanza una excepcion por el error
-            // Esta es una excepción de sintaxis, lo que indica que es probable que el archivo esté vacío o tenga un formato incorrecto
+        } catch (JsonSyntaxException e) {
             System.err.println("El archivo JSON está vacío o tiene un formato inválido");
             return null;
         }
@@ -103,7 +99,7 @@ import com.proyecto.demo.Model.Producto;
     //FUNCIONAL
     //PRIMERA FORMA DE GUARDAR UN ADMIN EN EL JSON
     //En esta forma es cuando es un solo objeto, no funciona si la estructura del archivo json es de lista
-   public static void guardarAdministrador(Administrador administrador) throws IOException { //Se le pasa el objeto que deseo guardar
+    public static void guardarAdministrador(Administrador administrador) throws IOException { //Se le pasa el objeto que deseo guardar
        // Validar si el archivo existe y está vacío
        File archivo = new File("src//main//java//com//proyecto//demo//Json//administrador.json");
        if (archivo.exists() && archivo.length() > 0) {
@@ -166,7 +162,7 @@ import com.proyecto.demo.Model.Producto;
     //FUNCIONAL
     //SEGUNDA FORMA DE ELIMINAR ADMIN
     //Para Eliminar un objeto especifico de la lista (ORIGINAL, es decir, cuando es una lista)
-   /* public static void eliminarAdministrador(String correoAdmin) throws IOException {
+    /* public static void eliminarAdministrador(String correoAdmin) throws IOException {
         // Leer el JSON existente
         Gson gson = new Gson();
         List<Administrador> administradores = gson.fromJson(new FileReader("src//main//java//com//proyecto//demo//Json//administrador.json"), new TypeToken<List<Administrador>>() {

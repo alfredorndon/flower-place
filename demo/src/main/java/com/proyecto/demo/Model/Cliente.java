@@ -58,7 +58,7 @@ public class Cliente extends Persona {
     {
         this.pedidos=obtenerCliente(correo).pedidos;
         if (pedidos==null)
-        pedidos=new ArrayList<Pedido>();
+            pedidos=new ArrayList<Pedido>();
         return pedidos;
     }
     public ArrayList<Pedido> getPedidos()
@@ -243,6 +243,7 @@ public class Cliente extends Persona {
     {
         ArrayList<Pedido> pedidosTotales=PedidoJson.obtenerPedidosTotales();
         pedido.setId((pedidosTotales.size())+1);
+        PedidoJson.guardarPedido(pedido);
         ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
         Cliente clienteActual= new Cliente();
         for (int i=0;i<listaClientes.size();i++)
@@ -251,10 +252,10 @@ public class Cliente extends Persona {
             {
                 clienteActual=listaClientes.get(i);
                 ClienteJson.eliminarCliente(correo);
-            }
-        }
                 clienteActual.pedidos.add(pedido);
                 ClienteJson.guardarCliente(clienteActual);
+            }
+        }
     }
 
     public boolean validarPedido(Pedido pedido , String correo)
@@ -309,9 +310,9 @@ public class Cliente extends Persona {
             contador++;
         }
         if (contador!=0 || AdministradorJson.obtenerAdmin().getNumeroTelefonico().equals(numeroTelefonico))
-        return false;
+            return false;
         else
-        return true;
+            return true;
     }
 
     public void eliminarDesign (String correo, String nombreDesign) throws IOException
