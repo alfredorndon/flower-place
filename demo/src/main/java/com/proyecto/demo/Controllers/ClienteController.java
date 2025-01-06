@@ -51,9 +51,23 @@ public class ClienteController {
     @PostMapping("/crearPedido")
     public ResponseEntity<String> crearPedido(@RequestBody ArrayList<Design> Design, @RequestParam("correo") String correo) throws IOException
     {
+        Cliente cliente= ClienteJson.obtenerClientes(correo).get(0);
+        ArrayList<Design> designsCliente = cliente.getDesigns();
+        ArrayList<Design> designsPedidos = new ArrayList<Design>();
+        ArrayList<Design> design = Design;
+        for (int i=0; i<Design.size(); i++)
+        {
+            for (int j=0; j<designsCliente.size(); j++)
+            {
+                if(design.get(i).getNombre() == designsCliente.get(j).getNombre())
+                {
+                    Design temporal = designsCliente.get(j);
+                    designsPedidos.add(temporal);
+                }
+            }
+        }
         Pedido pedido = new Pedido(correo);
         pedido.setDisenos(Design);
-        Cliente cliente= new Cliente(correo,"","","");
         cliente.agregarPedido(pedido, correo);
         cliente.actualizarProductosTotales(pedido);
         return new ResponseEntity<String>("Pedido creado", HttpStatus.OK);

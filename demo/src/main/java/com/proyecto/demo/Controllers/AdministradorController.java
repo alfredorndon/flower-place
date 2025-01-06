@@ -21,7 +21,7 @@ public class AdministradorController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody DatosPersona datosPersona) {
-        if (datosPersona.validarDatosLogIn(datosPersona.getCorreo(), datosPersona.getContra()))
+        if (datosPersona.validarDatosLogIn(datosPersona.getCorreo(), datosPersona.getContrasena()))
         return new ResponseEntity<String>("Inicio de sesion valido", HttpStatus.OK);
         else
         return new ResponseEntity<String>("Datos invalidos", HttpStatus.BAD_REQUEST);
@@ -92,6 +92,15 @@ public class AdministradorController {
             return new ResponseEntity<ArrayList<Pedido>>(PedidoJson.obtenerPedidosTotales(),HttpStatus.OK);
     }
 
+    @GetMapping("/cargarClientes")
+    public ResponseEntity<ArrayList<Cliente>> obtenerClientes() throws IOException
+    {
+        if (ClienteJson.obtenerClientesTotales().isEmpty())
+            return new ResponseEntity<ArrayList<Cliente>>(ClienteJson.obtenerClientesTotales(),HttpStatus.BAD_REQUEST);
+        else
+            return new ResponseEntity<ArrayList<Cliente>>(ClienteJson.obtenerClientesTotales(),HttpStatus.OK);
+    }
+
     @PostMapping("/editarPedido")
     public ResponseEntity<String> editarPedido (@RequestBody String estado,  @RequestParam("id") int id, @RequestParam ("correo") String correo) throws IOException
     {
@@ -128,11 +137,24 @@ public class AdministradorController {
         return new ResponseEntity<String>("Producto eliminado con exito", HttpStatus.OK);
     }
 
-    @GetMapping("/consultarPedido")
-    public Pedido consultarPedido (@RequestParam("id") int id) throws IOException
+    @GetMapping("/cerrarPedido")
+    public ResponseEntity<String> consultarPedido (@RequestParam("id") int id, @RequestParam("correo") String correo) throws IOException
     {
-        Administrador admin= new Administrador(1);
-        return admin.obtenerPedido(id);
+        Pedido pedido = PedidoJson.obtenerPedidos(id).get(0);
+        PedidoJson.eliminarPedido(id, 0);
+        pedido.setEstado("Cerrado");
+        Cliente cliente = ClienteJson.obtenerClientes(correo).get(0);
+        ArrayList<Pedido> pedidos = cliente.getPedidos();
+        for (int i=0; i<pedidos.size(); i++)
+        {
+            if (pedidos.get(i).getId() == id)
+                pedidos.set(i, pedido);
+        }
+        cliente.setPedidos(pedidos);
+        ClienteJson.eliminarCliente(correo);
+        ClienteJson.guardarCliente(cliente);
+        PedidoJson.guardarPedido(pedido);
+        return new ResponseEntity<String>("Pedido cerrado con exito", HttpStatus.OK);
     }
 
     @PostMapping("/cancelarPedido")

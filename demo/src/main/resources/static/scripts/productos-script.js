@@ -116,16 +116,24 @@ document.addEventListener('DOMContentLoaded', function()
 
                     tarjetas.forEach(tarjeta => {
                         tarjeta.addEventListener('click', function () {
-                            // Quitar la selección de la tarjeta anterior
-                            if (tarjetaSeleccionada) {
-                                tarjetaSeleccionada.classList.remove('seleccionada');
+                            if (tarjetaSeleccionada != tarjeta && tarjetaSeleccionada != null)
+                                tarjetaSeleccionada.classList.remove("seleccionada");
+                            if (tarjetaSeleccionada == tarjeta && tarjetaSeleccionada != null)
+                            {
+                                tarjetaSeleccionada.classList.remove("seleccionada");
+                                tarjetaSeleccionada = null;
+                                botonEditar.disabled = true;
+                                botonEliminar.disabled = true;
+                                return;
                             }
-
-                            // Seleccionar la nueva tarjeta
-                            tarjetaSeleccionada = tarjeta;
-                            tarjetaSeleccionada.classList.add('seleccionada');
-                            botonEditar.disabled = false; // Habilitar el botón de editar
-                            botonEliminar.disabled = false; // Habilitar el botón de eliminar
+                            else
+                            {
+                                tarjetaSeleccionada = tarjeta;
+                                tarjetaSeleccionada.classList.add('seleccionada');
+                                botonEditar.disabled = false; // Habilitar el botón de editar
+                                botonEliminar.disabled = false; // Habilitar el botón de eliminar
+                            }
+                            
                         });
                     });
                     
@@ -144,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function()
                             ocultarPorID("catalogo-productos");
                             mostrarPorID("editar-producto");
                         }
-
                         document.getElementById('editar-confirmar').addEventListener('click', async () =>
                         {
                             event.preventDefault();

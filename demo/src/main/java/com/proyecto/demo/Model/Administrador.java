@@ -149,7 +149,7 @@ public class Administrador extends Persona {
             if (pedidosTotales.get(i).getId()==id)
             {
                 pedidosTotales.get(i).setEstado(estado);
-                PedidoJson.eliminarPedido(id);
+                PedidoJson.eliminarPedido(id,0);
                 PedidoJson.guardarPedido(pedidosTotales.get(i));
             }
         }
@@ -224,7 +224,7 @@ public class Administrador extends Persona {
             if (this.pedidos.get(i).getId()==id)
             {
                 this.pedidos.remove(i);
-                PedidoJson.eliminarPedido(id);
+                PedidoJson.eliminarPedido(id,1);
             }
         }
         ArrayList<Cliente> clientes= ClienteJson.obtenerClientesTotales();

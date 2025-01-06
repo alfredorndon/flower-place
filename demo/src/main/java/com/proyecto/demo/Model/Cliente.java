@@ -39,7 +39,7 @@ public class Cliente extends Persona {
 
     //Getters and setters
     public ArrayList<Design> getDesigns(String correo) {
-        this.designs =obtenerCliente(correo).designs;
+        this.designs = obtenerCliente(correo).designs;
         if (designs==null)
             designs=new ArrayList<Design>();
         return designs;

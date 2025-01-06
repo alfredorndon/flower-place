@@ -80,13 +80,13 @@ function crearTarjetaPedido(pedido, cliente, id)
         <p class='nombre-cliente'><strong>Nombre del Cliente:</strong> ${cliente.nombre}</p>
         <p class='telefono-cliente'><strong>Teléfono:</strong> ${cliente.numeroTelefonico}</p>
         <p class='email-cliente'><strong>Correo:</strong> ${cliente.correo}</p>
+        <p class='id-pedido'><strong>ID:</strong> ${pedido.id}</p>
         <p class='designs-incluidos'><strong>Diseños Incluidos:</strong></p>
     `;
     let totalDesigns = 0;
     let lista = document.createElement("ul");
     lista.classList.add("lista-designs");
-    console.log(pedido);
-    pedido.disenos.forEach((design, index) =>
+    pedido.disenos.forEach((design) =>
     {
         let elemento = document.createElement("li");
         elemento.innerHTML = `${design.nombre}`;
@@ -97,7 +97,10 @@ function crearTarjetaPedido(pedido, cliente, id)
 
     let estado = document.createElement("div");
     estado.classList.add("estado-pedido");
-    estado.innerHTML = `<strong>Estado del Pedido:</strong> <span class='estado-abierto'>${pedido.estado}</span>`;
+    if (pedido.estado == "Cerrado")
+        estado.innerHTML = `<strong>Estado del Pedido:</strong> <span class='estado-cerrado'>${pedido.estado}</span>`;
+    else
+        estado.innerHTML = `<strong>Estado del Pedido:</strong> <span class='estado-abierto'>${pedido.estado}</span>`;
     tarjetaTemporal.appendChild(estado);
 
     let total = document.createElement("div");
@@ -138,80 +141,82 @@ document.addEventListener('DOMContentLoaded', function ()
 {
     if (login)
     {
-        let pedirDesigns = async() =>
-        {
-            event.preventDefault();
-            let emailCliente = localStorage.getItem('email');
-            const respuesta = await fetch(`/cliente/cargarDesigns?correo=${emailCliente}`,
-            {
-                method: 'GET',
-                headers:
-                {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                }
-            });
-            if (respuesta.ok)
-            {
-                const designs = await respuesta.json();
-                designs.forEach(design =>
-                {
-                    crearTarjetadesign(design, "tarjetas-design-pedido-nuevo");
-                });
-                let tarjetaSelect = null;
-                let todasSelect = [];
-                const tarjetas =document.getElementById("crear-pedido").querySelectorAll('.tarjeta-design');
-                tarjetas.forEach(tarjeta => 
-                {
-                    tarjeta.addEventListener('click', function () 
-                    {
-                        // Quitar la selección de la tarjeta anterior
-                        if (contadorSeleccionado == 10)
-                        {
-                            todasSelect[0].classList.remove("seleccionada");
-                            todasSelect.shift();
-                            cualesSeleccionados.shift();
-                            contadorSeleccionado--;
-                        }
-
-                        // Seleccionar la nueva tarjeta
-                        tarjetaSelect = tarjeta;
-                        if (tarjetaSelect.classList.contains("seleccionada"))
-                            return;
-                        else
-                        {
-                            tarjetaSelect.classList.add("seleccionada");
-                            todasSelect.push(tarjetaSelect);
-                            contadorSeleccionado++;
-                            let i = -1;
-                            let productos = [];
-                            let parrafos = tarjetaSelect.querySelectorAll("p");
-                            while (parrafos[i+2].id != "precio-design")
-                            {
-                                i+= 2;
-                                let productoEscogido = {};
-                                productoEscogido.nombre = parrafos[i].textContent.split(" ")[1];
-                                productoEscogido.precio = " ";
-                                productoEscogido.cantidad = parrafos[i+1].textContent.split(" ")[1];
-                                productos = productos.concat([productoEscogido]);
-                            }
-                            let designEscogido  = {};
-                            designEscogido.productos = productos;
-                            designEscogido.nombre = parrafos[0].textContent;
-                            designEscogido.precio = parrafos[i+2].textContent.split("$")[1];
-                            cualesSeleccionados = cualesSeleccionados.concat([designEscogido]);
-                            actualizarTotal("crear-pedido");
-                        }
-                    });    
-                });
-            }
-        }
-        pedirDesigns();
-        
         let pedirPedidos = async () => 
         {
             if (localStorage.getItem("email") != correoAdmin)
             {
+                let pedirDesigns = async() =>
+                {
+                    event.preventDefault();
+                    let emailCliente = localStorage.getItem('email');
+                    const respuesta = await fetch(`/cliente/cargarDesigns?correo=${emailCliente}`,
+                    {
+                        method: 'GET',
+                        headers:
+                        {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        }
+                    });
+                    if (respuesta.ok)
+                    {
+                        const designs = await respuesta.json();
+                        designs.forEach(design =>
+                        {
+                            crearTarjetadesign(design, "tarjetas-design-pedido-nuevo");
+                        });
+                        let tarjetaSelect = null;
+                        let todasSelect = [];
+                        const tarjetas =document.getElementById("crear-pedido").querySelectorAll('.tarjeta-design');
+                        tarjetas.forEach(tarjeta => 
+                        {
+                            tarjeta.addEventListener('click', function () 
+                            {
+                                // Quitar la selección de la tarjeta anterior
+                                if (contadorSeleccionado == 10)
+                                {
+                                    todasSelect[0].classList.remove("seleccionada");
+                                    todasSelect.shift();
+                                    cualesSeleccionados.shift();
+                                    contadorSeleccionado--;
+                                }
+        
+                                // Seleccionar la nueva tarjeta
+                                tarjetaSelect = tarjeta;
+                                if (tarjetaSelect.classList.contains("seleccionada"))
+                                {
+                                    tarjetaSelect.classList.remove("seleccionada");
+                                    return;
+                                }
+                                else
+                                {
+                                    tarjetaSelect.classList.add("seleccionada");
+                                    todasSelect.push(tarjetaSelect);
+                                    contadorSeleccionado++;
+                                    let i = -1;
+                                    let productos = [];
+                                    let parrafos = tarjetaSelect.querySelectorAll("p");
+                                    while (parrafos[i+2].id != "precio-design")
+                                    {
+                                        i+= 2;
+                                        let productoEscogido = {};
+                                        productoEscogido.nombre = parrafos[i].textContent.split(" ")[1];
+                                        productoEscogido.precio = " ";
+                                        productoEscogido.cantidad = parrafos[i+1].textContent.split(" ")[1];
+                                        productos = productos.concat([productoEscogido]);
+                                    }
+                                    let designEscogido  = {};
+                                    designEscogido.productos = productos;
+                                    designEscogido.nombre = parrafos[0].textContent;
+                                    designEscogido.precio = parrafos[i+2].textContent.split("$")[1];
+                                    cualesSeleccionados = cualesSeleccionados.concat([designEscogido]);
+                                    actualizarTotal("crear-pedido");
+                                }
+                            });    
+                        });
+                    }
+                }
+                pedirDesigns();
                 ocultarPorID("opciones-pedido-admin");
                 const pedir = await fetch(`/cliente/cargarPedidos?correo=${localStorage.getItem("email")}`,
                 {
@@ -245,7 +250,43 @@ document.addEventListener('DOMContentLoaded', function ()
             }
             else
             {
+                elementos[1].style.setProperty('display', 'none', 'important');
                 ocultarPorID("opciones-pedido-cliente");
+                const pedir = await fetch(`/admin/cargarPedidos`,
+                {
+                    method: 'GET',
+                    headers:
+                    {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    }
+                });
+                if (pedir.ok)
+                {
+                    const pedidosTotales = await pedir.json();
+                    const respuesta = await fetch(`/admin/cargarClientes`,
+                    {
+                        method: 'GET',
+                        headers:
+                        {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        }
+                    });
+                    if (respuesta.ok)
+                    {
+                        const clientes = await respuesta.json();
+                        let cliente;
+                        pedidosTotales.forEach(pedido => {
+                            for (let k = 0; k<clientes.length; k++)
+                            {
+                                if (pedido.correo == clientes[k].correo)
+                                    cliente = clientes[k];
+                            }
+                            crearTarjetaPedido(pedido, cliente, "tarjetas-pedidos");
+                        });
+                    }
+                }
             }
     
             document.getElementById('icono-logout').addEventListener('click', cerrarSesion);
@@ -261,20 +302,28 @@ document.addEventListener('DOMContentLoaded', function ()
             const botonConsultar = document.getElementById("boton-consultar-pedido");
             const botonCancelar = document.getElementById("boton-cancelar-pedido");
     
-            
             let tarjetaSeleccionada = null;
             tarjetasPedidos.forEach(tarjeta => 
             {
                 tarjeta.addEventListener("click", function ()
                 {
-                    if (tarjetaSeleccionada)
+                    if (tarjetaSeleccionada != tarjeta && tarjetaSeleccionada != null)
                         tarjetaSeleccionada.classList.remove("seleccionada");
-    
-                    tarjetaSeleccionada = tarjeta;
-                    tarjeta.classList.add("seleccionada");
-                    botonEditar.disabled = false;
-                    botonConsultar.disabled = false;
-                    botonCancelar.disabled = false;
+                    if (tarjetaSeleccionada == tarjeta && tarjetaSeleccionada != null)
+                    {
+                        tarjetaSeleccionada.classList.remove("seleccionada");
+                        tarjetaSeleccionada = null;
+                        return;
+                    }
+                    else
+                    {
+                        tarjetaSeleccionada = tarjeta;
+                        tarjeta.classList.add("seleccionada");
+                        botonEditar.disabled = false;
+                        botonConsultar.disabled = false;
+                        botonCancelar.disabled = false;
+                    }
+                    
                 })
             });
     
@@ -283,19 +332,51 @@ document.addEventListener('DOMContentLoaded', function ()
             //Sección de Consultar Pedido
             document.getElementById("boton-consultar-pedido").addEventListener('click', function()
             {
-                ocultarPorID("pedidos-creados");
-                ocultarPorID("opciones-pedido-cliente");
-                mostrarPorID("consultar-pedido");
-                mostrarPorID("volver-pedidos");
+                if (tarjetaSeleccionada)
+                {
+                    ocultarPorID("pedidos-creados");
+                    ocultarPorID("opciones-pedido-cliente");
+                    mostrarPorID("consultar-pedido");
+                    mostrarPorID("volver-pedidos");
+                    let seccionConsulta = document.getElementById("tarjetas-pedido-consultar");
+                    tarjetaSeleccionada.setAttribute("id","tarjeta-consultada");
+                    tarjetaSeleccionada.classList.remove("seleccionada");
+                    seccionConsulta.appendChild(tarjetaSeleccionada);
+                    let correoPedido = tarjetaSeleccionada.querySelectorAll("p")[2].textContent.split(" ")[1];
+                    let idPedido = Number(tarjetaSeleccionada.querySelectorAll("p")[3].textContent.split(" ")[1]);
+                    const botonConfirmarCierre = document.getElementById("cerrar-pedido");
+                    botonConfirmarCierre.addEventListener('click', async () =>
+                    {
+                        const cerrar = await fetch (`/admin/cerrarPedido?id=${idPedido}&correo=${correoPedido}`,
+                        {
+                            method: 'GET',
+                            headers:
+                            {
+                                'Accept': 'application/json'
+                            }
+                        });
+                        if (cerrar.ok)
+                        {
+                            swal({
+                                title: await cerrar.text(),
+                                icon: "success"
+                            }).then((resultado) => {window.location.href = "gestion-pedidos.html";});
+                        }
+                    });
+                }
             });
-    
+            
+
             //Sección de Editar Pedido
             document.getElementById("boton-editar-pedido").addEventListener('click', function()
             {
-                ocultarPorID("pedidos-creados");
-                ocultarPorID("opciones-pedido-cliente");
-                mostrarPorID("editar-pedido");
-                mostrarPorID("volver-pedidos");
+                if (tarjetaSeleccionada)
+                {
+                    ocultarPorID("pedidos-creados");
+                    ocultarPorID("opciones-pedido-cliente");
+                    mostrarPorID("editar-pedido");
+                    mostrarPorID("volver-pedidos");
+                }
             });
     
             //Sección de Nuevo Pedido

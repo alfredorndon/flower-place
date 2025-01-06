@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function ()
                 event.preventDefault();
                 let datosPersona = {}
                 datosPersona.correo = document.getElementById('email-inicio').value;
-                datosPersona.contra = document.getElementById('contrasena-inicio').value;
+                datosPersona.contrasena = document.getElementById('contrasena-inicio').value;
                 const peticion = await fetch ("/admin/login",
                 {
                     method:'POST',
