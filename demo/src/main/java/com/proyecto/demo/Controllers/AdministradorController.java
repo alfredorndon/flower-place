@@ -142,7 +142,6 @@ public class AdministradorController {
     {
         Pedido pedido = PedidoJson.obtenerPedidos(id).get(0);
         PedidoJson.eliminarPedido(id, 0);
-        pedido.setEstado("Cerrado");
         Cliente cliente = ClienteJson.obtenerClientes(correo).get(0);
         ArrayList<Pedido> pedidos = cliente.getPedidos();
         for (int i=0; i<pedidos.size(); i++)
@@ -150,11 +149,18 @@ public class AdministradorController {
             if (pedidos.get(i).getId() == id)
                 pedidos.set(i, pedido);
         }
-        cliente.setPedidos(pedidos);
-        ClienteJson.eliminarCliente(correo);
-        ClienteJson.guardarCliente(cliente);
-        PedidoJson.guardarPedido(pedido);
-        return new ResponseEntity<String>("Pedido cerrado con exito", HttpStatus.OK);
+        boolean Posible= cliente.actualizarProductosTotales(pedido);
+        if (Posible)
+        {
+            pedido.setEstado("Cerrado");
+            cliente.setPedidos(pedidos);
+            ClienteJson.eliminarCliente(correo);
+            ClienteJson.guardarCliente(cliente);
+            PedidoJson.guardarPedido(pedido);
+            return new ResponseEntity<String>("Pedido cerrado con exito", HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<String>("No hay suficientes productos en este momento", HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/cancelarPedido")

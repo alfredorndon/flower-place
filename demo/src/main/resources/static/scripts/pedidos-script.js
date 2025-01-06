@@ -98,9 +98,9 @@ function crearTarjetaPedido(pedido, cliente, id)
     let estado = document.createElement("div");
     estado.classList.add("estado-pedido");
     if (pedido.estado == "Cerrado")
-        estado.innerHTML = `<strong>Estado del Pedido:</strong> <span class='estado-cerrado'>${pedido.estado}</span>`;
+        estado.innerHTML = `<strong>Estado del Pedido:</strong> <span class='estado-cerrado' id='estado'>${pedido.estado}</span>`;
     else
-        estado.innerHTML = `<strong>Estado del Pedido:</strong> <span class='estado-abierto'>${pedido.estado}</span>`;
+        estado.innerHTML = `<strong>Estado del Pedido:</strong> <span class='estado-abierto' id='estado'>${pedido.estado}</span>`;
     tarjetaTemporal.appendChild(estado);
 
     let total = document.createElement("div");
@@ -332,7 +332,8 @@ document.addEventListener('DOMContentLoaded', function ()
             //Sección de Consultar Pedido
             document.getElementById("boton-consultar-pedido").addEventListener('click', function()
             {
-                if (tarjetaSeleccionada)
+                let status = tarjetaSeleccionada.querySelector("#estado");
+                if (tarjetaSeleccionada && status.textContent != "Cerrado")
                 {
                     ocultarPorID("pedidos-creados");
                     ocultarPorID("opciones-pedido-cliente");
@@ -361,6 +362,11 @@ document.addEventListener('DOMContentLoaded', function ()
                                 title: await cerrar.text(),
                                 icon: "success"
                             }).then((resultado) => {window.location.href = "gestion-pedidos.html";});
+                        }
+                        else
+                        {
+                            const errorRespuesta = await cerrar.text();
+                            swal ("Un error inesperado",errorRespuesta,"error");
                         }
                     });
                 }

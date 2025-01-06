@@ -9,6 +9,7 @@ import com.proyecto.demo.Model.Cliente;
 import com.proyecto.demo.Model.Design;
 import com.proyecto.demo.Model.Pedido;
 import com.proyecto.demo.Model.Producto;
+import java.util.Objects;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -55,21 +56,21 @@ public class ClienteController {
         ArrayList<Design> designsCliente = cliente.getDesigns();
         ArrayList<Design> designsPedidos = new ArrayList<Design>();
         ArrayList<Design> design = Design;
-        for (int i=0; i<Design.size(); i++)
+        for (int i=0; i<design.size(); i++)
         {
             for (int j=0; j<designsCliente.size(); j++)
             {
-                if(design.get(i).getNombre() == designsCliente.get(j).getNombre())
+                Design aComparar = design.get(i);
+                Design temporal = designsCliente.get(j);
+                if(Objects.equals(temporal.getNombre(), aComparar.getNombre()))
                 {
-                    Design temporal = designsCliente.get(j);
                     designsPedidos.add(temporal);
                 }
             }
         }
         Pedido pedido = new Pedido(correo);
-        pedido.setDisenos(Design);
+        pedido.setDisenos(designsPedidos);
         cliente.agregarPedido(pedido, correo);
-        cliente.actualizarProductosTotales(pedido);
         return new ResponseEntity<String>("Pedido creado", HttpStatus.OK);
     }
     @GetMapping("/cargarPedidos")
