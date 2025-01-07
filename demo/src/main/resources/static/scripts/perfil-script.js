@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function ()
                 {
                     elementos[1].style.setProperty('display', 'none', 'important');
                     ocultarPorID("boton-eliminar-perfil");
+                    ocultarPorID("boton-editar-perfil");
                 }
                 let divDatos = document.getElementById("datos-perfil");
                 let parrafos = divDatos.querySelectorAll("p");
@@ -189,7 +190,10 @@ document.addEventListener('DOMContentLoaded', function ()
                                 if (peticion.ok)
                                 {
                                     const respuesta = await peticion.text();
-                                    swal (respuesta,"success");
+                                    swal ({
+                                        title: respuesta,
+                                        icon: "success"
+                                    }).then((valor) => {window.location.href = "gestion-perfil.html";});
                                 }
                                 else
                                 {
@@ -269,13 +273,13 @@ document.addEventListener('DOMContentLoaded', function ()
                 else
                 {
                     const errorRespuesta = await peticion.text();
-                    console.log(errorRespuesta);
-                    alert(errorRespuesta);
+                    swal ("Un error inesperado",errorRespuesta,"error");
                 }
+
             }
             else
             {
-                alert("Las contraseñas no coinciden");
+                swal ("Un error inesperado","Las contraseñas no coinciden","error");
             }
         });
 
@@ -298,7 +302,7 @@ document.addEventListener('DOMContentLoaded', function ()
                 event.preventDefault();
                 let datosPersona = {}
                 datosPersona.correo = document.getElementById('email-inicio').value;
-                datosPersona.contra = document.getElementById('contrasena-inicio').value;
+                datosPersona.contrasena = document.getElementById('contrasena-inicio').value;
                 const peticion = await fetch ("/admin/login",
                 {
                     method:'POST',
@@ -314,13 +318,12 @@ document.addEventListener('DOMContentLoaded', function ()
                     localStorage.setItem('email', document.getElementById('email-inicio').value);
                     localStorage.setItem('contrasena', document.getElementById('contrasena-inicio').value);
                     localStorage.setItem('login','true');
-                    window.location.href = "index.html";
+                    window.location.href = "index.html"
                 }
                 else
                 {
                     const errorRespuesta = await peticion.text();
-                    console.log(errorRespuesta);
-                    alert(errorRespuesta);
+                    swal ("Un error inesperado",errorRespuesta,"error");
                 }
             }
         });

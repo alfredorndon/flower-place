@@ -1,6 +1,7 @@
 package com.proyecto.demo.Model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Pedido {
     private ArrayList<Design> designs;
@@ -23,6 +24,14 @@ public class Pedido {
         id=0;
         correo="";
     }
+
+    public Pedido (String correo)
+    {
+        designs= new ArrayList<Design>();
+        estado="Abierto";
+        id=0;
+        this.correo = correo;
+    }
     
     public String getCorreo() {
         return correo;
@@ -38,6 +47,7 @@ public class Pedido {
     }
 
     public void setDisenos(ArrayList<Design> designs) {
+        designs.removeIf(Objects::isNull);
         this.designs = designs;
     }
 

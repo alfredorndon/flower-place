@@ -12,7 +12,7 @@ public class Administrador extends Persona {
     private ArrayList<Producto> productos;
     private ArrayList<Pedido>  pedidos;
 
-    public Administrador() throws IOException {
+    public Administrador(int confirmacion) throws IOException {
         super("admin@gmail.com", AdministradorJson.obtenerAdmin().getContrasena(), AdministradorJson.obtenerAdmin().getNombre() ,AdministradorJson.obtenerAdmin().getNumeroTelefonico());
         this.productos=ProductoJson.obtenerProductosTotales();
         this.pedidos=PedidoJson.obtenerPedidosTotales();
@@ -22,9 +22,9 @@ public class Administrador extends Persona {
             pedidos=new ArrayList<Pedido>();
     }
 
-    public Administrador(int confirmacion)
+    public Administrador()
     {
-        super("admin@gmail.com", "admnin1234", "Administrador" ,"04120998105");
+        super("","","","");
         this.productos=new ArrayList<Producto>();
         this.pedidos=new ArrayList<Pedido>();
     }
@@ -93,7 +93,7 @@ public class Administrador extends Persona {
     @Override
     public boolean verificarCorreo(String correo)
     {
-        Administrador admin = new Administrador(1); //quitar
+        Administrador admin = new Administrador(); //quitar
         boolean adminObtenido= false;
         if (admin.getCorreo().equals(correo))
             adminObtenido=true;
@@ -104,7 +104,7 @@ public class Administrador extends Persona {
     @Override
     public boolean verificarContra(String contrasena)
     {
-        Administrador admin = new Administrador(1); //quitar
+        Administrador admin = new Administrador(); //quitar
         boolean adminObtenido= false;
         if (admin.getContrasena().equals(contrasena))
             adminObtenido=true;
@@ -112,7 +112,7 @@ public class Administrador extends Persona {
     }
     public boolean verificarTelefono(String telefono)
     {
-        Administrador admin = new Administrador(1); //quitar
+        Administrador admin = new Administrador(); //quitar
         boolean adminObtenido= false;
         if (admin.getNumeroTelefonico().equals(telefono))
             adminObtenido=true;
@@ -121,7 +121,7 @@ public class Administrador extends Persona {
 
     public boolean verificarDatos(String correo, String contrasena)
     {
-        Administrador admin = new Administrador(1); //quitar
+        Administrador admin = new Administrador(); //quitar
         boolean adminObtenido= false;
         if (admin.getNumeroTelefonico().equals(correo) && admin.getContrasena().equals(contrasena))
         {
@@ -134,7 +134,7 @@ public class Administrador extends Persona {
     {
         if (admin.getCorreo().equals(this.getCorreo()) && admin.getContrasena().equals(this.getContrasena()) && admin.getNumeroTelefonico().equals(this.getNumeroTelefonico()))
         {
-            return new Administrador(1); //quitar
+            return new Administrador(); //quitar
         }
         else
         {
@@ -149,7 +149,7 @@ public class Administrador extends Persona {
             if (pedidosTotales.get(i).getId()==id)
             {
                 pedidosTotales.get(i).setEstado(estado);
-                PedidoJson.eliminarPedido(id);
+                PedidoJson.eliminarPedido(id,0);
                 PedidoJson.guardarPedido(pedidosTotales.get(i));
             }
         }
@@ -224,7 +224,7 @@ public class Administrador extends Persona {
             if (this.pedidos.get(i).getId()==id)
             {
                 this.pedidos.remove(i);
-                PedidoJson.eliminarPedido(id);
+                PedidoJson.eliminarPedido(id,1);
             }
         }
         ArrayList<Cliente> clientes= ClienteJson.obtenerClientesTotales();

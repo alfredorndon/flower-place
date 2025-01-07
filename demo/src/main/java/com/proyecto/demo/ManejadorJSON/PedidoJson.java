@@ -86,11 +86,11 @@ public class PedidoJson extends Pedido {
     }
 
     //Para Eliminar un objeto especifico de la lista
-    public static void eliminarPedido(int idPedido) throws IOException {
+    public static void eliminarPedido(int idPedido, int validacion) throws IOException {
         // Leer el JSON existente
         Gson gson = new Gson();
-        List<Pedido> pedidos = gson.fromJson(new FileReader("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\producto.json"), new TypeToken<List<Pedido>>() {}.getType());
-
+        List<Pedido> pedidos = gson.fromJson(new FileReader("src//main//java//com//proyecto//demo//Json//pedido.json"), new TypeToken<List<Pedido>>() {}.getType());
+        
         // Eliminar el producto
         List<Pedido> pedidosActualizados = new ArrayList<>();
         for (Pedido pedido : pedidos) {
@@ -100,9 +100,8 @@ public class PedidoJson extends Pedido {
         }
 
         // Escribir el JSON actualizado
-        try (FileWriter writer = new FileWriter("C:\\Users\\MGI\\Downloads\\springboot-backend-proyect2\\src\\main\\java\\com\\proyecto\\ingenieriasoftware\\ucab\\Json\\producto.json")) {
+        try (FileWriter writer = new FileWriter("src//main//java//com//proyecto//demo//Json//pedido.json")) {
             gson.toJson(pedidosActualizados, writer);
         }
     }
-
 }

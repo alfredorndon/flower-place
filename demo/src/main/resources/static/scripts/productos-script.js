@@ -116,16 +116,24 @@ document.addEventListener('DOMContentLoaded', function()
 
                     tarjetas.forEach(tarjeta => {
                         tarjeta.addEventListener('click', function () {
-                            // Quitar la selección de la tarjeta anterior
-                            if (tarjetaSeleccionada) {
-                                tarjetaSeleccionada.classList.remove('seleccionada');
+                            if (tarjetaSeleccionada != tarjeta && tarjetaSeleccionada != null)
+                                tarjetaSeleccionada.classList.remove("seleccionada");
+                            if (tarjetaSeleccionada == tarjeta && tarjetaSeleccionada != null)
+                            {
+                                tarjetaSeleccionada.classList.remove("seleccionada");
+                                tarjetaSeleccionada = null;
+                                botonEditar.disabled = true;
+                                botonEliminar.disabled = true;
+                                return;
                             }
-
-                            // Seleccionar la nueva tarjeta
-                            tarjetaSeleccionada = tarjeta;
-                            tarjetaSeleccionada.classList.add('seleccionada');
-                            botonEditar.disabled = false; // Habilitar el botón de editar
-                            botonEliminar.disabled = false; // Habilitar el botón de eliminar
+                            else
+                            {
+                                tarjetaSeleccionada = tarjeta;
+                                tarjetaSeleccionada.classList.add('seleccionada');
+                                botonEditar.disabled = false; // Habilitar el botón de editar
+                                botonEliminar.disabled = false; // Habilitar el botón de eliminar
+                            }
+                            
                         });
                     });
                     
@@ -144,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function()
                             ocultarPorID("catalogo-productos");
                             mostrarPorID("editar-producto");
                         }
-
                         document.getElementById('editar-confirmar').addEventListener('click', async () =>
                         {
                             event.preventDefault();
@@ -164,14 +171,15 @@ document.addEventListener('DOMContentLoaded', function()
                             });
                             if (guardar.ok)
                             {
-                                alert ('Producto editado con éxito');
-                                window.location.href = "gestion-productos.html";
+                                swal({
+                                    title: await guardar.text(),
+                                    icon: "success"
+                                }).then((resultado) => {window.location.href = "gestion-productos.html";});
                             }
                             else
                             {
                                 const errorRespuesta = await guardar.text();
-                                console.log(errorRespuesta);
-                                alert(errorRespuesta);
+                                swal ("Un error inesperado",errorRespuesta,"error");
                             }
                         });
                     });
@@ -205,13 +213,15 @@ document.addEventListener('DOMContentLoaded', function()
                         });
                         if (peticion.ok)
                         {
-                            window.location.href = "gestion-productos.html";
-                        } 
+                            swal({
+                                title: await peticion.text(),
+                                icon: "success"
+                            }).then((resultado) => {window.location.href = "gestion-productos.html";});
+                        }
                         else
                         {
                             const errorRespuesta = await peticion.text();
-                            console.log(errorRespuesta);
-                            alert(errorRespuesta);
+                            swal ("Un error inesperado",errorRespuesta,"error");
                         }
                     });
 
@@ -272,8 +282,7 @@ document.addEventListener('DOMContentLoaded', function()
             else
             {
                 const errorRespuesta = await respuesta.text();
-                console.log(errorRespuesta);
-                alert(errorRespuesta);
+                swal ("Un error inesperado",errorRespuesta,"error");
             }
         }
         pedirProductos();

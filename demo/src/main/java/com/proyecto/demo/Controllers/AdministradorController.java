@@ -6,6 +6,8 @@ import com.proyecto.demo.ManejadorJSON.ClienteJson;
 import com.proyecto.demo.ManejadorJSON.DesignJson;
 import com.proyecto.demo.ManejadorJSON.PedidoJson;
 import com.proyecto.demo.ManejadorJSON.ProductoJson;
+import java.util.Objects;
+import java.util.Collections;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +23,7 @@ public class AdministradorController {
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody DatosPersona datosPersona) {
-        if (datosPersona.validarDatosLogIn(datosPersona.getCorreo(), datosPersona.getContra()))
+        if (datosPersona.validarDatosLogIn(datosPersona.getCorreo(), datosPersona.getContrasena()))
         return new ResponseEntity<String>("Inicio de sesion valido", HttpStatus.OK);
         else
         return new ResponseEntity<String>("Datos invalidos", HttpStatus.BAD_REQUEST);
@@ -48,7 +50,7 @@ public class AdministradorController {
     @PostMapping("/AgregarProducto")
     public ResponseEntity<String> agregarProducto (@RequestBody Producto productoAgregado) throws IOException
     {
-        Administrador administrador= new Administrador(); 
+        Administrador administrador= new Administrador(1); 
         if (administrador.verificarProducto(productoAgregado))
         {
             ProductoJson.guardarProducto(productoAgregado);
@@ -61,11 +63,11 @@ public class AdministradorController {
     @PostMapping("/EditarProducto")
     public ResponseEntity<String> editarProducto(@RequestBody Producto productoEditado) throws IOException
     {
-        Administrador admin =new Administrador(); 
+        Administrador admin =new Administrador(1); 
         if (admin.validarDatosProducto(productoEditado.getCantidad(),productoEditado.getPrecio()))
         {
             admin.editarProducto(productoEditado.getNombre(), productoEditado.getPrecio(), productoEditado.getCantidad());
-            return new ResponseEntity<String>("Producto Editado",HttpStatus.OK);
+            return new ResponseEntity<String>("Producto Editado con éxito",HttpStatus.OK);
         }
         else
         return new ResponseEntity<String>("Datos invalidos",HttpStatus.CONFLICT);
@@ -75,7 +77,7 @@ public class AdministradorController {
     {
         Cliente cliente;
         if (correo.equals("admin@gmail.com"))
-            cliente= new Cliente(correo,AdministradorJson.obtenerAdmin().getContrasena(),AdministradorJson.obtenerAdmin().getNombre(),AdministradorJson.obtenerAdmin().getNumeroTelefonico());
+            cliente= new Cliente(correo,"admin1234","Administrador","04122398760");
         else
         {
             cliente= ClienteJson.obtenerClientes(correo).get(0);
@@ -89,13 +91,34 @@ public class AdministradorController {
         if (PedidoJson.obtenerPedidosTotales().isEmpty())
             return new ResponseEntity<ArrayList<Pedido>>(PedidoJson.obtenerPedidosTotales(),HttpStatus.BAD_REQUEST);
         else
-            return new ResponseEntity<ArrayList<Pedido>>(PedidoJson.obtenerPedidosTotales(),HttpStatus.OK);
+        {
+            ArrayList<Pedido> pedidos = PedidoJson.obtenerPedidosTotales();
+            ArrayList<Pedido> cerrados = new ArrayList<Pedido>();
+            for (int i=0; i<pedidos.size(); i++)
+            {
+                if (pedidos.get(i).getEstado().equals("Cerrado"))
+                    cerrados.add(pedidos.get(i));
+            }
+            pedidos.removeIf(pedido-> pedido.getEstado().equals("Cerrado"));
+            Collections.reverse(pedidos);
+            pedidos.addAll(cerrados);
+            return new ResponseEntity<ArrayList<Pedido>>(pedidos,HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/cargarClientes")
+    public ResponseEntity<ArrayList<Cliente>> obtenerClientes() throws IOException
+    {
+        if (ClienteJson.obtenerClientesTotales().isEmpty())
+            return new ResponseEntity<ArrayList<Cliente>>(ClienteJson.obtenerClientesTotales(),HttpStatus.BAD_REQUEST);
+        else
+            return new ResponseEntity<ArrayList<Cliente>>(ClienteJson.obtenerClientesTotales(),HttpStatus.OK);
     }
 
     @PostMapping("/editarPedido")
     public ResponseEntity<String> editarPedido (@RequestBody String estado,  @RequestParam("id") int id, @RequestParam ("correo") String correo) throws IOException
     {
-        Administrador admin= new Administrador(); 
+        Administrador admin= new Administrador(1); 
         admin.editarPedido(estado,id);
         admin.editarPedidoCliente(estado, correo, id);
         return new ResponseEntity<String>("Pedido Editado",HttpStatus.OK);
@@ -104,7 +127,7 @@ public class AdministradorController {
     @PostMapping("/editarPerfilAdministrador")
     public ResponseEntity<String> editarPerfilAdministrador(@RequestParam("correo") String correo, @RequestParam("contra") String contra, @RequestParam("nombre") String nombre, @RequestParam("numeroTelefonico") String numeroTelefonico ) throws IOException
     {
-        Administrador admin= new Administrador(); 
+        Administrador admin= new Administrador(1); 
         if (admin.verificarNumeroTelefonico (numeroTelefonico))
         {
         admin.editarPerfilAdministrador(correo, contra, nombre, numeroTelefonico);
@@ -117,7 +140,7 @@ public class AdministradorController {
     @GetMapping("/consultarProducto")
     public Producto consultarProducto (@RequestParam("nombre") String nombre) throws IOException
     {
-        Administrador admin= new Administrador(); 
+        Administrador admin= new Administrador(1); 
         return admin.obtenerProducto(nombre);
     }
     
@@ -128,19 +151,37 @@ public class AdministradorController {
         return new ResponseEntity<String>("Producto eliminado con exito", HttpStatus.OK);
     }
 
-    @GetMapping("/consultarPedido")
-    public Pedido consultarPedido (@RequestParam("id") int id) throws IOException
+    @GetMapping("/cerrarPedido")
+    public ResponseEntity<String> consultarPedido (@RequestParam("id") int id, @RequestParam("correo") String correo) throws IOException
     {
-        Administrador admin= new Administrador();
-        return admin.obtenerPedido(id);
+        Pedido pedido = PedidoJson.obtenerPedidos(id).get(0);
+        PedidoJson.eliminarPedido(id, 0);
+        Cliente cliente = ClienteJson.obtenerClientes(correo).get(0);
+        ArrayList<Pedido> pedidos = cliente.getPedidos();
+        for (int i=0; i<pedidos.size(); i++)
+        {
+            if (pedidos.get(i).getId() == id)
+                pedidos.set(i, pedido);
+        }
+        boolean Posible= cliente.actualizarProductosTotales(pedido);
+        if (Posible)
+        {
+            pedido.setEstado("Cerrado");
+            cliente.setPedidos(pedidos);
+            ClienteJson.eliminarCliente(correo);
+            ClienteJson.guardarCliente(cliente);
+            PedidoJson.guardarPedido(pedido);
+            return new ResponseEntity<String>("Pedido cerrado con exito", HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<String>("No hay suficientes productos en este momento", HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/cancelarPedido")
-    public ResponseEntity<String> cancelarPedido (@RequestBody Pedido pedido, @RequestParam("id") int id, @RequestParam ("correo") String correo) throws IOException
+    public ResponseEntity<String> cancelarPedido (@RequestParam("id") int id, @RequestParam ("correo") String correo) throws IOException
     {
-        Administrador admin= new Administrador();
+        Administrador admin= new Administrador(1);
         admin.cancelarPedido(id, correo);
-        admin.actualizarProductosTotales(pedido);
         return new ResponseEntity<String>("Pedido cancelado con exito", HttpStatus.OK);
     }
 }

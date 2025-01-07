@@ -3,17 +3,17 @@ package com.proyecto.demo.Model;
 public class DatosPersona {
 
     String correo;
-    String contra;
+    String contrasena;
 
-    public DatosPersona(String correo, String contra) {
+    public DatosPersona(String correo, String contrasena) {
         this.correo = correo;
-        this.contra = contra;
+        this.contrasena = contrasena;
     }
 
     public DatosPersona()
     {
         this.correo = "";
-        this.contra = "";
+        this.contrasena = "";
     }
 
     public String getCorreo() {
@@ -24,18 +24,18 @@ public class DatosPersona {
         this.correo = correo;
     }
 
-    public String getContra() {
-        return contra;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setContra(String contra) {
-        this.contra = contra;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public boolean validarDatosLogIn (String correo, String contrasena)
     {
         Cliente cliente= new Cliente(correo,contrasena,"","");
-        Administrador admin= new Administrador(1); //quitar
+        Administrador admin= new Administrador(); //quitar
         if (correo.equals("admin@gmail.com") && contrasena.equals(admin.getContrasena()))
             return true;
         else if (cliente.verificarDatos(correo, contrasena))

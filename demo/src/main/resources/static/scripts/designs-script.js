@@ -173,17 +173,23 @@ document.addEventListener("DOMContentLoaded", function ()
 
                 tarjetas.forEach(tarjeta => {
                     tarjeta.addEventListener("click", function () {
-                        // Quitar la selección de la tarjeta anterior
-                        if (tarjetaSeleccionada) {
+                        if (tarjetaSeleccionada != tarjeta && tarjetaSeleccionada != null)
                             tarjetaSeleccionada.classList.remove("seleccionada");
+                        if (tarjetaSeleccionada == tarjeta && tarjetaSeleccionada != null)
+                        {
+                            tarjetaSeleccionada.classList.remove("seleccionada");
+                            tarjetaSeleccionada = null;
+                            botonEditar.disabled = true;
+                            botonEliminar.disabled = true;
+                            return;
                         }
-
-                        // Seleccionar la nueva tarjeta
-                        tarjetaSeleccionada = tarjeta;
-                        tarjetaSeleccionada.classList.add("seleccionada");
-                        botonEditar.disabled = false; // Habilitar el botón de editar
-                        botonEliminar.disabled = false; // Habilitar el botón de eliminar
-                        console.log('me selecciono');
+                        else
+                        {
+                            tarjetaSeleccionada = tarjeta;
+                            tarjetaSeleccionada.classList.add("seleccionada");
+                            botonEditar.disabled = false; // Habilitar el botón de editar
+                            botonEliminar.disabled = false; // Habilitar el botón de eliminar
+                        }                  
                     });
                 });
 
@@ -252,7 +258,7 @@ document.addEventListener("DOMContentLoaded", function ()
                         swal({
                             title: await peticion.text(),
                             icon: "success"
-                        }).then((resultado) => {window.location.href = "gestion-designs.html";});;
+                        }).then((resultado) => {window.location.href = "gestion-designs.html";});
                     }
                     else
                     {
@@ -353,26 +359,25 @@ document.addEventListener("DOMContentLoaded", function ()
                 
                     if (respuesta.ok)
                     {
-                        alert("Diseño creado con éxito");
-                        window.location.href = "gestion-designs.html"
-                    } 
+                        swal({
+                            title: await respuesta.text(),
+                            icon: "success"
+                        }).then((resultado) => {window.location.href = "gestion-designs.html";});
+                    }
                     else
                     {
                         const errorRespuesta = await respuesta.text();
-                        console.log(errorRespuesta);
-                        alert("Error al crear el diseño: " + errorRespuesta);
+                        swal ("Un error inesperado",errorRespuesta,"error");
                     }
                 });
             }
             else
             {
                 const errorRespuesta = await respuesta.text();
-                console.log(errorRespuesta);
-                alert(errorRespuesta);
+                swal ("Un error inesperado",errorRespuesta,"error");
             }
         }
         pedirProductos();
-        
     }
     else
     {

@@ -39,7 +39,7 @@ public class Cliente extends Persona {
 
     //Getters and setters
     public ArrayList<Design> getDesigns(String correo) {
-        this.designs =obtenerCliente(correo).designs;
+        this.designs = obtenerCliente(correo).designs;
         if (designs==null)
             designs=new ArrayList<Design>();
         return designs;
@@ -58,7 +58,7 @@ public class Cliente extends Persona {
     {
         this.pedidos=obtenerCliente(correo).pedidos;
         if (pedidos==null)
-        pedidos=new ArrayList<Pedido>();
+            pedidos=new ArrayList<Pedido>();
         return pedidos;
     }
     public ArrayList<Pedido> getPedidos()
@@ -143,30 +143,37 @@ public class Cliente extends Persona {
     }
 
 
-    public void actualizarProductosTotales(Pedido pedido) throws IOException
+    public boolean actualizarProductosTotales(Pedido pedido) throws IOException
     {
         ArrayList<Producto> productosTotales=ProductoJson.obtenerProductosTotales();
         if (productosTotales==null)
             productosTotales=new ArrayList<Producto>();
-        for (int i = 0; i< pedido.getDisenos().size(); i++)
+        ArrayList<Design> designs = pedido.getDisenos();
+        for (int i = 0; i< designs.size(); i++)
         {
-            for (int j = 0; j< pedido.getDisenos().get(i).getProductos().size(); j++)
+            ArrayList<Producto> productosDesign = designs.get(i).getProductos();
+            for (int j = 0; j< productosDesign.size(); j++)
             {
                 for(int k=0;k<productosTotales.size();k++)
                 {
-                    if (productosTotales.get(k).getNombre()==pedido.getDisenos().get(i).getProductos().get(j).getNombre())
+                    if (productosTotales.get(k).getNombre().equals(productosDesign.get(j).getNombre()))
                     {
-                        productosTotales.get(k).setCantidad(productosTotales.get(k).getCantidad()- pedido.getDisenos().get(i).getProductos().get(j).getCantidad());
-                        if (productosTotales.get(k).getCantidad()<0)
-                        {
-                            productosTotales.get(k).setCantidad(0);
+                        Producto producto = productosTotales.get(k);
+                        Producto productoDesing = productosDesign.get(j);
+                        int diferencia = producto.getCantidad() - productoDesing.getCantidad();
+                        if (diferencia<0)
+                            return false;
+                        else
+                        {   
+                            producto.setCantidad(diferencia);
+                            ProductoJson.eliminarProducto(producto.getNombre());
+                            ProductoJson.guardarProducto(producto);
                         }
-                        ProductoJson.eliminarProducto(productosTotales.get(k).getNombre());
-                        ProductoJson.guardarProducto(productosTotales.get(k));
                     }
                 }
             }
         }
+        return true;
     }
 
 
@@ -242,7 +249,8 @@ public class Cliente extends Persona {
     public void agregarPedido(Pedido pedido , String correo) throws IOException
     {
         ArrayList<Pedido> pedidosTotales=PedidoJson.obtenerPedidosTotales();
-        pedido.setId((pedidosTotales.size())+1);
+        pedido.setId(pedidosTotales.get(pedidosTotales.size()-1).getId()+1);
+        PedidoJson.guardarPedido(pedido);
         ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
         Cliente clienteActual= new Cliente();
         for (int i=0;i<listaClientes.size();i++)
@@ -251,10 +259,10 @@ public class Cliente extends Persona {
             {
                 clienteActual=listaClientes.get(i);
                 ClienteJson.eliminarCliente(correo);
-            }
-        }
                 clienteActual.pedidos.add(pedido);
                 ClienteJson.guardarCliente(clienteActual);
+            }
+        }
     }
 
     public boolean validarPedido(Pedido pedido , String correo)
