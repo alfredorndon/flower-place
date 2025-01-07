@@ -13,6 +13,7 @@ import java.util.Objects;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -52,26 +53,31 @@ public class ClienteController {
     @PostMapping("/crearPedido")
     public ResponseEntity<String> crearPedido(@RequestBody ArrayList<Design> Design, @RequestParam("correo") String correo) throws IOException
     {
-        Cliente cliente= ClienteJson.obtenerClientes(correo).get(0);
-        ArrayList<Design> designsCliente = cliente.getDesigns();
-        ArrayList<Design> designsPedidos = new ArrayList<Design>();
-        ArrayList<Design> design = Design;
-        for (int i=0; i<design.size(); i++)
+        if (Design.isEmpty())
+            return new ResponseEntity<String>("No se pueden crear pedidos sin diseños", HttpStatus.BAD_REQUEST);
+        else
         {
-            for (int j=0; j<designsCliente.size(); j++)
+            Cliente cliente= ClienteJson.obtenerClientes(correo).get(0);
+            ArrayList<Design> designsCliente = cliente.getDesigns();
+            ArrayList<Design> designsPedidos = new ArrayList<Design>();
+            ArrayList<Design> design = Design;
+            for (int i=0; i<design.size(); i++)
             {
-                Design aComparar = design.get(i);
-                Design temporal = designsCliente.get(j);
-                if(Objects.equals(temporal.getNombre(), aComparar.getNombre()))
+                for (int j=0; j<designsCliente.size(); j++)
                 {
-                    designsPedidos.add(temporal);
+                    Design aComparar = design.get(i);
+                    Design temporal = designsCliente.get(j);
+                    if(Objects.equals(temporal.getNombre(), aComparar.getNombre()))
+                    {
+                        designsPedidos.add(temporal);
+                    }
                 }
             }
+            Pedido pedido = new Pedido(correo);
+            pedido.setDisenos(designsPedidos);
+            cliente.agregarPedido(pedido, correo);
+            return new ResponseEntity<String>("Pedido creado", HttpStatus.OK);
         }
-        Pedido pedido = new Pedido(correo);
-        pedido.setDisenos(designsPedidos);
-        cliente.agregarPedido(pedido, correo);
-        return new ResponseEntity<String>("Pedido creado", HttpStatus.OK);
     }
     @GetMapping("/cargarPedidos")
     public ResponseEntity<ArrayList<Pedido>> obtenerPedidos(@RequestParam("correo") String correo) throws IOException
@@ -82,7 +88,52 @@ public class ClienteController {
         else
         {
             ArrayList<Pedido> pedidos = cliente.getPedidos();
+            ArrayList<Pedido> cerrados = new ArrayList<Pedido>();
+            for (int i=0; i<pedidos.size(); i++)
+            {
+                if (pedidos.get(i).getEstado().equals("Cerrado"))
+                    cerrados.add(pedidos.get(i));
+            }
+            pedidos.removeIf(pedido-> pedido.getEstado().equals("Cerrado"));
+            Collections.reverse(pedidos);
+            pedidos.addAll(cerrados);
             return new ResponseEntity<ArrayList<Pedido>>(pedidos,HttpStatus.OK);
+        }
+    }
+
+    @PostMapping("/editarPedido")
+    public ResponseEntity<String> editarPedido(@RequestParam("id") int id, @RequestParam("correo") String correo, @RequestBody ArrayList<Design> Design) throws IOException
+    {
+        if (Design.isEmpty())
+            return new ResponseEntity<String>("No se pueden cargar pedidos sin diseños", HttpStatus.BAD_REQUEST);
+        {
+            Cliente cliente = ClienteJson.obtenerClientes(correo).get(0);
+            ClienteJson.eliminarCliente(correo);
+            Pedido pedido = PedidoJson.obtenerPedidos(id).get(0);
+            PedidoJson.eliminarPedido(id, 0);
+            ArrayList<Pedido> nuevaListaPedidos = cliente.getPedidos();
+            nuevaListaPedidos.removeIf(pedidos -> pedidos.getId() == id);
+            ArrayList<Design> designsCliente = cliente.getDesigns();
+            ArrayList<Design> designsPedidos = new ArrayList<Design>();
+            ArrayList<Design> design = Design;
+            for (int i=0; i<design.size(); i++)
+            {
+                for (int j=0; j<designsCliente.size(); j++)
+                {
+                    Design aComparar = design.get(i);
+                    Design temporal = designsCliente.get(j);
+                    if(Objects.equals(temporal.getNombre(), aComparar.getNombre()))
+                    {
+                        designsPedidos.add(temporal);
+                    }
+                }
+            }
+            pedido.setDisenos(designsPedidos);
+            nuevaListaPedidos.add(pedido);
+            cliente.setPedidos(nuevaListaPedidos);
+            PedidoJson.guardarPedido(pedido);
+            ClienteJson.guardarCliente(cliente);
+            return new ResponseEntity<String>("Pedido editado exitosamente", HttpStatus.OK);
         }
     }
 

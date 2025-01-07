@@ -6,6 +6,8 @@ import com.proyecto.demo.ManejadorJSON.ClienteJson;
 import com.proyecto.demo.ManejadorJSON.DesignJson;
 import com.proyecto.demo.ManejadorJSON.PedidoJson;
 import com.proyecto.demo.ManejadorJSON.ProductoJson;
+import java.util.Objects;
+import java.util.Collections;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,7 +67,7 @@ public class AdministradorController {
         if (admin.validarDatosProducto(productoEditado.getCantidad(),productoEditado.getPrecio()))
         {
             admin.editarProducto(productoEditado.getNombre(), productoEditado.getPrecio(), productoEditado.getCantidad());
-            return new ResponseEntity<String>("Producto Editado",HttpStatus.OK);
+            return new ResponseEntity<String>("Producto Editado con éxito",HttpStatus.OK);
         }
         else
         return new ResponseEntity<String>("Datos invalidos",HttpStatus.CONFLICT);
@@ -89,7 +91,19 @@ public class AdministradorController {
         if (PedidoJson.obtenerPedidosTotales().isEmpty())
             return new ResponseEntity<ArrayList<Pedido>>(PedidoJson.obtenerPedidosTotales(),HttpStatus.BAD_REQUEST);
         else
-            return new ResponseEntity<ArrayList<Pedido>>(PedidoJson.obtenerPedidosTotales(),HttpStatus.OK);
+        {
+            ArrayList<Pedido> pedidos = PedidoJson.obtenerPedidosTotales();
+            ArrayList<Pedido> cerrados = new ArrayList<Pedido>();
+            for (int i=0; i<pedidos.size(); i++)
+            {
+                if (pedidos.get(i).getEstado().equals("Cerrado"))
+                    cerrados.add(pedidos.get(i));
+            }
+            pedidos.removeIf(pedido-> pedido.getEstado().equals("Cerrado"));
+            Collections.reverse(pedidos);
+            pedidos.addAll(cerrados);
+            return new ResponseEntity<ArrayList<Pedido>>(pedidos,HttpStatus.OK);
+        }
     }
 
     @GetMapping("/cargarClientes")
@@ -164,11 +178,10 @@ public class AdministradorController {
     }
 
     @PostMapping("/cancelarPedido")
-    public ResponseEntity<String> cancelarPedido (@RequestBody Pedido pedido, @RequestParam("id") int id, @RequestParam ("correo") String correo) throws IOException
+    public ResponseEntity<String> cancelarPedido (@RequestParam("id") int id, @RequestParam ("correo") String correo) throws IOException
     {
         Administrador admin= new Administrador(1);
         admin.cancelarPedido(id, correo);
-        admin.actualizarProductosTotales(pedido);
         return new ResponseEntity<String>("Pedido cancelado con exito", HttpStatus.OK);
     }
 }

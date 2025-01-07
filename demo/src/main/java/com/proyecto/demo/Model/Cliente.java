@@ -249,7 +249,7 @@ public class Cliente extends Persona {
     public void agregarPedido(Pedido pedido , String correo) throws IOException
     {
         ArrayList<Pedido> pedidosTotales=PedidoJson.obtenerPedidosTotales();
-        pedido.setId((pedidosTotales.size())+1);
+        pedido.setId(pedidosTotales.get(pedidosTotales.size()-1).getId()+1);
         PedidoJson.guardarPedido(pedido);
         ArrayList<Cliente> listaClientes = ClienteJson.obtenerClientesTotales();
         Cliente clienteActual= new Cliente();

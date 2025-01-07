@@ -359,26 +359,25 @@ document.addEventListener("DOMContentLoaded", function ()
                 
                     if (respuesta.ok)
                     {
-                        alert("Diseño creado con éxito");
-                        window.location.href = "gestion-designs.html"
-                    } 
+                        swal({
+                            title: await respuesta.text(),
+                            icon: "success"
+                        }).then((resultado) => {window.location.href = "gestion-designs.html";});
+                    }
                     else
                     {
                         const errorRespuesta = await respuesta.text();
-                        console.log(errorRespuesta);
-                        alert("Error al crear el diseño: " + errorRespuesta);
+                        swal ("Un error inesperado",errorRespuesta,"error");
                     }
                 });
             }
             else
             {
                 const errorRespuesta = await respuesta.text();
-                console.log(errorRespuesta);
-                alert(errorRespuesta);
+                swal ("Un error inesperado",errorRespuesta,"error");
             }
         }
         pedirProductos();
-        
     }
     else
     {

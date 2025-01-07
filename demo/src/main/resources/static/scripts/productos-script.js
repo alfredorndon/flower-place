@@ -171,14 +171,15 @@ document.addEventListener('DOMContentLoaded', function()
                             });
                             if (guardar.ok)
                             {
-                                alert ('Producto editado con éxito');
-                                window.location.href = "gestion-productos.html";
+                                swal({
+                                    title: await guardar.text(),
+                                    icon: "success"
+                                }).then((resultado) => {window.location.href = "gestion-productos.html";});
                             }
                             else
                             {
                                 const errorRespuesta = await guardar.text();
-                                console.log(errorRespuesta);
-                                alert(errorRespuesta);
+                                swal ("Un error inesperado",errorRespuesta,"error");
                             }
                         });
                     });
@@ -212,13 +213,15 @@ document.addEventListener('DOMContentLoaded', function()
                         });
                         if (peticion.ok)
                         {
-                            window.location.href = "gestion-productos.html";
-                        } 
+                            swal({
+                                title: await peticion.text(),
+                                icon: "success"
+                            }).then((resultado) => {window.location.href = "gestion-productos.html";});
+                        }
                         else
                         {
                             const errorRespuesta = await peticion.text();
-                            console.log(errorRespuesta);
-                            alert(errorRespuesta);
+                            swal ("Un error inesperado",errorRespuesta,"error");
                         }
                     });
 
@@ -279,8 +282,7 @@ document.addEventListener('DOMContentLoaded', function()
             else
             {
                 const errorRespuesta = await respuesta.text();
-                console.log(errorRespuesta);
-                alert(errorRespuesta);
+                swal ("Un error inesperado",errorRespuesta,"error");
             }
         }
         pedirProductos();

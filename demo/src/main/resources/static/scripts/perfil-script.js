@@ -273,13 +273,13 @@ document.addEventListener('DOMContentLoaded', function ()
                 else
                 {
                     const errorRespuesta = await peticion.text();
-                    console.log(errorRespuesta);
-                    alert(errorRespuesta);
+                    swal ("Un error inesperado",errorRespuesta,"error");
                 }
+
             }
             else
             {
-                alert("Las contraseñas no coinciden");
+                swal ("Un error inesperado","Las contraseñas no coinciden","error");
             }
         });
 
@@ -318,13 +318,12 @@ document.addEventListener('DOMContentLoaded', function ()
                     localStorage.setItem('email', document.getElementById('email-inicio').value);
                     localStorage.setItem('contrasena', document.getElementById('contrasena-inicio').value);
                     localStorage.setItem('login','true');
-                    window.location.href = "index.html";
+                    window.location.href = "index.html"
                 }
                 else
                 {
                     const errorRespuesta = await peticion.text();
-                    console.log(errorRespuesta);
-                    alert(errorRespuesta);
+                    swal ("Un error inesperado",errorRespuesta,"error");
                 }
             }
         });
