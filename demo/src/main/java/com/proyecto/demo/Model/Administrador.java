@@ -66,6 +66,8 @@ public class Administrador extends Persona {
 
     public void editarProducto(String nombreProducto, float precio, int cantidad) throws IOException
     {
+
+        
         for (int i = 0; i < productos.size(); i++)
         {
             if (productos.get(i).getNombre().equalsIgnoreCase(nombreProducto))
