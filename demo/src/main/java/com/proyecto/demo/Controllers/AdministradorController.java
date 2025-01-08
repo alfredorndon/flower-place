@@ -65,6 +65,7 @@ public class AdministradorController {
     {
 
         Administrador admin =new Administrador(); 
+        admin.setProductos(ProductoJson.obtenerProductosTotales());
         if (admin.validarDatosProducto(productoEditado.getCantidad(),productoEditado.getPrecio()))
         {
             admin.editarProducto(productoEditado.getNombre(), productoEditado.getPrecio(), productoEditado.getCantidad());
